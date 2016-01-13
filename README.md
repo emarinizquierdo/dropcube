@@ -1,3 +1,1 @@
-The OpenShift `nodejs` cartridge documentation can be found at:
-
-http://openshift.github.io/documentation/oo_cartridge_guide.html#nodejs
+[![Stories in Ready](https://badge.waffle.io/emarinizquierdo/dropcube.png?label=ready&title=Ready)](http://waffle.io/emarinizquierdo/dropcube)
