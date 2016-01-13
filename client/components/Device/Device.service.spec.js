@@ -3,7 +3,7 @@
 describe('Service: Device', function () {
 
   // load the service's module
-  beforeEach(module('kairosApp'));
+  beforeEach(module('dropcubeApp'));
 
   // instantiate service
   var Device;

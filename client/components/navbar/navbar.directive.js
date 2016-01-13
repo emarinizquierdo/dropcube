@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('kairosApp').directive('navbar', ['$location', 'Auth', function($location, Auth) {
+angular.module('dropcubeApp').directive('navbar', ['$location', 'Auth', function($location, Auth) {
 
     return {
         restrict: 'A',

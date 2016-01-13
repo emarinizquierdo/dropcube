@@ -1,9 +1,11 @@
 'use strict';
 
-angular.module('kairosApp').controller('DevicesCtrl', ["$scope", "$location", "Device", function($scope, $location, Device) {
+angular.module('dropcubeApp').controller('DevicesCtrl', ["$scope", "$location", "Device", "Help", "Note", function($scope, $location, Device, Help, Note) {
 
     $scope.Device = Device;
     $scope.newDevice;
+    $scope.help = Help;
+    $scope.note = Note;
 
     var toDelete = null;
 
@@ -35,8 +37,8 @@ angular.module('kairosApp').controller('DevicesCtrl', ["$scope", "$location", "D
 
     $scope.deleteDevice = function() {
         $('#modal1').closeModal();
-        Device.resource.delete(toDelete, function(data) {
-            localDelete(Device.data, data[0]);
+        Device.resource.delete({id : toDelete._id}, function(data) {
+            localDelete(Device.data, toDelete);
         }, function(e) {
 
         })
@@ -44,7 +46,7 @@ angular.module('kairosApp').controller('DevicesCtrl', ["$scope", "$location", "D
 
     function localDelete(array, data) {
         angular.forEach(array, function(item, index) {
-            if (item.id === data.id) {
+            if (item._id === data._id) {
                 array.splice(index, 1);
                 return false;
             }

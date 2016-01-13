@@ -29,7 +29,7 @@ var all = {
 
   // Secret for session, you will want to change this and make it an environment variable
   secrets: {
-    session: 'kairos-secret'
+    session: 'dropcube-secret'
   },
 
   // List of user roles
@@ -60,9 +60,12 @@ var all = {
     clientID:     process.env.GOOGLE_ID || 'id',
     clientSecret: process.env.GOOGLE_SECRET || 'secret',
     callbackURL:  (process.env.DOMAIN || '') + '/auth/google/callback'
-  }
-};
+  },
+  
+  redirectOnLogin : '/devices'
 
+};
+console.log('id:......... ' + process.env.GOOGLE_ID)
 // Export the config object based on the NODE_ENV
 // ==============================================
 module.exports = _.merge(

@@ -1,13 +1,18 @@
+<div subnavbar name="'My drop cube - ' + deviceData.name"></div>
 <div class="container">
     <div class="card-panel">
         <div class="card-content">
             <div ng-show="!editing">
                 <a class="btn-floating right btn-large waves-effect waves-light" ng-click="edit(true)"><i class="material-icons">mode_edit</i></a>
-                <h4>{{deviceData.name}}</h4>
-                <h5 class="margintop">ID</h5>
-                <p>{{deviceData.deviceId}}</p>
-                <h5>Description</h5>
-                <p>{{deviceData.description}}</p>
+                <div class="bordered">
+                    <h4>{{deviceData.name}}</h4>
+                    <h5 class="margintop">ID</h5>
+                    <p>{{deviceData.deviceId}}</p>
+                </div>
+                <div class="bordered">
+                    <h5>Description</h5>
+                    <p>{{deviceData.description}}</p>
+                </div>
                 <h5>Status</h5>
                 <p>{{deviceData.status}}</p>
                 <h5>When do you want to be warned about weather?</h5>
@@ -17,20 +22,21 @@
                 <p class="range-field">
                     <h6>Left work at {{deviceData.maxHour}} hours <span class="weather-icon {{predictions.maxHour.icon}}"></span></h6>
                 </p>
+                <span ng-show="predictions.time">(prediction for {{predictions.time * 1000 | date:'dd/MM/yyyy'}})</span>
             </div>
             <div ng-show="editing">
                 <div class="row">
                     <h4>{{deviceData.name}}</h4>
-                    <div class="input-field col s6">
-                        <input id="first_name" type="text" class="validate" ng-model="deviceData.deviceId">
+                    <div class="input-field col s6 bordered">
+                        <input id="first_name" type="text" class="validate" ng-model="deviceData.deviceId" maxlength="50">
                         <label for="first_name" class="active">Id</label>
                     </div>
-                    <div class="input-field col s6">
-                        <input id="first_name" type="text" class="validate" ng-model="deviceData.name">
+                    <div class="input-field col s6 bordered">
+                        <input id="first_name" type="text" class="validate" ng-model="deviceData.name" maxlength="40">
                         <label for="first_name" class="active">Name</label>
                     </div>
                     <div class="input-field col s12">
-                        <textarea id="textarea1" class="materialize-textarea" ng-model="deviceData.description"></textarea>
+                        <textarea id="textarea1" class="materialize-textarea" ng-model="deviceData.description" maxlength="250"></textarea>
                         <label for="last_name" class="active">Description</label>
                     </div>
                     <div class="input-field col s12">

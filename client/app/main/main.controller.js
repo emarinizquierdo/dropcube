@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('kairosApp')
-  .controller('MainCtrl', function ($scope, $http) {
+angular.module('dropcubeApp')
+  .controller('MainCtrl', function ($rootScope, $scope, $http) {
     $scope.awesomeThings = [];
 
     $http.get('/api/things').success(function(awesomeThings) {
@@ -15,6 +15,10 @@ angular.module('kairosApp')
       $http.post('/api/things', { name: $scope.newThing });
       $scope.newThing = '';
     };
+
+    $(document).ready(function(){
+      $('.parallax').parallax();
+    });
 
     $scope.deleteThing = function(thing) {
       $http.delete('/api/things/' + thing._id);

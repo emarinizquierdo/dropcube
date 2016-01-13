@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('kairosApp')
+angular.module('dropcubeApp')
   .factory('User', function ($resource) {
     return $resource('/api/users/:id/:controller', {
       id: '@_id'

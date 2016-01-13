@@ -3,7 +3,7 @@
 /**
  * Removes server error when user updates input
  */
-angular.module('kairosApp')
+angular.module('dropcubeApp')
   .directive('mongooseError', function () {
     return {
       restrict: 'A',

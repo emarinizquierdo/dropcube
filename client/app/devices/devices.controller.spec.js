@@ -3,7 +3,7 @@
 describe('Controller: DevicesCtrl', function () {
 
   // load the controller's module
-  beforeEach(module('kairosApp'));
+  beforeEach(module('dropcubeApp'));
 
   var DevicesCtrl, scope;
 

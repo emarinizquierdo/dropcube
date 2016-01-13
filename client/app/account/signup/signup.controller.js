@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('kairosApp')
+angular.module('dropcubeApp')
   .controller('SignupCtrl', function ($scope, Auth, $location, $window) {
     $scope.user = {};
     $scope.errors = {};

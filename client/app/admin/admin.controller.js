@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('kairosApp')
+angular.module('dropcubeApp')
   .controller('AdminCtrl', function ($scope, $http, Auth, User) {
 
     // Use the User $resource to fetch all users

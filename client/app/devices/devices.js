@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('kairosApp')
+angular.module('dropcubeApp')
   .config(function ($routeProvider) {
     $routeProvider
       .when('/devices', {

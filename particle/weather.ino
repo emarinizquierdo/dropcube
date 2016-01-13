@@ -54,7 +54,7 @@ void loop() {
 
 double retrieveLight(){
     
-    request.hostname = "kairos-nefele.rhcloud.com";
+    request.hostname = "dropcube-nefele.rhcloud.com";
     request.port = 80;
     request.path = "/api/lights/particle/" + System.deviceID();
 

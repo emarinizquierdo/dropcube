@@ -1,0 +1,13 @@
+{
+	"HELP" : {
+	    "HELP_01" : "Loading"
+	},
+
+	"FOOTER" : {
+		"JOIN_US" : "JOIN US"
+	},
+
+	"NOTES" : {
+		"NOTES_01" : "Administra esta información básica (tu nombre, correo electrónico y número de teléfono) para que los demás puedan encontrarte en productos de Google, como Hangouts, Gmail y Maps, y contactar contigo más fácilmente."
+	}
+}

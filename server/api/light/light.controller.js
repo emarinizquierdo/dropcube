@@ -6,6 +6,7 @@
 'use strict';
 
 var _ = require('lodash');
+var timezoner = require('timezoner');
 var Device = require('../device/device.model');
 var config = require('../../config/environment');
 var http = require("http");
@@ -15,9 +16,20 @@ var https = require("https");
 exports.show = function(req, res) {
 
     findDevice(req, res, function(device) {
-        getWeather(device.lat, device.lng, function(weather) {
-            return res.status(200).json(parseJson(weather, device));
-        });
+
+        timezoner.getTimeZone(
+            device.lat, device.lng,
+            function (err, data) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    getWeather(device.lat, device.lng, (toLocalTime(data.rawOffset) > device.maxHour), function(weather) {
+                        return res.status(200).json(parseJson(weather, device));
+                    });
+                }
+            }
+        );
+
     });
 };
 
@@ -25,9 +37,18 @@ exports.show = function(req, res) {
 exports.particleShow = function(req, res) {
 
     findDevice(req, res, function(device) {
-        getWeather(device.lat, device.lng, function(weather) {
-            return res.status(200).send(parseParticleValue(weather, device));
-        });
+        timezoner.getTimeZone(
+            device.lat, device.lng,
+            function (err, data) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    getWeather(device.lat, device.lng, (toLocalTime(data.rawOffset) > device.maxHour), function(weather) {
+                        return res.status(200).send(parseParticleValue(weather, device));
+                    });
+                }
+            }
+        );
     });
 };
 
@@ -60,6 +81,7 @@ function parseJson(weather, device) {
     var minHour = device.minHour,
         maxHour = device.maxHour,
         json = {
+            time : 0,
             minHour: {
                 probability: 0,
                 intensity: 0,
@@ -70,6 +92,7 @@ function parseJson(weather, device) {
             }
         };
 
+    json.time = weather.currently.time;
     json.minHour.probability = weather.hourly.data[minHour].precipProbability;
     json.maxHour.probability = weather.hourly.data[maxHour].precipProbability;
     json.minHour.icon = weather.hourly.data[minHour].icon;
@@ -105,7 +128,7 @@ function parseParticleValue(weather, device){
 
 }
 
-function getWeather(lat, lng, callback) {
+function getWeather(lat, lng, nextDay, callback) {
 
     //https://developer.forecast.io/docs/v2
     var options = {
@@ -116,8 +139,8 @@ function getWeather(lat, lng, callback) {
         json: true
     };
 
-    options.path += lat + "," + lng + "," + Math.floor(new Date().getTime() / 1000) + config.weather.parameters;
-
+    var timestamp = (nextDay) ? new Date().getTime() + 86400000: new Date().getTime();
+    options.path += lat + "," + lng + "," + Math.floor(timestamp / 1000) + config.weather.parameters;
     getJson(options, function(statusCode, result) {
         callback(result);
     });
@@ -144,5 +167,14 @@ function getJson(options, onResult) {
     });
 
     req.end();
+
+};
+
+var toLocalTime = function(offset) {
+    var d = new Date();
+    var offset = ((new Date().getTimezoneOffset() + (offset / 60)));
+    var n = new Date(d.getTime() + offset * 60 * 1000).getHours();
+    console.log(n);
+    return n;
 
 };

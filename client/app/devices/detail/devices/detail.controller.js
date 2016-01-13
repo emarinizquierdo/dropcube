@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('kairosApp')
+angular.module('dropcubeApp')
     .controller('DevicesDetailCtrl', ["$scope", "$location", "$routeParams", "Device", "Light", function($scope, $location, $routeParams, Device, Light) {
 
 
@@ -50,6 +50,7 @@ angular.module('kairosApp')
             Device.resource.update(device, function(data) {
                 $scope.deviceData = data;
                 $scope.edit(false);
+                getLight($scope.deviceData.deviceId);
             }, function() {
                 $scope.edit(false);
             });

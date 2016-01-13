@@ -1,40 +1,49 @@
+<div subnavbar name="'My drop cubes'"></div>
 <div class="container">
+<div class="col s12 m6">
+    <div note data="note.notes.NOTE_01"></div>
     <div class="row">
-        <h4>My devices</h4>
-        <ul class="collection">
-            <li class="collection-item avatar pointer" ng-repeat="device in Device.data" ng-click="goToDetail(device._id)">
-                <img src="https://hackster.imgix.net/uploads/avatar/file/2813/spark-mark-400px.png" alt="" class="circle">
-                <span class="title">{{device.deviceId}}</span>
-                <p>
-                    {{device.name}}
-                </p>
-                <a class="secondary-content pointer" ng-click="beforeToDelete(device); $event.stopPropagation();"><i class="material-icons">delete</i></a>
-            </li>
-        </ul>
-        <ul class="collapsible hoverable" data-collapsible="accordion">
-            <li>
-                <div class="collapsible-header"><i class="material-icons">input</i>Add a new device</div>
-                <div class="collapsible-body">
-                    <div class="container margintop">
-                        <div class="row">
-                            <form class="col s12">
-                                <div class="row">
-                                    <div class="input-field col s6">
-                                        <input id="first_name" type="text" class="validate" ng-model="newDevice.deviceId">
-                                        <label for="first_name">ID</label>
+        <div class="col s12 l9">
+            <ul class="collection device-list">
+                <li class="collection-item avatar pointer" ng-repeat="device in Device.data" ng-click="goToDetail(device._id)">
+                    <span class="blue-cube circle"></span>
+                    <h5 class="title">{{device.name}}</h5>
+                    <p class="truncate">
+                        {{device.description}}
+                    </p>
+                    <a class="secondary-content pointer" ng-click="beforeToDelete(device); $event.stopPropagation();"><i class="material-icons color-blue">delete</i></a>
+                </li>
+            </ul>
+            <div ng-show="Device.data.length < 5">
+            <ul class="collapsible hoverable" data-collapsible="accordion">
+                <li>
+                    <div class="collapsible-header"><i class="material-icons">input</i>Add a new drop cube</div>
+                    <div class="collapsible-body">
+                        <div class="container margintop">
+                            <div class="row">
+                                <form class="col s12">
+                                    <div class="row">
+                                        <div class="input-field col s6">
+                                            <input id="first_name" type="text" class="validate" ng-model="newDevice.deviceId">
+                                            <label for="first_name">ID</label>
+                                        </div>
+                                        <div class="input-field col s6">
+                                            <input id="last_name" type="text" class="validate" ng-model="newDevice.name">
+                                            <label for="last_name">Name</label>
+                                        </div>
+                                        <a class="right waves-effect waves-light btn blue darken-1" ng-class="{'disabled' : !newDevice.name || !newDevice.deviceId}" ng-click="(newDevice.name && newDevice.deviceId) && addNew(newDevice)">Add</a>
                                     </div>
-                                    <div class="input-field col s6">
-                                        <input id="last_name" type="text" class="validate" ng-model="newDevice.name">
-                                        <label for="last_name">Name</label>
-                                    </div>
-                                    <a class="right waves-effect waves-light btn" ng-click="addNew(newDevice)">Add</a>
-                                </div>
-                            </form>
+                                </form>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </li>
-        </ul>
+                </li>
+            </ul>
+            </div>
+        </div>
+        <div class="col s12 l3">
+            <div help-block source="help.sections.devices"></div>
+        </div>
     </div>
 </div>
 <!-- Modal Structure -->

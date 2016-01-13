@@ -30,7 +30,7 @@ module.exports = function (grunt) {
     yeoman: {
       // configurable paths
       client: require('./bower.json').appPath || 'client',
-      dist: '../kairos-pro/'
+      dist: '../dropcube-pro/'
     },
     express: {
       options: {
@@ -311,7 +311,7 @@ module.exports = function (grunt) {
     ngtemplates: {
       options: {
         // This should be the name of your apps angular module
-        module: 'kairosApp',
+        module: 'dropcubeApp',
         htmlmin: {
           collapseBooleanAttributes: true,
           collapseWhitespace: true,
@@ -354,6 +354,7 @@ module.exports = function (grunt) {
             '*.{ico,png,txt}',
             '.htaccess',
             'bower_components/**/*',
+            'lang/**/*',
             'assets/images/**/*',
             'assets/fonts/**/*',
             'index.html'

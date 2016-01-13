@@ -5,6 +5,6 @@
 module.exports = {
   // MongoDB connection options
   mongo: {
-    uri: 'mongodb://localhost/kairos-test'
+    uri: 'mongodb://localhost/dropcube-test'
   }
 };

@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('kairosApp')
+angular.module('dropcubeApp')
   .directive('footer', function () {
     return {
       templateUrl: 'components/footer/footer.html',

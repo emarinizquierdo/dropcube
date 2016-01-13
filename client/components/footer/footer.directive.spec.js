@@ -3,7 +3,7 @@
 describe('Directive: footer', function () {
 
   // load the directive's module and view
-  beforeEach(module('kairosApp'));
+  beforeEach(module('dropcubeApp'));
   beforeEach(module('components/footer/footer.html'));
 
   var element, scope;

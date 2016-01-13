@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('kairosApp')
+angular.module('dropcubeApp')
   .factory('Device', function($rootScope, $resource) {
 
     var _Device = {};
