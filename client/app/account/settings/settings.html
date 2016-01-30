@@ -25,6 +25,17 @@
       <div class="card-content">
             <h5 class="margintop">Sexo, fecha de nacimiento y otros datos</h5>
             <p>{{deviceData.deviceId}}</p>
+            <h6>Language</h6>
+            <div>
+            <p>
+              <input name="group1" class="with-gap" type="radio" ng-model="user.normalized.lang" id="english" ng-value="'en_US'" ng-change="updateLang('en_US')"/>
+              <label for="english">English</label>
+            </p>
+            <p>
+              <input name="group1" class="with-gap" type="radio" ng-model="user.normalized.lang" id="spanish" ng-value="'es_ES'" ng-change="updateLang('es_ES')"/>
+              <label for="spanish">Spanish</label>
+            </p>
+            </div>
           </div>
       </div>
   </div>

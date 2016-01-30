@@ -4,6 +4,7 @@ var User = require('./user.model');
 var passport = require('passport');
 var config = require('../../config/environment');
 var jwt = require('jsonwebtoken');
+var _ = require('lodash');
 
 var validationError = function(res, err) {
   return res.status(422).json(err);
@@ -29,9 +30,32 @@ exports.create = function (req, res, next) {
   newUser.role = 'user';
   newUser.save(function(err, user) {
     if (err) return validationError(res, err);
-    var token = jwt.sign({_id: user._id }, config.secrets.session, { expiresInMinutes: 60*5 });
+    var token = jwt.sign({_id: user._id }, config.secrets.session, { expiresInMinutes: 60*24*7 });
     res.json({ token: token });
   });
+};
+
+// Updates an existing user in the DB.
+exports.update = function(req, res) {
+    var userId = req.user._id;
+console.log(userId);
+    User.findOne({
+      _id: userId
+    }, '-salt -hashedPassword', function(err, user) {
+        if (err) {
+            return handleError(res, err);
+        }
+        if (!user) {
+            return res.status(404).send('Not Found');
+        }
+        var updated = _.merge(user, req.body);
+        updated.save(function(err) {
+            if (err) {
+                return handleError(res, err);
+            }
+            return res.status(200).json(user);
+        });
+    });
 };
 
 /**

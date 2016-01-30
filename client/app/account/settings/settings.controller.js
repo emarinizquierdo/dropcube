@@ -19,15 +19,16 @@ angular.module('dropcubeApp')
       console.log(user);
       if(user && user.provider == "google"){
 
+        user.normalized._id = user._id;
         user.normalized.name = user.google.displayName;
         user.normalized.email = user.email;
-        
+        user.normalized.lang = user.lang;
+
         if(user.google.image){
           user.normalized.photo = user.google.image.url.replace("?sz=50", "?sz=100");
         }
 
       }
-
 
       $scope.user.normalized = user.normalized;
 
@@ -36,7 +37,18 @@ angular.module('dropcubeApp')
     __init__();
 
     $scope.showBig = function(user){
-      debugger;
       return url.replace('?sz=50', '');
     }
+
+    $scope.updateLang = function(lang) {
+
+        User.update({lang : lang}, function(user) {
+            normalize(user);
+            $scope.edit(false);
+        }, function() {
+            $scope.edit(false);
+        });
+
+    };
+
   });

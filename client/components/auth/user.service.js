@@ -17,6 +17,13 @@ angular.module('dropcubeApp')
         params: {
           id:'me'
         }
+      },
+      update: {
+          method: 'PUT',
+          params: {
+            id:'me'
+          },
+          isArray: false
       }
 	  });
   });
