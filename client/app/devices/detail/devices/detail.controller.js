@@ -38,10 +38,23 @@ angular.module('dropcubeApp')
             if (status) {
                 marker.setDraggable(true);
                 $scope.editing = true;
+                map.setOptions({
+                    draggable : true,
+                    zoomControl: true,
+                    scrollwheel: true,
+                    disableDoubleClickZoom: false
+                });
                 initMap();
             } else {
                 marker.setDraggable(false);
+                map.setOptions({
+                    draggable : false,
+                    zoomControl: false,
+                    scrollwheel: false,
+                    disableDoubleClickZoom: true
+                });
                 $scope.editing = false;
+                centerMark();
             }
         };
 
@@ -51,6 +64,7 @@ angular.module('dropcubeApp')
                 $scope.deviceData = data;
                 $scope.edit(false);
                 getLight($scope.deviceData.deviceId);
+                centerMark();
             }, function() {
                 $scope.edit(false);
             });
@@ -84,7 +98,11 @@ angular.module('dropcubeApp')
                 center: {
                     lat: $scope.deviceData.lat,
                     lng: $scope.deviceData.lng
-                }
+                },
+                draggable : false,
+                zoomControl: false,
+                scrollwheel: false,
+                disableDoubleClickZoom: true
             });
 
             marker = new google.maps.Marker({

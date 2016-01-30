@@ -57,3 +57,14 @@
 .bordered{
     border-bottom: 1px dashed #ddd;
 }
+
+.edition-bar{
+    right: 0;
+    top: 64px;
+    width: 100%;
+    text-align: right;
+    padding: 14px;
+    bottom: initial;
+    background-color: #90caf9;
+    z-index:initial;
+}
