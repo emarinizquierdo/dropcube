@@ -1,11 +1,11 @@
 'use strict';
 
 angular.module('dropcubeApp')
-  .controller('SettingsCtrl', function ($scope, User, Auth, Note) {
+  .controller('SettingsCtrl', function ($scope, $translate, User, Auth, Note) {
     
     $scope.errors = {};
     $scope.note = Note;
-    $scope.user = Auth.getCurrentUser().$promise.then(normalize);
+    $scope.user = Auth.getCurrentUser(true).$promise.then(normalize);
 
 
 
@@ -44,9 +44,10 @@ angular.module('dropcubeApp')
 
         User.update({lang : lang}, function(user) {
             normalize(user);
-            $scope.edit(false);
+            $translate.use(user.lang);
+            $scope.edit = false;
         }, function() {
-            $scope.edit(false);
+            $scope.edit = false;
         });
 
     };

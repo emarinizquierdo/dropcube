@@ -97,8 +97,13 @@ angular.module('dropcubeApp')
        *
        * @return {Object} user
        */
-      getCurrentUser: function() {
-        return currentUser;
+      getCurrentUser: function( force ) {
+        if(!force){
+          return currentUser;
+        }else{
+          return User.get();
+        }
+        
       },
 
       /**

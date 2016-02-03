@@ -1,4 +1,11 @@
 {
+	
+	"MAIN_PAGE" :{
+
+		"PREPARE_FOR_RAIN" : "be prepare for raining"
+
+	},
+
 	"HELP" : {
 		"HELP_00" : "Help",
 	    "HELP_01" : "What is this?"
