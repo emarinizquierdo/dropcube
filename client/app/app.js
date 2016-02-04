@@ -72,9 +72,19 @@ angular.module('dropcubeApp', [
 .run(function($rootScope, $location, Auth, $timeout, $translate) {
     $rootScope.hideNavLogo = true;
     
-    Auth.getCurrentUser().$promise.then(function(user){
-        $translate.use(user.lang);
-    }, function(){});
+    var getUser = Auth.getCurrentUser();
+
+    if(getUser.$promise){
+        getUser.$promise.then(function(user){
+            $translate.use(user.lang);
+        }, function(){});
+    }else{
+        if(navigator.language.replace('_ES') == 'es'){
+            $translate.use('es_ES');
+        }else{
+            $translate.use('en_US');
+        }
+    }
 
     // Redirect to login if route requires auth and you're not logged in
     $rootScope.$on('$routeChangeStart', function(event, next) {

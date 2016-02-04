@@ -2,8 +2,13 @@
 
 	"MAIN_PAGE" :{
 
-		"PREPARE_FOR_RAIN" : "prepárate para la lluvia"
-
+		"PREPARE_FOR_RAIN" : "prepárate para la lluvia",
+		"OH_NO" : "¡Oh no! ¡Está lloviendo!",
+		"WOULD_YOU" : "¿Te gustaría saber si va a llover al día siguiente justo a la hora de ir o volver de trabajar? ¿Prefieres dejar la moto o el coche en casa esos días? ¡Ahora puedes saberlo!",
+		"WHAT_IS" : "Drop Cube te avisará cuando vaya a llover",
+		"DROP_CUBE_IS" : "Drop cube es un gadget que puedes colocar encima del mueble del salón, encima de una mesa, o donde tú quieras. Tan sólo tienes que conectarlo a la WIFI de tu casa, añadirlo desde tu 'dashboard' y drop cube se encenderá con diferentes tonalidades si va a llover en las horas que tú indiques",
+		"HOW_DOES_IT_WORK" : "¿Cómo funciona?",
+		"DO_YOU_PREFER" : "Tú eliges cuando los momentos del día en los que quieres que Drop Cube te avise si va a llover. Tan fácil como eso. Ya no tendrás que mirar el móvil. De un solo vistazo, cuando lo veas iluminado, sabrás si tienes que coger el paraguas."
 	},
 
 
