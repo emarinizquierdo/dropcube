@@ -30,7 +30,7 @@
       </div>
     </div>
 	<div class="row container valign-wrapper">
-		
+
     	<div class="col s12 m6">
             <h4 class="header light">{{'MAIN_PAGE.WHAT_IS' | translate }}</h4>
             <p class="flow-text thin">{{'MAIN_PAGE.DROP_CUBE_IS' | translate }}</p>
@@ -73,13 +73,37 @@
 	</div>
 </div>
 
+<div class="block-100"></div>
+<div class="row container valign-wrapper">
+
+    <div class="col s12 m6">
+          <h4 class="header light">{{'MAIN_PAGE.IN_YOUR_MOBILE' | translate }}</h4>
+          <p class="flow-text thin">{{'MAIN_PAGE.USING_YOUR_MOBILE' | translate }}</p>
+      </div>
+      <div class="col s12 m6 center-align valign hide-on-small-only">
+      <img src="https://c2.staticflickr.com/2/1706/24397053754_757ae386ab_z.jpg"/>
+    </div>
+  </div>
+  <div class="row container  hide-on-med-and-up">
+    <div class="col s12 m6 center-align ">
+        <img src="https://c2.staticflickr.com/2/1706/24397053754_757ae386ab_z.jpg"/>
+    </div>
+  </div>
+  <div class="block-100"></div>
+<div class="parallax-container">
+      <div class="parallax"><img src="https://c2.staticflickr.com/2/1565/25000556776_59bcd14b9f_h.jpg"></div>
+    </div>
+
 <div class="section white">
   <div class="block-100"></div>
     <div class="row container">
       <div class="col s12 m12 center-align">
        <h4 class="header light">{{'MAIN_PAGE.READY_TO_BE_READY' | translate }}</h4>
-          <p class="grey-text text-lighten-4">If you want to checkout your drop cube, do it!</p>
-          <button class="btn btn-large waves-effect waves-light light-blue" type="submit" name="action" alt="PayPal - The safer, easier way to pay online!">{{'MAIN_PAGE.TAKE_YOUR' | translate }}</button>
+
+          <!--<a class="btn btn-large waves-effect waves-light light-blue" href="/checkout">{{'MAIN_PAGE.TAKE_YOUR' | translate }}</a>-->
+          <h5>{{'MAIN_PAGE.CHECKOUT_YOURS' | translate}}</h5>
+          <p></p>
+          <ngcart-checkout service="paypal" settings="{ url:'/checkout' }"></ngcart-checkout>
 
       </div>
     </div>

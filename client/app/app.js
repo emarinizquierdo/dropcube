@@ -5,7 +5,8 @@ angular.module('dropcubeApp', [
         'ngResource',
         'ngSanitize',
         'ngRoute',
-        'pascalprecht.translate'
+        'pascalprecht.translate',
+        'ngCart'
     ])
     .config(function($routeProvider, $locationProvider, $httpProvider, $translateProvider, $sceProvider, properties) {
         $routeProvider
@@ -71,7 +72,7 @@ angular.module('dropcubeApp', [
 
 .run(function($rootScope, $location, Auth, $timeout, $translate) {
     $rootScope.hideNavLogo = true;
-    
+
     var getUser = Auth.getCurrentUser();
 
     if(getUser.$promise){

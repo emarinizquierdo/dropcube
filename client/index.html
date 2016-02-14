@@ -37,7 +37,7 @@
     <!-- Add your site or application content here -->
     <div navbar></div>
     <main>
-        
+
         <div ng-view =""></div>
         <div sidenav></div>
     </main>
@@ -73,12 +73,13 @@
       <script src="bower_components/angular-route/angular-route.js"></script>
       <script src="bower_components/lodash/dist/lodash.compat.js"></script>
       <script src="bower_components/angular-translate/angular-translate.js"></script>
+      <script src="bower_components/ngCart/dist/ngCart.js"></script>
       <!-- endbower -->
     <!-- endbuild -->
 
-        
+
         <!-- build:js({.tmp,client}) app/app.js -->
-        
+
         <script src="app/app.js"></script>
           <!-- injector:js -->
           <script src="app/account/account.js"></script>
@@ -87,6 +88,8 @@
           <script src="app/account/signup/signup.controller.js"></script>
           <script src="app/admin/admin.controller.js"></script>
           <script src="app/admin/admin.js"></script>
+          <script src="app/checkout/checkout.controller.js"></script>
+          <script src="app/checkout/checkout.js"></script>
           <script src="app/devices/detail/devices/detail.controller.js"></script>
           <script src="app/devices/detail/devices/detail.js"></script>
           <script src="app/devices/devices.controller.js"></script>

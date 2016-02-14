@@ -1,0 +1,24 @@
+<!--  Parallax Section  -->
+<div class="parallax-container">
+    <div class="parallax">
+        <div class="checkout-parallax">
+            <div class="row container">
+              <br/>
+                <h2 class="header light exo trademark-main">dropcube</h2>
+                <br/>
+                <span id="logo-big"></span>
+                <br/><br/><br/>
+                <h3 class="header thin exo trademark-main">{{ 'MAIN_PAGE.PREPARE_FOR_RAIN' | translate }}</h3>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="section white">
+	<div class="block-100"></div>
+    <div class="row container valign-wrapper">
+      <ngcart-summary></ngcart-summary>
+      <ngcart-cart></ngcart-cart>
+      <ngcart-checkout service="log"></ngcart-checkout>
+      <ngcart-checkout service="paypal" settings="{ url:'/checkout' }"></ngcart-checkout>
+    </div>
+</div>
