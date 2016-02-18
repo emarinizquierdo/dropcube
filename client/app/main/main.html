@@ -81,17 +81,17 @@
           <p class="flow-text thin">{{'MAIN_PAGE.USING_YOUR_MOBILE' | translate }}</p>
       </div>
       <div class="col s12 m6 center-align valign hide-on-small-only">
-      <img src="https://c2.staticflickr.com/2/1706/24397053754_757ae386ab_z.jpg"/>
-    </div>
+        <img class="responsive-img" src="https://c2.staticflickr.com/2/1706/24397053754_757ae386ab_z.jpg"/>
+      </div>
   </div>
   <div class="row container  hide-on-med-and-up">
-    <div class="col s12 m6 center-align ">
-        <img src="https://c2.staticflickr.com/2/1706/24397053754_757ae386ab_z.jpg"/>
+    <div class="col s6 m6 center-align push-s3">
+        <img class="responsive-img" src="https://c2.staticflickr.com/2/1706/24397053754_757ae386ab_z.jpg"/>
     </div>
   </div>
   <div class="block-100"></div>
-<div class="parallax-container">
-      <div class="parallax"><img src="https://c2.staticflickr.com/2/1565/25000556776_59bcd14b9f_h.jpg"></div>
+<div class="parallax-container small">
+      <div class="parallax"><img class="parallax-image" src="https://c2.staticflickr.com/2/1565/25000556776_59bcd14b9f_h.jpg"></div>
     </div>
 
 <div class="section white">
@@ -102,6 +102,7 @@
 
           <!--<a class="btn btn-large waves-effect waves-light light-blue" href="/checkout">{{'MAIN_PAGE.TAKE_YOUR' | translate }}</a>-->
           <h5>{{'MAIN_PAGE.CHECKOUT_YOURS' | translate}}</h5>
+          <h6>{{'MAIN_PAGE.WE_ARE_WORKING' | translate}}</h6>
           <p></p>
           <ngcart-checkout service="paypal" settings="{ url:'/checkout' }"></ngcart-checkout>
 

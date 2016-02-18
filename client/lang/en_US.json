@@ -12,9 +12,10 @@
 		"READY_TO_BE_READY" : "Do you want to be ready?",
 		"TAKE_YOUR" : "Check out!",
 		"SEE_HOW_WORKS" : "See how it works",
-		"IN_YOUR_MOBILE" : "Úsalo desde tu móvil",
-		"USING_YOUR_MOBILE" : "Dropcube está pensado para utilizarlo sin quebraderos de cabeza. Si no quieres encender tu PC, si no tienes portátil, o tablet, no te preocupes, Dropcube te lo pone fácil. Usa tu móvil. Podrás configurarlo desde ahí sin problemas. Enciéndelo, accede a dropcube, inicia sesión y configura tu dropcube. Fácil. Cómodo",
-		"CHECKOUT_YOURS" : "Adquiere el tuyo ya!"
+		"IN_YOUR_MOBILE" : "Use it from your smartphone",
+		"USING_YOUR_MOBILE" : "Dropcube is easy to use. If you don't want to turn on you PC, or if you don't have a laptop, or tablet, don't worry, Dropcube do it easy. You can use your smartphone. You can configure it from your mobile phone. Turn on Dropcube, enter to Dropcube application and set up. Easy!",
+		"CHECKOUT_YOURS" : "Get yours now!",
+		"WE_ARE_WORKING" : "(We are working for offer you dropcube as son as possible)"
 	},
 
 	"HELP" : {

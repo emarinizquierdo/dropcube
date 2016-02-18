@@ -5,11 +5,11 @@
 
 <div class="card small profile-info">
     <div class="card-image">
-      <img src="https://c1.staticflickr.com/7/6177/6231203377_42e03464fd_b.jpg">
+      <img class="image-responsive" ng-src="{{user.normalized.cover}}">
       <div class="dark-background">
         <span class="card-title">{{user.normalized.name}}</span>
       </div>
-      
+
     </div>
     <div class="card-content">
     <div class="profile-photo-wrapper">
@@ -18,7 +18,7 @@
       <h5>Correo electrónico</h5>
       <p>{{user.normalized.email}}</p>
     </div>
-    
+
   </div>
 
   <div class="card-panel">
@@ -41,4 +41,3 @@
   </div>
 
 </div>
-

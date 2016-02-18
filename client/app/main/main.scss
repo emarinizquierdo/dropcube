@@ -76,3 +76,15 @@
     padding: 15px 15px 15px 0;
 
 }
+
+
+
+/* Responsive: Portrait tablets and up */
+@media screen and (max-width: 600px) {
+    .parallax-container.small {
+        height: 300px;
+    }
+    .parallax-image{
+      width: 200%;
+    }
+}
