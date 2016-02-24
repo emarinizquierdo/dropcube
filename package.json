@@ -23,6 +23,7 @@
     "passport-google-oauth": "latest",
     "passport-local": "~0.1.6",
     "passport-twitter": "latest",
+    "prerender-node": "^2.2.0",
     "serve-favicon": "~2.0.1",
     "timezoner": "^0.1.9"
   },
