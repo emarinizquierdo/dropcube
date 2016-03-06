@@ -9,6 +9,8 @@ import java.lang.String;
 import java.util.Date;
 import java.util.List;
 
+import com.dropcube.beans.User;
+
 /**
  * The @Entity tells Objectify about our entity.  We also register it in {@link OfyHelper}
  * Our primary key @Id is set automatically by the Google Datastore for us.
@@ -21,24 +23,19 @@ import java.util.List;
  * NOTE - all the properties are PUBLIC so that can keep the code simple.
  **/
 @Entity
-public class User {
+public class Device {
 
-    @Parent Key<User> theUser;
+    @Parent Key<Device> theDevice;
     @Id public Long id;
 
+    public String deviceId;
     public String name;
-    public String email;
-    public String role;
-    public String hashedPassword;
-    public String provider;
-    public String lang;
-
-    /**
-     * Simple constructor just sets the date
-     **/
-    public User() {
-        role = "user";
-        lang = "en_US";
-    }
+    public String description;
+    public Boolean status;
+    public Integer lat;
+    public Integer lng;
+    public Integer minHour;
+    public Integer maxHour;
+    public User user;
 
 }

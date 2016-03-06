@@ -7,9 +7,14 @@ public class Rest {
     // /USERS
     // //////////////
 
-    public static final String USER_SERVICE_URL = "/user";
-
+    public static final String USER_SERVICE_URL = "/users";
     public static final String USER_GET_URL = "/{" + Params.PARAM_ID + "}";
+
+    // //////////////
+    // /DEVICES
+    // //////////////
+    public static final String DEVICE_SERVICE_URL = "/devices";
+    public static final String DEVICE_GET_URL = "/{" + Params.PARAM_ID + "}";
 
 
 }
