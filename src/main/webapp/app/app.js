@@ -50,6 +50,7 @@ angular.module('dropcubeApp', [
         // Add authorization token to headers
         request: function(config) {
             config.headers = config.headers || {};
+
             if ($cookieStore.get('token')) {
                 config.headers.Authorization = 'Bearer ' + $cookieStore.get('token');
             }

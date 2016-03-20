@@ -31,8 +31,47 @@
         <url-pattern>/s/*</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>SigninServlet</servlet-name>
+        <servlet-class>com.dropcube.authentication.SigninServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SigninServlet</servlet-name>
+        <url-pattern>/auth/google</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>OauthCallback</servlet-name>
+        <servlet-class>com.dropcube.authentication.OAuthCodeCallbackHandlerServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>OauthCallback</servlet-name>
+        <url-pattern>/oauthcallback</url-pattern>
+    </servlet-mapping>
+
+    <!-- HTML5 History -->
+    <servlet>
+        <servlet-name>historyhtml5mode</servlet-name>
+        <jsp-file>index.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>historyhtml5mode</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+
+    <!-- Filter for incoming request from GCaronte -->
+    <filter>
+        <filter-name>AuthFilter</filter-name>
+        <filter-class>com.dropcube.authentication.AuthorizationFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>AuthFilter</filter-name>
+        <servlet-name>jersey</servlet-name>
+        <dispatcher>REQUEST</dispatcher>
+    </filter-mapping>
+
     <welcome-file-list>
-        <welcome-file>index.html</welcome-file>
+        <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
 
 </web-app>

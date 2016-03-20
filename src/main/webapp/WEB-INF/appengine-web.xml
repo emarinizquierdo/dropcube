@@ -13,7 +13,7 @@
     </system-properties>
 
     <!-- HTTP Sessions are disabled by default. To enable HTTP sessions specify: -->
-    <sessions-enabled>false</sessions-enabled>
+    <sessions-enabled>true</sessions-enabled>
 
     <!-- It's possible to reduce request latency by configuring your application
         to asynchronously write HTTP session data to the datastore -->
