@@ -10,6 +10,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.logging.Logger;
 
 /**
  * Created by edu on 5/03/16.
@@ -17,6 +18,7 @@ import javax.ws.rs.core.Response;
 @Path(Rest.DEVICE_SERVICE_URL)
 public class DeviceService {
 
+    private final static Logger LOGGER = Logger.getLogger(DeviceService.class.getName());
 
     /**
      * Gets a user information.
@@ -29,6 +31,7 @@ public class DeviceService {
             @Context HttpServletRequest request,
             @PathParam(Params.PARAM_ID) String id) {
         BizResponse response = new BizResponse();
+        LOGGER.info("response");
         return Response.ok().entity(response.toJsonExcludeFieldsWithoutExposeAnnotation()).build();
 
     }

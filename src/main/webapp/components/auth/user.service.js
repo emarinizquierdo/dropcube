@@ -2,7 +2,7 @@
 
 angular.module('dropcubeApp')
   .factory('User', function ($resource) {
-    return $resource('/api/users/:id/:controller', {
+    return $resource('/s/users/:id/:controller', {
       id: '@_id'
     },
     {

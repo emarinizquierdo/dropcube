@@ -49,11 +49,12 @@ com_crashlytics_export_strings.xml
 crashlytics.properties
 crashlytics-build.properties
 
-node_modules
+src/main/webapp/node_modules
 src/main/webapp/.tmp
 src/main/webapp/.sass-cache
 src/main/webap/public
 src/main/webapp/dist
+node_modules
 
 local_db.bin
 

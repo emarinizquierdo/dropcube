@@ -13,6 +13,8 @@ angular.module('dropcubeApp')
 
     function normalize(user){
 
+      user = user.data;
+
       user.normalized = {};
 
       user.normalized._id = user._id;
@@ -27,8 +29,8 @@ angular.module('dropcubeApp')
           user.normalized.photo = user.google.image.url.replace("?sz=50", "?sz=100");
         }
 
-        if(user.google.cover && user.google.cover.coverPhoto && user.google.cover.coverPhoto.url){
-          user.normalized.cover = user.google.cover.coverPhoto.url;
+        if(user.google.cover){
+          user.normalized.cover = user.google.cover;
         }
 
       }

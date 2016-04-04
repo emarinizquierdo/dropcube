@@ -1,11 +1,13 @@
 'use strict';
 
 angular.module('dropcubeApp')
-  .factory('Auth', function Auth($location, $rootScope, $http, User, $cookieStore, $q) {
+  .factory('Auth', function Auth($location, $rootScope, $http, User, $cookies, $q) {
     var currentUser = {};
 
-    if($cookieStore.get('token')) {
-      currentUser = User.get();
+    if($cookies.get('token')) {
+      currentUser = User.get(function(user){
+        currentUser = user.data;
+      });
     }
 
     return {
@@ -21,12 +23,9 @@ angular.module('dropcubeApp')
         var cb = callback || angular.noop;
         var deferred = $q.defer();
 
-        $http.post('/auth/local', {
-          email: user.email,
-          password: user.password
-        }).
+        $http.get('/users/me').
         success(function(data) {
-          $cookieStore.put('token', data.token);
+          $cookies.put('token', data.token);
           currentUser = User.get();
           deferred.resolve(data);
           return cb();
@@ -46,7 +45,7 @@ angular.module('dropcubeApp')
        * @param  {Function}
        */
       logout: function() {
-        $cookieStore.remove('token');
+        $cookies.remove('token');
         currentUser = {};
       },
 
@@ -62,7 +61,7 @@ angular.module('dropcubeApp')
 
         return User.save(user,
           function(data) {
-            $cookieStore.put('token', data.token);
+            $cookies.put('token', data.token);
             currentUser = User.get();
             return cb(user);
           },
@@ -146,7 +145,7 @@ angular.module('dropcubeApp')
        * Get auth token
        */
       getToken: function() {
-        return $cookieStore.get('token');
+        return $cookies.get('token');
       }
     };
   });

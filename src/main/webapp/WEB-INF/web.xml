@@ -21,6 +21,7 @@
             <param-value>com.dropcube.services</param-value>
         </init-param>
         <init-param>
+            <!-- speed up initial Jersey loading by deactivating WADL -->
             <param-name>com.sun.jersey.config.feature.DisableWADL</param-name>
             <param-value>true</param-value>
         </init-param>
@@ -46,20 +47,9 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>OauthCallback</servlet-name>
-        <url-pattern>/oauthcallback</url-pattern>
+        <url-pattern>/oauth2callback</url-pattern>
     </servlet-mapping>
 
-    <!-- HTML5 History -->
-    <servlet>
-        <servlet-name>historyhtml5mode</servlet-name>
-        <jsp-file>index.jsp</jsp-file>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>historyhtml5mode</servlet-name>
-        <url-pattern>/</url-pattern>
-    </servlet-mapping>
-
-    <!-- Filter for incoming request from GCaronte -->
     <filter>
         <filter-name>AuthFilter</filter-name>
         <filter-class>com.dropcube.authentication.AuthorizationFilter</filter-class>
@@ -70,6 +60,33 @@
         <dispatcher>REQUEST</dispatcher>
     </filter-mapping>
 
+    <listener>
+        <listener-class>com.dropcube.beans.OfyHelper</listener-class>
+    </listener>
+
+    <filter>
+        <filter-name>ObjectifyFilter</filter-name>
+        <filter-class>com.googlecode.objectify.ObjectifyFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>ObjectifyFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
+
+    <servlet>
+        <servlet-name>historyhtml5mode</servlet-name>
+        <jsp-file>/index.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>historyhtml5mode</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+
+    <!-- Welcome page -->
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>

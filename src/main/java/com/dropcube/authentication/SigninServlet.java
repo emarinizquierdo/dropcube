@@ -1,7 +1,11 @@
 package com.dropcube.authentication;
 
+import com.google.api.client.auth.oauth2.AuthorizationCodeFlow;
+import com.google.api.client.extensions.appengine.auth.oauth2.AbstractAppEngineAuthorizationCodeServlet;
+import com.google.api.client.extensions.appengine.http.UrlFetchTransport;
+import com.google.api.client.json.jackson2.JacksonFactory;
+
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -9,20 +13,30 @@ import java.io.IOException;
 /**
  * Created by edu on 20/03/16.
  */
-public class SigninServlet extends HttpServlet {
+public class SigninServlet extends AbstractAppEngineAuthorizationCodeServlet {
+
+
+    static final UrlFetchTransport HTTP_TRANSPORT = new UrlFetchTransport();
+    static final JacksonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
+
     @Override
-    public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException,IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws IOException {
+        // do stuff
+    }
 
-        // redirect to google for authorization
-        StringBuilder oauthUrl = new StringBuilder().append("https://accounts.google.com/o/oauth2/auth")
-                .append("?client_id=").append("1014736735296-h96jbcfu84kbm6v4kkohu88it2n2pc1d.apps.googleusercontent.com") // the client id from the api console registration
-                .append("&response_type=code")
-                .append("&scope=openid%20email") // scope is the api permissions we are requesting
-                .append("&redirect_uri=http://localhost:8080/oauthcallback") // the servlet that google redirects to after authorization
-                .append("&state=/")
-                .append("&access_type=offline") // here we are asking to access to user's data while they are not signed in
-                .append("&approval_prompt=force"); // this requires them to verify which account to use, if they are already signed in
+    @Override
+    protected String getRedirectUri(HttpServletRequest req) throws ServletException, IOException {
+        return Utils.getRedirectUri(req);
+    }
 
-        resp.sendRedirect(oauthUrl.toString());
+    @Override
+    protected AuthorizationCodeFlow initializeFlow() throws IOException {
+        return Utils.newFlow();
+    }
+
+    @Override
+    protected String getUserId(HttpServletRequest req) throws ServletException, IOException {
+        return null;
     }
 }

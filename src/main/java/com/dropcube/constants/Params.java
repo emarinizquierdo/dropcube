@@ -1,5 +1,6 @@
 package com.dropcube.constants;
 
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
@@ -57,7 +58,7 @@ public class Params {
 
     public final static String GOOGLE_RESOURCE = "https://gdata.youtube.com/";
 
-    public final static String AUTH_RESOURCE_LOC = "/client_secrets.json";
+    public final static String AUTH_RESOURCE_LOC = "/src/main/resources/client_secrets.json";
 
     public final static List<String> SCOPES = Arrays.asList(
             "https://gdata.youtube.com/feeds/api/users/default/favorites/");
@@ -68,4 +69,12 @@ public class Params {
     // Use for local testing
     public final static String OATH_CALLBACK = "http://localhost:8888/authSub";
 
+    //After Authentication Redirect
+    public final static String FINAL_REDIRECT = "/";
+
+
+    /**
+     * INPUT PARAMS
+     */
+    public final static String PARAM_LANGUAGE = "lang";
 }

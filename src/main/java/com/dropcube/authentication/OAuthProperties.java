@@ -19,13 +19,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-
 /**
  * Object representation of an OAuth properties file.
  */
 public class OAuthProperties {
 
-    public static final String DEFAULT_OAUTH_PROPERTIES_FILE_NAME = "oauth.properties";
+    public static final String DEFAULT_OAUTH_PROPERTIES_FILE_NAME = "/oauth.properties";
 
     /** The OAuth 2.0 Client ID */
     private String clientId;

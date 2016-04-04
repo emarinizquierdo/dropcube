@@ -7,7 +7,7 @@ angular.module('dropcubeApp')
 
     _Light.data = [];
 
-    _Light.resource = $resource('/api/lights/:id', {
+    _Light.resource = $resource('/s/lights/:id', {
         id: '@_id'
     }, {
         get: {
