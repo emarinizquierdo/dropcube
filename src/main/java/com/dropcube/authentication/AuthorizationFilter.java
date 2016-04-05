@@ -1,8 +1,6 @@
 package com.dropcube.authentication;
 
-import com.google.appengine.api.users.User;
-import com.google.appengine.api.users.UserService;
-import com.google.appengine.api.users.UserServiceFactory;
+import com.dropcube.beans.User;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -10,7 +8,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 
 public class AuthorizationFilter implements Filter {
 
@@ -30,17 +27,15 @@ public class AuthorizationFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) res;
 
-        UserService userService = UserServiceFactory.getUserService();
-        User user = userService.getCurrentUser();
+        String emailUser = (String) request.getSession().getAttribute("emailUser");
 
-
-        if (user == null) {
+        if (emailUser == null) {
             LOGGER.info("user is null");
             SigninServlet signin = new SigninServlet();
             signin.doGet(request, response);
 
         }else{
-            LOGGER.info("EMAIL DE USUARIO " + user.getEmail());
+            LOGGER.info("EMAIL DE USUARIO " + emailUser);
             chain.doFilter(request, response);
         }
 

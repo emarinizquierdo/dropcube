@@ -13,7 +13,9 @@ import com.googlecode.objectify.annotation.Parent;
 import com.google.api.services.oauth2.Oauth2;
 
 import javax.servlet.http.HttpServletRequest;
+import java.beans.Transient;
 import java.io.IOException;
+import java.io.Serializable;
 import java.lang.String;
 import java.util.logging.Level;
 import java.util.logging.Logger;

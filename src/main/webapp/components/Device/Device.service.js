@@ -12,7 +12,7 @@ angular.module('dropcubeApp')
     }, {
         get: {
             method: 'GET',
-            isArray: true
+            isArray: false
         },
         save: {
             method: 'POST',
@@ -20,7 +20,7 @@ angular.module('dropcubeApp')
         },
         delete: {
             method: 'DELETE',
-            isArray: true
+            isArray: false
         },
         update: {
             method: 'PUT',
@@ -31,8 +31,8 @@ angular.module('dropcubeApp')
     _Device.all = function() {
 
         _Device.resource.get(function(data) {
-            if (data) {
-                _Device.data = data;
+            if (data && data.data) {
+                _Device.data = data.data;
             }
         }, function() {
 
@@ -40,7 +40,6 @@ angular.module('dropcubeApp')
     }
 
     _Device.all();
-
 
     return _Device;
 

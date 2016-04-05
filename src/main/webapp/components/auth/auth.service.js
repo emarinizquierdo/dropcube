@@ -112,6 +112,10 @@ angular.module('dropcubeApp')
        * @return {Boolean}
        */
       isLoggedIn: function() {
+        if(!currentUser){
+            return false;
+        }
+
         return currentUser.hasOwnProperty('role');
       },
 
@@ -138,6 +142,9 @@ angular.module('dropcubeApp')
        * @return {Boolean}
        */
       isAdmin: function() {
+        if(!currentUser){
+            return false;
+        }
         return currentUser.role === 'admin';
       },
 

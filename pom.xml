@@ -193,6 +193,9 @@
                 <configuration>
                     <enableJarClasses>false</enableJarClasses>
                     <version>${app.version}</version>
+                    <jvmFlags>
+                        <jvmFlag>-Ddatastore.backing_store=/home/edu/workspace/temp/ds-maven.bin</jvmFlag>
+                    </jvmFlags>
                     <!-- Comment in the below snippet to bind to all IPs instead of just localhost -->
                     <!-- address>0.0.0.0</address>
                     <port>8080</port -->

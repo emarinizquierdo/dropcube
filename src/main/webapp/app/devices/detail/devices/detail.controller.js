@@ -15,11 +15,13 @@ angular.module('dropcubeApp')
         $scope.predictions;
 
         function __init__() {
+
             if ($routeParams.id) {
                 Device.resource.get({
                     id: $routeParams.id
                 }, function(data) {
-                    $scope.deviceData = data[0];
+
+                    $scope.deviceData = data.data;
                     if (!$scope.deviceData) {
                         $location.path("/devices");
                     } else {
@@ -61,7 +63,7 @@ angular.module('dropcubeApp')
         $scope.updateDevice = function(device) {
 
             Device.resource.update(device, function(data) {
-                $scope.deviceData = data;
+                $scope.deviceData = data.data;
                 $scope.edit(false);
                 getLight($scope.deviceData.deviceId);
                 centerMark();

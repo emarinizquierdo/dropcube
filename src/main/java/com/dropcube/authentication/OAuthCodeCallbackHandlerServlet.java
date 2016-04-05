@@ -88,9 +88,6 @@ public class OAuthCodeCallbackHandlerServlet extends AbstractAuthorizationCodeCa
         Oauth2 oauth2 = new Oauth2.Builder(new NetHttpTransport(), new JacksonFactory(), credential).build();
         Userinfoplus userinfo = oauth2.userinfo().get().execute();
 
-        LOGGER.info(userinfo.toPrettyString());
-        LOGGER.info(profile.toPrettyString());
-
         String email = userinfo.getEmail();
         LOGGER.info("saving user: " + email);
 
@@ -102,6 +99,8 @@ public class OAuthCodeCallbackHandlerServlet extends AbstractAuthorizationCodeCa
             ObjectifyService.ofy().save().entity(user).now();
             LOGGER.info("saving user: " + email);
         }
+
+        req.getSession().setAttribute("emailUser", user.email);
 
         Cookie cookie =  createCookie("token", "code");
 

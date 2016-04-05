@@ -63,7 +63,7 @@ angular.module('dropcubeApp')
 
         User.update({lang : lang}, function(user) {
             normalize(user);
-            $translate.use(user.lang);
+            $translate.use(user.data.lang);
             $scope.edit = false;
         }, function() {
             $scope.edit = false;

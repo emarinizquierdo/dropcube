@@ -18,6 +18,8 @@ configuration = {
 		  , "/oauth2callback*"
 		  , "/_ah/*"
 		  , "/settings"
+		  , "/devices"
+		  , "/devices/detail/"
 		  , "/login"
 	  ]
 };

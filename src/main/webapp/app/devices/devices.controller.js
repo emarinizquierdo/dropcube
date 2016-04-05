@@ -16,7 +16,9 @@ angular.module('dropcubeApp').controller('DevicesCtrl', ["$scope", "$location", 
     $scope.addNew = function(newDevice) {
 
         Device.resource.save(newDevice, function(data) {
-            Device.data.push(data);
+            if(data && data.data){
+                Device.data.push(data.data);
+            }
         }, function() {
 
         });

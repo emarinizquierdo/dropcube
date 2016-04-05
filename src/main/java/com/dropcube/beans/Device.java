@@ -3,6 +3,7 @@ package com.dropcube.beans;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Index;
 import com.googlecode.objectify.annotation.Parent;
 
 import java.lang.String;
@@ -25,17 +26,49 @@ import com.dropcube.beans.User;
 @Entity
 public class Device {
 
-    @Parent Key<Device> theDevice;
-    @Id public Long id;
+    @Id public Long _id;
 
-    public String deviceId;
+    @Index public String deviceId;
+    @Index public Long userId;
+
     public String name;
     public String description;
     public Boolean status;
-    public Integer lat;
-    public Integer lng;
+    public Double lat;
+    public Double lng;
     public Integer minHour;
     public Integer maxHour;
-    public User user;
+
+    public Device(){
+
+    }
+
+    public Device(String pDeviceId, String pName, Long pUserId){
+        this();
+        deviceId = pDeviceId;
+        name = pName;
+        userId = pUserId;
+    }
+
+    public void setDescription( String pDescription){
+        description = pDescription;
+    }
+
+    public void setLat( Double pLat){
+        lat = pLat;
+    }
+
+    public void setLong(Double pLong){
+        lng = pLong;
+    }
+
+    public void setMinHour(Integer pMinHour){
+        minHour = pMinHour;
+    }
+
+    public void setMaxHour(Integer pMaxHour){
+        maxHour = pMaxHour;
+    }
+
 
 }
