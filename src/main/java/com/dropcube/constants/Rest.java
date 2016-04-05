@@ -19,4 +19,9 @@ public class Rest {
     public static final String DEVICE_GET_URL = "/{" + Params.PARAM_ID + "}";
 
 
+    // //////////////
+    // /LIGHTS
+    // //////////////
+    public static final String LIGHTS_SERVICE_URL = "/lights";
+
 }
