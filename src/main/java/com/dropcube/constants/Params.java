@@ -77,4 +77,10 @@ public class Params {
      * INPUT PARAMS
      */
     public final static String PARAM_LANGUAGE = "lang";
+
+    /**
+     * LIGHTS
+     */
+    public final static String URL_GMAPS = "https://maps.googleapis.com/maps/api/timezone/json?location=";
+    public final static String GMAPS_KEY = "&timestamp=1331161200&key=AIzaSyDjlKGoghg7xvbk_B7Ym4OEzl1JPGd2CNk";
 }

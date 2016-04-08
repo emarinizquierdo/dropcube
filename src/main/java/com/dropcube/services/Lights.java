@@ -4,7 +4,6 @@ import com.dropcube.beans.Device;
 import com.dropcube.beans.User;
 import com.dropcube.constants.Params;
 import com.dropcube.constants.Rest;
-import com.google.appengine.repackaged.com.google.gson.Gson;
 import com.googlecode.objectify.ObjectifyService;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
@@ -23,6 +22,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -31,12 +31,6 @@ import java.util.logging.Logger;
  */
 @Path(Rest.LIGHTS_SERVICE_URL)
 public class Lights {
-
-    private static final Gson GSON = new Gson();
-
-    private String URL_GMAPS = "https://maps.googleapis.com/maps/api/timezone/json?location=";
-    private String GMAPS_KEY = "&timestamp=1331161200&key=AIzaSyDjlKGoghg7xvbk_B7Ym4OEzl1JPGd2CNk";
-
 
     private final static Logger LOGGER = Logger.getLogger(DeviceService.class.getName());
 
@@ -49,7 +43,7 @@ public class Lights {
     @Produces(MediaType.APPLICATION_JSON + Params.CHARSET_UTF8)
     public Response getLights(
             @Context HttpServletRequest request,
-            @PathParam(Params.PARAM_ID) Long id) {
+            @PathParam(Params.PARAM_ID) String id) {
 
         LOGGER.info("response");
 
@@ -58,31 +52,33 @@ public class Lights {
 
         // We get datastore user info and update language
         User user = ObjectifyService.ofy().load().type(User.class).filter("email", emailUser).first().now();
-    LOGGER.info("el usuario es: " + user.id);
 
-        Device device = ObjectifyService.ofy().load().type(Device.class).id(id).now();
-
-        LOGGER.info("el device es : " + device.userId);
+        Device device = ObjectifyService.ofy().load().type(Device.class).filter("deviceId", id).first().now();
 
         if(device.userId.compareTo(user.id) != 0){
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }
-        LOGGER.info("latitude: " + device.lat.toString());
-        LOGGER.info("longitude: " + device.lng.toString());
-        String data = getJSON(URL_GMAPS + device.lat.toString() + "," + device.lng.toString() + GMAPS_KEY, 60000);
+
+        String data = getJSON(Params.URL_GMAPS + device.lat.toString() + "," + device.lng.toString() + Params.GMAPS_KEY, 60000);
+        String data2 = "";
+        String data3 = "";
 
         try {
+
             JSONObject jObject = new JSONObject(data);
-            Integer projecname = (Integer) jObject.get("dstOffset");
-            LOGGER.info("el dstoffset es: " + projecname);
+            Integer rawOffset = (Integer) jObject.get("rawOffset");
+
+            data2 = getWeather(device.lat.toString(), device.lng.toString(), (toLocalTime(rawOffset) > device.maxHour));
+
+            data3 = parseJson(data2, device);
+
         }catch(JSONException ie){
+
+            LOGGER.info(ie.getCause().toString());
 
         }
 
-        //BizResponse response = new BizResponse(deviceList);
-
-        //return Response.ok().entity(response.toJsonExcludeFieldsWithoutExposeAnnotation()).build();
-        return Response.ok().entity(data).build();
+        return Response.ok().entity(data3).build();
     }
 
     public String getJSON(String url, int timeout) {
@@ -129,5 +125,63 @@ public class Lights {
     }
 
 
+    public String getWeather(String lat, String lng, Boolean nextday){
+
+        Date date = new Date();
+        long timestamp;
+
+        if(nextday){
+            timestamp = date.getTime() + 86400000;
+        }else{
+            timestamp =date.getTime();
+        }
+
+        String path = "https://api.forecast.io/forecast/b290219f260ca3a384400c3a019b21fd/";
+        String data = getJSON(path + lat + "," + lng + "," + (timestamp/1000) + "?units=si&exclude=daily,flags", 60000);
+
+        return data;
+
+    }
+
+    public String parseJson(String weather, Device device) throws JSONException{
+
+        JSONObject jObject = new JSONObject(weather);
+        Integer time = (Integer) jObject.getJSONObject("currently").get("time");
+        JSONObject minHourObject = (JSONObject) jObject.getJSONObject("hourly").getJSONArray("data").get(device.minHour);
+        double minProbability = Double.valueOf(minHourObject.get("precipProbability").toString());
+        double minIntensity = Double.valueOf(minHourObject.get("precipIntensity").toString());
+        String minIcon = minHourObject.get("icon").toString();
+        JSONObject maxHourObject = (JSONObject) jObject.getJSONObject("hourly").getJSONArray("data").get(device.maxHour);
+        double maxProbability = Double.valueOf(maxHourObject.get("precipProbability").toString());
+        double maxIntensity = Double.valueOf(maxHourObject.get("precipIntensity").toString());
+        String maxIcon = maxHourObject.get("icon").toString();
+
+        JSONObject jsonWeather = new JSONObject();
+        jsonWeather.put("time", time);
+
+        JSONObject minHour = new JSONObject();
+        minHour.put("probability", minProbability);
+        minHour.put("intensity", minIntensity);
+        minHour.put("icon", minIcon);
+        jsonWeather.put("minHour", minHour);
+
+        JSONObject maxHour = new JSONObject();
+        maxHour.put("probability", maxProbability);
+        maxHour.put("intensity", maxIntensity);
+        maxHour.put("icon", maxIcon);
+        jsonWeather.put("maxHour", maxHour);
+
+        return jsonWeather.toString();
+    }
+
+    public Integer toLocalTime(Integer poffset) {
+
+        Date d = new Date();
+        Integer offset = ((new Date().getTimezoneOffset() + (poffset / 60)));
+        Integer n = new Date(d.getTime() + offset * 60 * 1000).getHours();
+
+        return n;
+
+    };
 
 }
