@@ -78,7 +78,7 @@ angular.module('dropcubeApp', [
 
     if(getUser && getUser.$promise){
         getUser.$promise.then(function(user){
-            $translate.use(user.lang);
+            $translate.use(user.data.lang);
         }, function(){});
     }else{
         if(navigator.language.replace('_ES') == 'es'){

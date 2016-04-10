@@ -23,5 +23,6 @@ public class Rest {
     // /LIGHTS
     // //////////////
     public static final String LIGHTS_SERVICE_URL = "/lights";
+    public static final String PARTICLE_SERVICE_URL = "/particle";
 
 }

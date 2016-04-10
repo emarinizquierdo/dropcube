@@ -39,89 +39,77 @@ public class Lights {
      * @return {@link Response} Response in Json with the rating information.
      */
     @GET
-    @Path(Rest.DEVICE_GET_URL)
+    @Path(Rest.PARTICLE_SERVICE_URL)
     @Produces(MediaType.APPLICATION_JSON + Params.CHARSET_UTF8)
     public Response getLights(
             @Context HttpServletRequest request,
-            @PathParam(Params.PARAM_ID) String id) {
+            @PathParam(Params.PARAM_ID) String id) throws JSONException {
 
         LOGGER.info("response");
 
-        // We get the user logged info
+        //We get the user logged info
         String emailUser = (String) request.getSession().getAttribute("emailUser");
 
-        // We get datastore user info and update language
+        //We get datastore user info
         User user = ObjectifyService.ofy().load().type(User.class).filter("email", emailUser).first().now();
 
+        //We get datastore device info
         Device device = ObjectifyService.ofy().load().type(Device.class).filter("deviceId", id).first().now();
 
+        //If user doesn't have permission, we return 401 status
         if(device.userId.compareTo(user.id) != 0){
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }
 
-        String data = getJSON(Params.URL_GMAPS + device.lat.toString() + "," + device.lng.toString() + Params.GMAPS_KEY, 60000);
-        String data2 = "";
-        String data3 = "";
+        String timezoneData = getJSON(Params.URL_GMAPS + device.lat.toString() + "," + device.lng.toString() + Params.GMAPS_KEY, 60000);
 
-        try {
+        JSONObject timezoneDataJson = new JSONObject(timezoneData);
+        Integer rawOffset = (Integer) timezoneDataJson.get("rawOffset");
 
-            JSONObject jObject = new JSONObject(data);
-            Integer rawOffset = (Integer) jObject.get("rawOffset");
+        String weatherData = getWeather(device.lat.toString(), device.lng.toString(), (toLocalTime(rawOffset) > device.maxHour));
 
-            data2 = getWeather(device.lat.toString(), device.lng.toString(), (toLocalTime(rawOffset) > device.maxHour));
+        String ligthsData = parseJson(weatherData, device);
 
-            data3 = parseJson(data2, device);
-
-        }catch(JSONException ie){
-
-            LOGGER.info(ie.getCause().toString());
-
-        }
-
-        return Response.ok().entity(data3).build();
+        return Response.ok().entity(ligthsData).build();
     }
 
-    public String getJSON(String url, int timeout) {
-        HttpURLConnection c = null;
-        try {
-            URL u = new URL(url);
-            c = (HttpURLConnection) u.openConnection();
-            c.setRequestMethod("GET");
-            c.setRequestProperty("Content-length", "0");
-            c.setUseCaches(false);
-            c.setAllowUserInteraction(false);
-            c.setConnectTimeout(timeout);
-            c.setReadTimeout(timeout);
-            c.connect();
-            int status = c.getResponseCode();
+    /**
+     * Gets a user information.
+     * @return {@link Response} Response in Json with the rating information.
+     */
+    @GET
+    @Path(Rest.DEVICE_GET_URL  + Rest.DEVICE_GET_URL)
+    @Produces(MediaType.TEXT_HTML + Params.CHARSET_UTF8)
+    public Response getParticleLights(
+            @Context HttpServletRequest request,
+            @PathParam(Params.PARAM_ID) String id) throws JSONException {
 
-            switch (status) {
-                case 200:
-                case 201:
-                    BufferedReader br = new BufferedReader(new InputStreamReader(c.getInputStream()));
-                    StringBuilder sb = new StringBuilder();
-                    String line;
-                    while ((line = br.readLine()) != null) {
-                        sb.append(line+"\n");
-                    }
-                    br.close();
-                    return sb.toString();
-            }
+        LOGGER.info("response");
 
-        } catch (MalformedURLException ex) {
-            Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            if (c != null) {
-                try {
-                    c.disconnect();
-                } catch (Exception ex) {
-                    Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, ex);
-                }
-            }
+        //We get the user logged info
+        String emailUser = (String) request.getSession().getAttribute("emailUser");
+
+        //We get datastore user info
+        User user = ObjectifyService.ofy().load().type(User.class).filter("email", emailUser).first().now();
+
+        //We get datastore device info
+        Device device = ObjectifyService.ofy().load().type(Device.class).filter("deviceId", id).first().now();
+
+        //If user doesn't have permission, we return 401 status
+        if(device.userId.compareTo(user.id) != 0){
+            return Response.status(Response.Status.UNAUTHORIZED).build();
         }
-        return null;
+
+        String timezoneData = getJSON(Params.URL_GMAPS + device.lat.toString() + "," + device.lng.toString() + Params.GMAPS_KEY, 60000);
+
+        JSONObject timezoneDataJson = new JSONObject(timezoneData);
+        Integer rawOffset = (Integer) timezoneDataJson.get("rawOffset");
+
+        String weatherData = getWeather(device.lat.toString(), device.lng.toString(), (toLocalTime(rawOffset) > device.maxHour));
+
+        String ligthsData = parseParticleValue(weatherData, device);
+
+        return Response.ok().entity(ligthsData).build();
     }
 
 
@@ -174,6 +162,27 @@ public class Lights {
         return jsonWeather.toString();
     }
 
+    public String parseParticleValue(String weather, Device device) throws JSONException{
+
+        JSONObject jObject = new JSONObject(weather);
+        Integer time = (Integer) jObject.getJSONObject("currently").get("time");
+        JSONObject minHourObject = (JSONObject) jObject.getJSONObject("hourly").getJSONArray("data").get(device.minHour);
+        double minProbability = Double.valueOf(minHourObject.get("precipProbability").toString());
+        double minIntensity = Double.valueOf(minHourObject.get("precipIntensity").toString());
+        JSONObject maxHourObject = (JSONObject) jObject.getJSONObject("hourly").getJSONArray("data").get(device.maxHour);
+        double maxProbability = Double.valueOf(maxHourObject.get("precipProbability").toString());
+        double maxIntensity = Double.valueOf(maxHourObject.get("precipIntensity").toString());
+
+        minIntensity = (minIntensity == 0) ? 0 : (minIntensity <= 2.5) ? 0.2 : (minIntensity < 7.6) ? 0.5 : 0.85;
+        maxIntensity = (maxIntensity == 0) ? 0 : (maxIntensity <= 2.5) ? 0.2 : (maxIntensity < 7.6) ? 0.5 : 0.85;
+
+        Double minValue = (minProbability + minIntensity) / 2;
+        Double maxValue = (maxProbability + maxIntensity) / 2;
+
+        return (minValue > maxValue) ? "" + minValue : "" + maxValue;
+
+    }
+
     public Integer toLocalTime(Integer poffset) {
 
         Date d = new Date();
@@ -182,6 +191,52 @@ public class Lights {
 
         return n;
 
-    };
+    }
+
+    public String getJSON(String url, int timeout) {
+
+        HttpURLConnection c = null;
+        try {
+
+            URL u = new URL(url);
+            c = (HttpURLConnection) u.openConnection();
+            c.setRequestMethod("GET");
+            c.setRequestProperty("Content-length", "0");
+            c.setUseCaches(false);
+            c.setAllowUserInteraction(false);
+            c.setConnectTimeout(timeout);
+            c.setReadTimeout(timeout);
+            c.connect();
+            int status = c.getResponseCode();
+
+            switch (status) {
+                case 200:
+                case 201:
+                    BufferedReader br = new BufferedReader(new InputStreamReader(c.getInputStream()));
+                    StringBuilder sb = new StringBuilder();
+                    String line;
+                    while ((line = br.readLine()) != null) {
+                        sb.append(line+"\n");
+                    }
+                    br.close();
+                    return sb.toString();
+            }
+
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (c != null) {
+                try {
+                    c.disconnect();
+                } catch (Exception ex) {
+                    Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+
+        return null;
+    }
 
 }
