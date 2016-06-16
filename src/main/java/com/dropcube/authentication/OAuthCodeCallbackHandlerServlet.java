@@ -34,8 +34,6 @@ public class OAuthCodeCallbackHandlerServlet extends AbstractAuthorizationCodeCa
 
     private final static Logger LOGGER = Logger.getLogger(OAuthCodeCallbackHandlerServlet.class.getName());
 
-    private static final AppEngineDataStoreFactory DATA_STORE_FACTORY =
-            AppEngineDataStoreFactory.getDefaultInstance();
     /** The name of the OAuth code URL parameter */
     public static final String CODE_URL_PARAM_NAME = "code";
 
@@ -73,12 +71,6 @@ public class OAuthCodeCallbackHandlerServlet extends AbstractAuthorizationCodeCa
             return;
         }
 
-        // Construct incoming request URL
-        //String requestUrl = getOAuthCodeCallbackHandlerUrl(req);
-
-        // Exchange the code for OAuth tokens
-        //TokenResponse accessTokenResponse = requestAccessToken(code[0], requestUrl);
-
         Plus plus = new Plus.Builder(new NetHttpTransport(), JacksonFactory.getDefaultInstance(), credential)
                 .build();
 
@@ -95,8 +87,12 @@ public class OAuthCodeCallbackHandlerServlet extends AbstractAuthorizationCodeCa
         User user = ObjectifyService.ofy().load().type(User.class).filter("email", email).first().now();
 
         if(user == null){
-            user = new User(userinfo.getName(), email, profile);
+
+            user = new User(userinfo.getName(), email, "google");
+            user.setBackgroundCover(profile.getCover().getCoverPhoto().getUrl());
+            user.setProfileCover(profile.getImage().getUrl());
             ObjectifyService.ofy().save().entity(user).now();
+
             LOGGER.info("saving user: " + email);
         }
 

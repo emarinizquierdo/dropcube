@@ -42,12 +42,30 @@
     </servlet-mapping>
 
     <servlet>
+        <servlet-name>TwitterSigninServlet</servlet-name>
+        <servlet-class>com.dropcube.authentication.TwitterSigninServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>TwitterSigninServlet</servlet-name>
+        <url-pattern>/auth/twitter</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <servlet-name>OauthCallback</servlet-name>
         <servlet-class>com.dropcube.authentication.OAuthCodeCallbackHandlerServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>OauthCallback</servlet-name>
         <url-pattern>/oauth2callback</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>TwitterOauthCallback</servlet-name>
+        <servlet-class>com.dropcube.authentication.TwitterOauthCodeCallback</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>TwitterOauthCallback</servlet-name>
+        <url-pattern>/auth/twitter/callback</url-pattern>
     </servlet-mapping>
 
     <filter>
@@ -88,7 +106,7 @@
 
     <!-- Welcome page -->
     <welcome-file-list>
-        <welcome-file>index.jsp</welcome-file>
+        <welcome-file>index.html</welcome-file>
     </welcome-file-list>
 
 </web-app>

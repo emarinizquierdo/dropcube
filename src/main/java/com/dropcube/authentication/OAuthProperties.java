@@ -40,9 +40,6 @@ public class OAuthProperties {
      * {@code OAUTH_PROPERTIES_FILE_NAME} properties file.
      *
      * @throws IOException IF there is an issue reading the {@code propertiesFile}
-     * @throws OauthPropertiesFormatException If the given {@code propertiesFile}
-     *           is not of the right format (does not contains the keys {@code
-     *           clientId}, {@code clientSecret} and {@code scopes})
      */
     public OAuthProperties() throws IOException {
         this(OAuthProperties.class.getResourceAsStream(DEFAULT_OAUTH_PROPERTIES_FILE_NAME));

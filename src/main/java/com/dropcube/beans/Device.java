@@ -1,10 +1,7 @@
 package com.dropcube.beans;
 
 import com.googlecode.objectify.Key;
-import com.googlecode.objectify.annotation.Entity;
-import com.googlecode.objectify.annotation.Id;
-import com.googlecode.objectify.annotation.Index;
-import com.googlecode.objectify.annotation.Parent;
+import com.googlecode.objectify.annotation.*;
 
 import java.lang.String;
 import java.util.Date;
@@ -24,12 +21,16 @@ import com.dropcube.beans.User;
  * NOTE - all the properties are PUBLIC so that can keep the code simple.
  **/
 @Entity
+@Cache
 public class Device {
 
     @Id public Long _id;
 
-    @Index public String deviceId;
-    @Index public Long userId;
+    @Index
+    public String deviceId;
+
+    @Index
+    public Long userId;
 
     public String name;
     public String description;

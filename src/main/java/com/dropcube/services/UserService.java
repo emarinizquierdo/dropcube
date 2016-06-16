@@ -48,8 +48,7 @@ public class UserService {
             @PathParam(Params.PARAM_ID) String id) {
 
         // We get the user logged info
-        String emailUser = (String) request.getSession().getAttribute("emailUser");
-        User user = ObjectifyService.ofy().load().type(User.class).filter("email", emailUser).first().now();
+        User user = getUser(request);
 
         BizResponse response = new BizResponse(user);
 
@@ -65,11 +64,8 @@ public class UserService {
             @Context HttpServletRequest request,
             LangPOJO json) throws IOException{
 
-        // We get the user logged info
-        String emailUser = (String) request.getSession().getAttribute("emailUser");
+        User user = getUser(request);
 
-        // We get datastore user info and update language
-        User user = ObjectifyService.ofy().load().type(User.class).filter("email", emailUser).first().now();
         user.updateLang( json.lang );
         ObjectifyService.ofy().save().entity(user);
 
@@ -84,6 +80,23 @@ public class UserService {
 
         public LangPOJO() {} // constructor is required
 
+    }
+
+    public User getUser(HttpServletRequest request){
+        // We get the user logged info
+        String emailUser = (String) request.getSession().getAttribute("emailUser");
+        String screenName = (String) request.getSession().getAttribute("screenName");
+        User user = null;
+
+        if(emailUser != null){
+            // We get datastore user info and update language
+            user = ObjectifyService.ofy().load().type(User.class).filter("email", emailUser).first().now();
+        }else if(screenName != null){
+            // We get datastore user info and update language
+            user = ObjectifyService.ofy().load().type(User.class).filter("screenName", screenName).first().now();
+        }
+
+        return user;
     }
 
 }

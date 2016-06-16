@@ -23,28 +23,28 @@ angular.module('dropcubeApp')
 
       if(user && user.provider == "google"){
 
-        user.normalized.name = user.google.displayName;
+        user.normalized.name = user.name;
 
-        if(user.google.image){
-          user.normalized.photo = user.google.image.url.replace("?sz=50", "?sz=100");
+        if(user.profileCover){
+          user.normalized.photo = user.profileCover.replace("?sz=50", "?sz=100");
         }
 
-        if(user.google.cover){
-          user.normalized.cover = user.google.cover;
+        if(user.backgroundCover){
+          user.normalized.cover = user.backgroundCover;
         }
 
       }
 
       if(user && user.provider == "twitter"){
 
-        user.normalized.name = user.twitter.name;
+        user.normalized.name = user.name;
 
-        if(user.twitter.profile_image_url){
-          user.normalized.photo = user.twitter.profile_image_url;
+        if(user.profileCover){
+          user.normalized.photo = user.profileCover;
         }
 
-        if(user.twitter.profile_background_image_url_https){
-          user.normalized.cover = user.twitter.profile_background_image_url_https;
+        if(user.backgroundCover){
+          user.normalized.cover = user.backgroundCover;
         }
 
       }

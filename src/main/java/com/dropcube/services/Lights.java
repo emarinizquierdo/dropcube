@@ -39,7 +39,7 @@ public class Lights {
      * @return {@link Response} Response in Json with the rating information.
      */
     @GET
-    @Path(Rest.PARTICLE_SERVICE_URL)
+    @Path(Rest.LIGHTS_GET_URL)
     @Produces(MediaType.APPLICATION_JSON + Params.CHARSET_UTF8)
     public Response getLights(
             @Context HttpServletRequest request,
@@ -47,11 +47,8 @@ public class Lights {
 
         LOGGER.info("response");
 
-        //We get the user logged info
-        String emailUser = (String) request.getSession().getAttribute("emailUser");
-
-        //We get datastore user info
-        User user = ObjectifyService.ofy().load().type(User.class).filter("email", emailUser).first().now();
+        // We get datastore user info and update language
+        User user = getUser(request);
 
         //We get datastore device info
         Device device = ObjectifyService.ofy().load().type(Device.class).filter("deviceId", id).first().now();
@@ -78,22 +75,21 @@ public class Lights {
      * @return {@link Response} Response in Json with the rating information.
      */
     @GET
-    @Path(Rest.DEVICE_GET_URL  + Rest.DEVICE_GET_URL)
+    @Path(Rest.PARTICLE_SERVICE_URL  + Rest.LIGHTS_GET_URL)
     @Produces(MediaType.TEXT_HTML + Params.CHARSET_UTF8)
     public Response getParticleLights(
             @Context HttpServletRequest request,
-            @PathParam(Params.PARAM_ID) String id) throws JSONException {
+            @PathParam(Params.PARAM_ID) Long id) throws JSONException {
 
         LOGGER.info("response");
 
-        //We get the user logged info
-        String emailUser = (String) request.getSession().getAttribute("emailUser");
-
-        //We get datastore user info
-        User user = ObjectifyService.ofy().load().type(User.class).filter("email", emailUser).first().now();
+        // We get datastore user info and update language
+        User user = getUser(request);
 
         //We get datastore device info
         Device device = ObjectifyService.ofy().load().type(Device.class).filter("deviceId", id).first().now();
+
+        LOGGER.info("El user id es....................................." + device.userId.compareTo(user.id));
 
         //If user doesn't have permission, we return 401 status
         if(device.userId.compareTo(user.id) != 0){
@@ -237,6 +233,24 @@ public class Lights {
         }
 
         return null;
+    }
+
+
+    public User getUser(HttpServletRequest request){
+        // We get the user logged info
+        String emailUser = (String) request.getSession().getAttribute("emailUser");
+        String screenName = (String) request.getSession().getAttribute("screenName");
+        User user = null;
+
+        if(emailUser != null){
+            // We get datastore user info and update language
+            user = ObjectifyService.ofy().load().type(User.class).filter("email", emailUser).first().now();
+        }else if(screenName != null){
+            // We get datastore user info and update language
+            user = ObjectifyService.ofy().load().type(User.class).filter("screenName", screenName).first().now();
+        }
+
+        return user;
     }
 
 }

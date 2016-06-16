@@ -36,13 +36,15 @@ public class User {
 
     @Id public Long id;
     @Index public String email;
+    @Index public String screenName;
 
-    public PlusPerson google;
     public String name;
     public String role;
-    public String hashedPassword;
     public String provider;
     public String lang;
+    public String gender;
+    public String profileCover;
+    public String backgroundCover;
 
     protected static final Logger LOGGER = Logger.getLogger(User.class.getName());
 
@@ -57,16 +59,27 @@ public class User {
         provider = "google";
     }
 
-    public User(String theName, String theEmail, Person plus){
+    public User(String theName, String theEmail, String theProvider){
 
         this();
 
         name = theName;
-        email = theEmail;
+        provider = theProvider;
 
-        if( plus != null ) {
-            google = new PlusPerson(plus);  // Creating the Ancestor key
+        if(theProvider == "google"){
+            email = theEmail;
+        }else{
+            screenName = theEmail;
         }
+
+    }
+
+    public void setProfileCover(String theProfileCover){
+        profileCover = theProfileCover;
+    }
+
+    public void setBackgroundCover(String theBackgroundCover){
+        backgroundCover = theBackgroundCover;
     }
 
     public boolean updateLang(String language)throws IOException {

@@ -39,11 +39,8 @@ public class DeviceService {
 
         LOGGER.info("response");
 
-        // We get the user logged info
-        String emailUser = (String) request.getSession().getAttribute("emailUser");
-
         // We get datastore user info and update language
-        User user = ObjectifyService.ofy().load().type(User.class).filter("email", emailUser).first().now();
+        User user = getUser(request);
 
         List<Device> deviceList = ObjectifyService.ofy().load().type(Device.class).filter("userId", user.id).list();
 
@@ -64,11 +61,8 @@ public class DeviceService {
             @Context HttpServletRequest request,
             @PathParam(Params.PARAM_ID) Long id) {
 
-        // We get the user logged info
-        String emailUser = (String) request.getSession().getAttribute("emailUser");
-
         // We get datastore user info and update language
-        User user = ObjectifyService.ofy().load().type(User.class).filter("email", emailUser).first().now();
+        User user = getUser(request);
 
         Device device = ObjectifyService.ofy().load().type(Device.class).id(id).now();
 
@@ -88,11 +82,9 @@ public class DeviceService {
             @Context HttpServletRequest request,
             DevicesPOJO json) throws IOException {
 
-        // We get the user logged info
-        String emailUser = (String) request.getSession().getAttribute("emailUser");
-
         // We get datastore user info and update language
-        User user = ObjectifyService.ofy().load().type(User.class).filter("email", emailUser).first().now();
+        User user = getUser(request);
+
         Device device = new Device(json.deviceId, json.name, user.id);
 
         ObjectifyService.ofy().save().entity(device);
@@ -111,11 +103,8 @@ public class DeviceService {
             @PathParam(Params.PARAM_ID) Long id,
             DevicesPOJO json) throws IOException {
 
-        // We get the user logged info
-        String emailUser = (String) request.getSession().getAttribute("emailUser");
-
         // We get datastore user info and update language
-        User user = ObjectifyService.ofy().load().type(User.class).filter("email", emailUser).first().now();
+        User user = getUser(request);
 
         Device device = ObjectifyService.ofy().load().type(Device.class).id(id).now();
 
@@ -162,11 +151,8 @@ public class DeviceService {
             @Context HttpServletRequest request,
             @PathParam(Params.PARAM_ID) Long id) {
 
-        // We get the user logged info
-        String emailUser = (String) request.getSession().getAttribute("emailUser");
-
         // We get datastore user info and update language
-        User user = ObjectifyService.ofy().load().type(User.class).filter("email", emailUser).first().now();
+        User user = getUser(request);
 
         Device device = ObjectifyService.ofy().load().type(Device.class).id(id).now();
 
@@ -179,6 +165,23 @@ public class DeviceService {
         BizResponse response = new BizResponse(device);
         return Response.ok().entity(response.toJson()).build();
 
+    }
+
+    public User getUser(HttpServletRequest request){
+        // We get the user logged info
+        String emailUser = (String) request.getSession().getAttribute("emailUser");
+        String screenName = (String) request.getSession().getAttribute("screenName");
+        User user = null;
+
+        if(emailUser != null){
+            // We get datastore user info and update language
+            user = ObjectifyService.ofy().load().type(User.class).filter("email", emailUser).first().now();
+        }else if(screenName != null){
+            // We get datastore user info and update language
+            user = ObjectifyService.ofy().load().type(User.class).filter("screenName", screenName).first().now();
+        }
+
+        return user;
     }
 
 

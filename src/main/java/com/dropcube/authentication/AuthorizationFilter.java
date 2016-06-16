@@ -13,8 +13,6 @@ public class AuthorizationFilter implements Filter {
 
     private final static Logger LOGGER = Logger.getLogger(AuthorizationFilter.class.getName());
 
-    private FilterConfig filterConfig = null;
-
     public void init(FilterConfig filterConfig) throws ServletException {
 
         LOGGER.setLevel(Level.ALL);
@@ -28,14 +26,18 @@ public class AuthorizationFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) res;
 
         String emailUser = (String) request.getSession().getAttribute("emailUser");
+        String screenName = (String) request.getSession().getAttribute("screenName");
 
-        if (emailUser == null) {
+        if (emailUser == null && screenName == null) {
             LOGGER.info("user is null");
             SigninServlet signin = new SigninServlet();
             signin.doGet(request, response);
 
-        }else{
+        }else if(emailUser != null){
             LOGGER.info("EMAIL DE USUARIO " + emailUser);
+            chain.doFilter(request, response);
+        }else if(screenName != null){
+            LOGGER.info("Screen Name DE USUARIO " + screenName);
             chain.doFilter(request, response);
         }
 
