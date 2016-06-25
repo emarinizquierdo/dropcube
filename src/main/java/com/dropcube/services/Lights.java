@@ -79,7 +79,7 @@ public class Lights {
     @Produces(MediaType.TEXT_HTML + Params.CHARSET_UTF8)
     public Response getParticleLights(
             @Context HttpServletRequest request,
-            @PathParam(Params.PARAM_ID) Long id) throws JSONException {
+            @PathParam(Params.PARAM_ID) String id) throws JSONException {
 
         LOGGER.info("response");
 
@@ -89,12 +89,12 @@ public class Lights {
         //We get datastore device info
         Device device = ObjectifyService.ofy().load().type(Device.class).filter("deviceId", id).first().now();
 
-        LOGGER.info("El user id es....................................." + device.userId.compareTo(user.id));
-
         //If user doesn't have permission, we return 401 status
+        /*
         if(device.userId.compareTo(user.id) != 0){
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }
+        */
 
         String timezoneData = getJSON(Params.URL_GMAPS + device.lat.toString() + "," + device.lng.toString() + Params.GMAPS_KEY, 60000);
 

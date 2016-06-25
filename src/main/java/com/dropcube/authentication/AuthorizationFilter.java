@@ -28,7 +28,10 @@ public class AuthorizationFilter implements Filter {
         String emailUser = (String) request.getSession().getAttribute("emailUser");
         String screenName = (String) request.getSession().getAttribute("screenName");
 
-        if (emailUser == null && screenName == null) {
+        LOGGER.info("el request.getRequestURI() es ..........." + request.getRequestURI());
+        if(request.getRequestURI().contains("lights/particle/")){
+            chain.doFilter(request, response);
+        } else if (emailUser == null && screenName == null) {
             LOGGER.info("user is null");
             SigninServlet signin = new SigninServlet();
             signin.doGet(request, response);

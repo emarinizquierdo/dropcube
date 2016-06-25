@@ -33,15 +33,10 @@
   margin-left: 15px;
 }
 
-
 .trademark-parallax{
     text-align : center;
     height:100%; width:100%;
     background-color:$clear-main-color;
-    background-image: url(https://c5.staticflickr.com/6/5053/5575994156_d6accbcff3_b.jpg);
-        background-position: initial;
-        background-repeat: no-repeat;
-        background-size: cover;
 }
 
 .trademark-main{
@@ -82,14 +77,7 @@
 
 }
 
-.vignette {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  box-shadow: 0 0 200px rgba(0,0,0,0.9) inset;
-}
+
 
 /* Responsive: Portrait tablets and up */
 @media screen and (max-width: 600px) {

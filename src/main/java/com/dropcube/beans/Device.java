@@ -51,25 +51,83 @@ public class Device {
         userId = pUserId;
     }
 
-    public void setDescription( String pDescription){
-        description = pDescription;
+    public Long get_id() {
+        return _id;
     }
 
-    public void setLat( Double pLat){
-        lat = pLat;
+    public void set_id(Long _id) {
+        this._id = _id;
     }
 
-    public void setLong(Double pLong){
-        lng = pLong;
+    public String getDeviceId() {
+        return deviceId;
     }
 
-    public void setMinHour(Integer pMinHour){
-        minHour = pMinHour;
+    public void setDeviceId(String deviceId) {
+        this.deviceId = deviceId;
     }
 
-    public void setMaxHour(Integer pMaxHour){
-        maxHour = pMaxHour;
+    public Long getUserId() {
+        return userId;
     }
 
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+
+    public Double getLat() {
+        return lat;
+    }
+
+    public void setLat(Double lat) {
+        this.lat = lat;
+    }
+
+    public Double getLng() {
+        return lng;
+    }
+
+    public void setLng(Double lng) {
+        this.lng = lng;
+    }
+
+    public Integer getMinHour() {
+        return minHour;
+    }
+
+    public void setMinHour(Integer minHour) {
+        this.minHour = minHour;
+    }
+
+    public Integer getMaxHour() {
+        return maxHour;
+    }
+
+    public void setMaxHour(Integer maxHour) {
+        this.maxHour = maxHour;
+    }
 }

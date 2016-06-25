@@ -114,7 +114,7 @@ public class DeviceService {
 
         device.setDescription(json.description);
         device.setLat(json.lat);
-        device.setLong(json.lng);
+        device.setLng(json.lng);
         device.setMinHour(json.minHour);
         device.setMaxHour(json.maxHour);
 
