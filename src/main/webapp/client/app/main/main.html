@@ -100,15 +100,46 @@
       <div class="col s12 m12 center-align">
        <h4 class="header light">{{'MAIN_PAGE.READY_TO_BE_READY' | translate }}</h4>
 
-          <!--<a class="btn btn-large waves-effect waves-light light-blue" href="/checkout">{{'MAIN_PAGE.TAKE_YOUR' | translate }}</a>-->
-          <h5>{{'MAIN_PAGE.CHECKOUT_YOURS' | translate}}</h5>
-          <h6>{{'MAIN_PAGE.WE_ARE_WORKING' | translate}}</h6>
-          <p></p>
-          <ngcart-checkout service="paypal" settings="{ url:'/checkout' }"></ngcart-checkout>
-
-      </div>
+       <h5>{{'MAIN_PAGE.CHECKOUT_YOURS' | translate}} <mark>{{'MAIN_PAGE.PRICE' | translate}}</mark></h5>
+       <p></p>
+          <ngcart-addtocart id="dropcube" name="dropcube" price="39" data="item" quantity="1" quantity-max="2">{{'MAIN_PAGE.ADD_CART' | translate }}</ngcart-addtocart>
     </div>
   </div>
 
   <div class="block-100"></div>
 </div>
+
+<div class="parallax-container small" >
+    <div class="diy" ng-click="goTo('/diy')">
+      <h3 class="header light exo trademark-main">Do you want to know how to build your dropcube?</h3>
+      <h2 class="header light exo trademark-main">Learn how!</h2>
+    </div>
+    <img class="parallax-image" src="/assets/images/code.jpg">
+</div>
+
+<script type="text/ng-template" id="bower_components/ngCart/template/ngCart/addtocart.html">
+
+<div ng-hide="attrs.id">
+    <a class="btn btn-large waves-effect waves-light light-blue" ng-disabled="true" ng-transclude></a>
+</div>
+<div ng-show="attrs.id" >
+    <div ng-hide="inCart()">
+        <span ng-show="quantityMax">
+            <select name="quantity" id="quantity" ng-model="q"
+                    ng-options=" v for v in qtyOpt"></select>
+        </span>
+        <a class="btn btn-large waves-effect waves-light light-blue"
+           ng-click="ngCart.addItem(id, name, price, q, data)"
+           ng-transclude></a>
+    </div>
+    <div>
+    <a ng-show="inCart()" class="btn btn-large waves-effect waves-light light-blue" href="/checkout">Go to your cart</a>
+    </div>
+    <p></p>
+    <div ng-show="inCart()">
+        This item is in your cart. <a ng-click="ngCart.removeItemById(id)" style="cursor: pointer;">Remove</a>
+    </div>
+</div>
+</script>
+
+

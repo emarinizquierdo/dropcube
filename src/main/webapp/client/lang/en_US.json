@@ -11,11 +11,13 @@
 		"DO_YOU_PREFER" : "Do you prefer to go by bus or tube when it is raining? Would you like to know when you are going to go at work if it will rain? Now you can.",
 		"READY_TO_BE_READY" : "Do you want to be ready?",
 		"TAKE_YOUR" : "Check out!",
+		"ADD_CART" : "Add to cart",
 		"SEE_HOW_WORKS" : "See how it works",
 		"IN_YOUR_MOBILE" : "Use it from your smartphone",
 		"USING_YOUR_MOBILE" : "Dropcube is easy to use. If you don't want to turn on you PC, or if you don't have a laptop, or tablet, don't worry, Dropcube do it easy. You can use your smartphone. You can configure it from your mobile phone. Turn on Dropcube, enter to Dropcube application and set up. Easy!",
 		"CHECKOUT_YOURS" : "Get yours now!",
-		"WE_ARE_WORKING" : "(We are working for offer you dropcube as son as possible)"
+		"WE_ARE_WORKING" : "(We are working for offer you dropcube as son as possible)",
+		"PRICE" : "39€"
 	},
 
 	"HELP" : {
@@ -33,6 +35,11 @@
 	},
 
 	"NOTES" : {
-		"NOTES_01" : "Administra esta información básica (tu nombre, correo electrónico y número de teléfono) para que los demás puedan encontrarte en productos de Google, como Hangouts, Gmail y Maps, y contactar contigo más fácilmente."
+		"NOTES_01" : "Manage your basic information",
+		"NOTES_02" : "Add new dropcube devices'."
+	},
+
+	"DEVICES" : {
+		"ADD_NEW" : "Add a new Dropcube"
 	}
 }

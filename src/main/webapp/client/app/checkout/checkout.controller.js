@@ -1,26 +1,16 @@
 'use strict';
 
 angular.module('dropcubeApp')
-  .controller('CheckoutCtrl', function ($rootScope, $scope, $http) {
-    $scope.awesomeThings = [];
+  .controller('CheckoutCtrl', function ($rootScope, $scope, $http, ngCart) {
 
-    $http.get('/api/things').success(function(awesomeThings) {
-      $scope.awesomeThings = awesomeThings;
-    });
+    ngCart.setShipping(7);  
 
-    $scope.addThing = function() {
-      if($scope.newThing === '') {
-        return;
+    $scope.payPalSettings = {
+      paypal : {
+        business : "e.marin.izquierdo@gmail.com",
+        currency_code : "EUR",
       }
-      $http.post('/api/things', { name: $scope.newThing });
-      $scope.newThing = '';
     };
 
-    $(document).ready(function(){
-      $('.parallax').parallax();
-    });
 
-    $scope.deleteThing = function(thing) {
-      $http.delete('/api/things/' + thing._id);
-    };
   });

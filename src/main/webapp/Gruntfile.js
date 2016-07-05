@@ -84,16 +84,6 @@ module.exports = function (grunt) {
         options: {
           livereload: true
         }
-      },
-      express: {
-        files: [
-          'server/**/*.{js,json}'
-        ],
-        tasks: ['express:dev', 'wait'],
-        options: {
-          livereload: true,
-          nospawn: true //Without this option specified express won't be reloaded
-        }
       }
     },
 
@@ -429,9 +419,10 @@ module.exports = function (grunt) {
           ],
           compass: false
         },
-        files: {
-          '.tmp/app/app.css' : '<%= yeoman.client %>/app/app.scss'
-        }
+        files: [{
+          '.tmp/app/app.css' : '<%= yeoman.client %>/app/app.scss',
+          '<%= yeoman.client %>/app/app.css' : '<%= yeoman.client %>/app/app.scss'
+        }]
       }
     },
 
@@ -541,9 +532,7 @@ module.exports = function (grunt) {
       'injector',
       'wiredep',
       'autoprefixer',
-      'express:dev',
       'wait',
-      'open',
       'watch'
     ]);
   });

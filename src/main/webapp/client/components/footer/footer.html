@@ -1,7 +1,7 @@
 <footer class="page-footer">
     <div class="container">
         <div class="row">
-            <div class="col l3 s6">
+            <div class="col l3 m3 s6">
                 <h5 class="white-text light">{{'FOOTER.JOIN_US' | translate }}</h5>
                 <ul>
                     <li><span class="flaticon-twitter1 flaticon"></span><a class="grey-text text-lighten-3" href="https://twitter.com/eMarinIzquierdo">{{'FOOTER.TWITTER' | translate }}</a></li>
@@ -10,7 +10,7 @@
                     <li><span class="flaticon-socialnetwork106 flaticon"></span><a class="grey-text text-lighten-3" href="https://www.linkedin.com/in/eduardo-marín-izquierdo-8bb57830">{{'FOOTER.LINKEDIN' | translate }}</a></li>
                 </ul>
             </div>
-            <div class="col l4 offset-l2 s6">
+            <div class="col l3 offset-l2 m3 s6">
                 <h5 class="white-text light">DIG DEEPER</h5>
                 <ul>
                     <li><a class="grey-text text-lighten-3" href="#!">About</a></li>
@@ -20,11 +20,13 @@
                     <li><a class="grey-text text-lighten-3" href="#!">ontact</a></li>
                 </ul>
             </div>
-            <div class="col l4 s12">
+            <div class="col l4 m6 s12">
                 <h5 class="white-text light">Checkout your drop cube</h5>
                 <p class="grey-text text-lighten-4">If you want to checkout your drop cube, do it!</p>
-                <button class="btn waves-effect waves-light light-blue darken-4 lighten-3" type="submit" name="action" alt="PayPal - The safer, easier way to pay online!">Checkout</button>
-                </form>
+                <ngcart-addtocart id="dropcube" name="dropcube" price="39" data="item" quantity="1" quantity-max="2">{{'MAIN_PAGE.ADD_CART' | translate }}</ngcart-addtocart>
+            </div>
+            <div class="col l2 m3 s6">
+                <img class="android-badge pointer" src="/assets/images/android-badge.png"/>
             </div>
         </div>
     </div>
@@ -34,3 +36,28 @@
         </div>
     </div>
 </footer>
+
+<script type="text/ng-template" id="bower_components/ngCart/template/ngCart/addtocart.html">
+
+<div ng-hide="attrs.id">
+    <a class="btn btn-large waves-effect waves-light light-blue" ng-disabled="true" ng-transclude></a>
+</div>
+<div ng-show="attrs.id" >
+    <div ng-hide="inCart()">
+        <span ng-show="quantityMax">
+            <select name="quantity" id="quantity" ng-model="q"
+                    ng-options=" v for v in qtyOpt"></select>
+        </span>
+        <a class="btn btn-large waves-effect waves-light light-blue"
+           ng-click="ngCart.addItem(id, name, price, q, data)"
+           ng-transclude></a>
+    </div>
+    <div>
+    <a ng-show="inCart()" class="btn btn-large waves-effect waves-light light-blue" href="/checkout">Go to your cart</a>
+    </div>
+    <p></p>
+    <div ng-show="inCart()">
+        This item is in your cart. <a ng-click="ngCart.removeItemById(id)" style="cursor: pointer; color:white">Remove</a>
+    </div>
+</div>
+</script>

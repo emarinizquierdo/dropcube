@@ -77,6 +77,14 @@
 
 }
 
+.diy{
+    cursor:pointer;
+    position: absolute;
+    top: 150px;
+    width: 100%;
+    margin: auto;
+    text-align: center;
+}
 
 
 /* Responsive: Portrait tablets and up */
@@ -87,4 +95,17 @@
     .parallax-image{
       width: 200%;
     }
+
+    .diy{
+        top: 50px;
+    }
+
+    .diy h3{
+        font-size: 30px;
+    }
+
+    .diy h2{
+        font-size: 42px;
+    }
+
 }

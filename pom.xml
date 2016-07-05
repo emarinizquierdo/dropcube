@@ -3,14 +3,14 @@
 
     <modelVersion>4.0.0</modelVersion>
     <packaging>war</packaging>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.1.1</version>
 
     <groupId>com.dropcube</groupId>
     <artifactId>thedropcubecom</artifactId>
 
     <properties>
         <app.id>thedropcubecom</app.id>
-        <app.version>1-1-0</app.version>
+        <app.version>1-1-1</app.version>
         <appengine.version>1.9.32</appengine.version>
         <gcloud.plugin.version>2.0.9.74.v20150814</gcloud.plugin.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

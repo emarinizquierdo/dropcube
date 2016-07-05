@@ -8,7 +8,7 @@ var express = require('express')
 
 //Configure your server
 configuration = {
-	  appPath : '/dist/public/'
+	  appPath : '/client/'
 	, server_port : 8877
 	, proxy_host : "localhost"
 	, proxy_port : 8080
@@ -21,6 +21,8 @@ configuration = {
 		  , "/devices"
 		  , "/devices/detail/"
 		  , "/login"
+		  , "/checkout"
+		  , "/diy"
 	  ]
 };
 
