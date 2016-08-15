@@ -87,7 +87,7 @@ public class DeviceService {
 
         Device device = new Device(json.deviceId, json.name, user.id);
 
-        ObjectifyService.ofy().save().entity(device);
+        ObjectifyService.ofy().save().entity(device).now();
 
         BizResponse response = new BizResponse(device);
         return Response.ok().entity(response.toJson()).build();

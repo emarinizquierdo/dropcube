@@ -35,10 +35,10 @@ public class Device {
     public String name;
     public String description;
     public Boolean status;
-    public Double lat;
-    public Double lng;
-    public Integer minHour;
-    public Integer maxHour;
+    public Double lat = 40.4165000;
+    public Double lng = -3.7025600;
+    public Integer minHour = 8;
+    public Integer maxHour = 18;
 
     public Device(){
 

@@ -58,13 +58,31 @@ public class Lights {
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }
 
+        if(device.lat == null){
+            device.lat = 51.74461742196093;
+        }
+
+        if(device.lng == null){
+            device.lng = -0.25765322500001275;
+        }
+
+        if(device.minHour == null){
+            device.minHour = 8;
+        }
+
+        if(device.maxHour == null){
+            device.maxHour = 18;
+        }
+
+        LOGGER.info("el lat es.........." + device.lat.toString());
+        LOGGER.info("el lng es.........." + device.lng.toString());
         String timezoneData = getJSON(Params.URL_GMAPS + device.lat.toString() + "," + device.lng.toString() + Params.GMAPS_KEY, 60000);
 
         JSONObject timezoneDataJson = new JSONObject(timezoneData);
         Integer rawOffset = (Integer) timezoneDataJson.get("rawOffset");
-
+        LOGGER.info("aqui llega................................");
         String weatherData = getWeather(device.lat.toString(), device.lng.toString(), (toLocalTime(rawOffset) > device.maxHour));
-
+LOGGER.info("este es el weatherData..........." + weatherData);
         String ligthsData = parseJson(weatherData, device);
 
         return Response.ok().entity(ligthsData).build();
@@ -119,10 +137,10 @@ public class Lights {
         }else{
             timestamp =date.getTime();
         }
-
+        LOGGER.info("el weather es...............");
         String path = "https://api.forecast.io/forecast/b290219f260ca3a384400c3a019b21fd/";
         String data = getJSON(path + lat + "," + lng + "," + (timestamp/1000) + "?units=si&exclude=daily,flags", 60000);
-
+LOGGER.info("el weather es..............." + data);
         return data;
 
     }
