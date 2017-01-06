@@ -83,4 +83,12 @@ public class Params {
      */
     public final static String URL_GMAPS = "https://maps.googleapis.com/maps/api/timezone/json?location=";
     public final static String GMAPS_KEY = "&timestamp=1331161200&key=AIzaSyDjlKGoghg7xvbk_B7Ym4OEzl1JPGd2CNk";
+
+    /**
+     * MODES
+     */
+    public enum MODE {
+        RAINBOW, TEST_HOT, TEST_RAIN, TEST_SNOW, TEST_WIND, TEST_STORM, NORMAL;
+    }
+
 }

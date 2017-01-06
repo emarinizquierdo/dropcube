@@ -14,6 +14,25 @@ angular.module('dropcubeApp')
         $scope.deviceData;
         $scope.predictions;
 
+        $scope.modes = [
+            { value: 'NORMAL', name: 'Normal' },
+            { value: 'RAINBOW', name: 'Rainbow' },
+            { value: 'TEST_HOT', name: 'Test hot' },
+            { value: 'TEST_RAIN', name: 'Test rain' },
+            { value: 'TEST_SNOW', name: 'Test snow' },
+            { value: 'TEST_WIND', name: 'Test wind' },
+            { value: 'TEST_STORM', name: 'Test storm' }
+          ];
+
+          window.setTimeout(function(){
+
+            angular.element('#mode-selector').material_select();
+
+          },1000);
+
+
+
+
         function __init__() {
 
             if ($routeParams.id) {
@@ -32,6 +51,7 @@ angular.module('dropcubeApp')
                     $location.path("/");
                 });
             }
+
         }
 
         __init__();
@@ -147,7 +167,7 @@ angular.module('dropcubeApp')
                 }, function(data) {
                     $scope.predictions = data;
                 }, function() {
-                    
+
                 });
         }
 

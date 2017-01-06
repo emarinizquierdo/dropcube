@@ -13,6 +13,10 @@
                     <h5>Description</h5>
                     <p>{{deviceData.description}}</p>
                 </div>
+                <div class="bordered">
+                    <h5>Mode</h5>
+                    <p>{{deviceData.mode}}</p>
+                </div>
                 <h5>Status</h5>
                 <p>{{deviceData.status}}</p>
                 <h5>When do you want to be warned about weather?</h5>
@@ -38,6 +42,16 @@
                         <textarea id="textarea1" class="materialize-textarea" ng-model="deviceData.description" maxlength="250"></textarea>
                         <label for="last_name" class="active">Description</label>
                     </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <div class="input-field col s12">
+                            <select id="mode-selector" ng-model="deviceData.mode">
+                                <option ng-repeat="item in modes" value="{{item.value}}">{{item.name}}</option>
+                            </select>
+                            <label>Materialize Select</label>
+                        </div>
+                    </div>
+                    </div>
                     <div class="input-field col s12">
                     <h5>When do you want to be warned about weather?</h5>
                     <p class="range-field">
@@ -60,7 +74,7 @@
                         <a class="waves-effect waves-light btn red darken-2" ng-click="edit(false)">Cancel</a>
                         <a class="waves-effect waves-light btn green darken-1" ng-click="updateDevice(deviceData)">Save</a>
                     </div>
-                        
+
                     </div>
                 </div>
             </div>

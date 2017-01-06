@@ -16,6 +16,7 @@ public class Rest {
     // /DEVICES
     // //////////////
     public static final String DEVICE_SERVICE_URL = "/devices";
+    public static final String DEVICE_REFRESH_URL = "/refresh";
     public static final String DEVICE_GET_URL = "/{" + Params.PARAM_ID + "}";
 
 

@@ -1,5 +1,6 @@
 package com.dropcube.beans;
 
+import com.dropcube.constants.Params;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.*;
 
@@ -39,6 +40,16 @@ public class Device {
     public Double lng = -3.7025600;
     public Integer minHour = 8;
     public Integer maxHour = 18;
+
+    public String mode;
+
+    public String getMode() {
+        return mode;
+    }
+
+    public void setMode(String mode) {
+        this.mode = mode;
+    }
 
     public Device(){
 

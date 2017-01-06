@@ -2,12 +2,11 @@ package com.dropcube.services;
 
 import com.dropcube.beans.Device;
 import com.dropcube.beans.User;
-import com.google.appengine.api.utils.SystemProperty;
+import com.dropcube.biz.DeviceBiz;
 import com.dropcube.biz.BizResponse;
 import com.dropcube.constants.Params;
 import com.dropcube.constants.Rest;
 import com.googlecode.objectify.ObjectifyService;
-import com.googlecode.objectify.cmd.Query;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
@@ -16,7 +15,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -27,6 +25,7 @@ import java.util.logging.Logger;
 public class DeviceService {
 
     private final static Logger LOGGER = Logger.getLogger(DeviceService.class.getName());
+    private DeviceBiz DEVICE_BIZ = new DeviceBiz();
 
     /**
      * Gets a user information.
@@ -113,6 +112,7 @@ public class DeviceService {
         }
 
         device.setDescription(json.description);
+        device.setMode(json.mode);
         device.setLat(json.lat);
         device.setLng(json.lng);
         device.setMinHour(json.minHour);
@@ -120,7 +120,25 @@ public class DeviceService {
 
         ObjectifyService.ofy().save().entity(device);
 
+        DEVICE_BIZ.refreshDevice(id, user);
+
         BizResponse response = new BizResponse(device);
+        return Response.ok().entity(response.toJson()).build();
+
+    }
+
+    @GET
+    @Path(Rest.DEVICE_REFRESH_URL + Rest.DEVICE_GET_URL)
+    @Produces(MediaType.APPLICATION_JSON + Params.CHARSET_UTF8)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response refreshDevice(
+            @Context HttpServletRequest request,
+            @PathParam(Params.PARAM_ID) Long deviceId) throws IOException{
+
+        // We get datastore user info and update language
+        User user = getUser(request);
+
+        BizResponse response = new BizResponse(DEVICE_BIZ.refreshDevice(deviceId, user));
         return Response.ok().entity(response.toJson()).build();
 
     }
@@ -133,6 +151,7 @@ public class DeviceService {
         public String description;
         public Double lat;
         public Double lng;
+        public String mode;
         public Integer minHour;
         public Integer maxHour;
 
