@@ -25,7 +25,7 @@ import com.dropcube.beans.User;
 @Cache
 public class Device {
 
-    @Id public Long _id;
+    @Id public Long id;
 
     @Index
     public String deviceId;
@@ -62,12 +62,12 @@ public class Device {
         userId = pUserId;
     }
 
-    public Long get_id() {
-        return _id;
+    public Long getId() {
+        return id;
     }
 
-    public void set_id(Long _id) {
-        this._id = _id;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getDeviceId() {

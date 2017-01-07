@@ -33,6 +33,16 @@
     </servlet-mapping>
 
     <servlet>
+        <servlet-name>_ah_sessioncleanup</servlet-name>
+        <servlet-class>com.google.apphosting.utils.servlet.SessionCleanupServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>_ah_sessioncleanup</servlet-name>
+        <url-pattern>/_ah/sessioncleanup</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <servlet-name>SigninServlet</servlet-name>
         <servlet-class>com.dropcube.authentication.SigninServlet</servlet-class>
     </servlet>
@@ -103,6 +113,15 @@
         <servlet-name>historyhtml5mode</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
+
+    <security-constraint>
+        <web-resource-collection>
+            <url-pattern>/_ah/sessioncleanup</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>admin</role-name>
+        </auth-constraint>
+    </security-constraint>
 
     <!-- Welcome page -->
     <welcome-file-list>

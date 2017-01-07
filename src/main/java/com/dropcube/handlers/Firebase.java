@@ -1,10 +1,9 @@
-package com.dropcube.handlers.jfirebase;
+package com.dropcube.handlers;
 
+import com.dropcube.beans.User;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpDelete;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONObject;
 
@@ -15,6 +14,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.Map;
+import java.util.logging.Logger;
 
 /**
  * Created by IntelliJ IDEA.
@@ -22,10 +22,18 @@ import java.util.Map;
  * Date: 4/21/12
  * Time: 11:43 AM
  */
-public class Driver implements IDriver {
+public class Firebase {
+
+    private User user;
+
+    private final static Logger LOGGER = Logger.getLogger(Firebase.class.getName());
 
     private String channel = "https://dropcube-c11b6.firebaseio.com/";
     private String key = "g8LHGVLv3QJ8yFBatXY1cmzS1tCkwEBY1qT6PIoo";
+
+    public Firebase(User user) {
+        this.user = user;
+    }
 
     public boolean write(String path, Map<String, String> map){
 

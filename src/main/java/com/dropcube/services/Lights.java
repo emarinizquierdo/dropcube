@@ -2,8 +2,10 @@ package com.dropcube.services;
 
 import com.dropcube.beans.Device;
 import com.dropcube.beans.User;
+import com.dropcube.biz.DeviceBiz;
 import com.dropcube.constants.Params;
 import com.dropcube.constants.Rest;
+import com.dropcube.exceptions.DropcubeException;
 import com.googlecode.objectify.ObjectifyService;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
@@ -43,20 +45,16 @@ public class Lights {
     @Produces(MediaType.APPLICATION_JSON + Params.CHARSET_UTF8)
     public Response getLights(
             @Context HttpServletRequest request,
-            @PathParam(Params.PARAM_ID) String id) throws JSONException {
+            @PathParam(Params.PARAM_ID) Long id) throws DropcubeException, JSONException {
 
         LOGGER.info("response");
 
         // We get datastore user info and update language
         User user = getUser(request);
+        DeviceBiz DEVICE_BIZ = new DeviceBiz(user);
 
         //We get datastore device info
-        Device device = ObjectifyService.ofy().load().type(Device.class).filter("deviceId", id).first().now();
-
-        //If user doesn't have permission, we return 401 status
-        if(device.userId.compareTo(user.id) != 0){
-            return Response.status(Response.Status.UNAUTHORIZED).build();
-        }
+        Device device = DEVICE_BIZ.get(id);
 
         if(device.lat == null){
             device.lat = 51.74461742196093;

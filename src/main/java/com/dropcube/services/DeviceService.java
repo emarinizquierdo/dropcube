@@ -25,7 +25,6 @@ import java.util.logging.Logger;
 public class DeviceService {
 
     private final static Logger LOGGER = Logger.getLogger(DeviceService.class.getName());
-    private DeviceBiz DEVICE_BIZ = new DeviceBiz();
 
     /**
      * Gets a user information.
@@ -104,6 +103,7 @@ public class DeviceService {
 
         // We get datastore user info and update language
         User user = getUser(request);
+        DeviceBiz DEVICE_BIZ = new DeviceBiz(user);
 
         Device device = ObjectifyService.ofy().load().type(Device.class).id(id).now();
 
@@ -120,7 +120,7 @@ public class DeviceService {
 
         ObjectifyService.ofy().save().entity(device);
 
-        DEVICE_BIZ.refreshDevice(id, user);
+        DEVICE_BIZ.refreshDevice(id);
 
         BizResponse response = new BizResponse(device);
         return Response.ok().entity(response.toJson()).build();
@@ -137,8 +137,9 @@ public class DeviceService {
 
         // We get datastore user info and update language
         User user = getUser(request);
+        DeviceBiz DEVICE_BIZ = new DeviceBiz(user);
 
-        BizResponse response = new BizResponse(DEVICE_BIZ.refreshDevice(deviceId, user));
+        BizResponse response = new BizResponse(DEVICE_BIZ.refreshDevice(deviceId));
         return Response.ok().entity(response.toJson()).build();
 
     }

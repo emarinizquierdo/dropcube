@@ -1,21 +1,10 @@
 package com.dropcube.beans;
 
-import com.google.api.client.json.GenericJson;
-import com.google.api.services.oauth2.model.Userinfoplus;
-import com.google.api.services.plus.Plus;
-import com.google.api.services.plus.model.Person;
-import com.googlecode.objectify.Key;
-import com.googlecode.objectify.annotation.Entity;
-import com.googlecode.objectify.annotation.Id;
-import com.googlecode.objectify.annotation.Index;
-import com.googlecode.objectify.annotation.Parent;
+import com.googlecode.objectify.annotation.*;
 
 import com.google.api.services.oauth2.Oauth2;
 
-import javax.servlet.http.HttpServletRequest;
-import java.beans.Transient;
 import java.io.IOException;
-import java.io.Serializable;
 import java.lang.String;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -32,6 +21,7 @@ import java.util.logging.Logger;
  * NOTE - all the properties are PUBLIC so that can keep the code simple.
  **/
 @Entity
+@Cache
 public class User {
 
     @Id public Long id;

@@ -4,6 +4,12 @@ package com.dropcube.constants;
 public class Rest {
 
     // //////////////
+    // /GENERIC
+    // //////////////
+
+    public static final String GET_ID_URL = "/{" + Params.PARAM_ID + "}";
+
+    // //////////////
     // /USERS
     // //////////////
 
@@ -26,5 +32,10 @@ public class Rest {
     public static final String LIGHTS_SERVICE_URL = "/lights";
     public static final String PARTICLE_SERVICE_URL = "/particle";
     public static final String LIGHTS_GET_URL = "/{" + Params.PARAM_ID + "}";
+
+    // //////////////
+    // /WEATHER
+    // //////////////
+    public static final String WEATHER_SERVICE_URL = "/weather";
 
 }

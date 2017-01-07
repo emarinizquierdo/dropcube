@@ -2,7 +2,10 @@ package com.dropcube.biz;
 
 import com.dropcube.beans.Device;
 import com.dropcube.beans.User;
-import com.dropcube.handlers.jfirebase.Driver;
+import com.dropcube.constants.StatusCodes;
+import com.dropcube.exceptions.DropcubeException;
+import com.dropcube.handlers.Firebase;
+import com.googlecode.objectify.Key;
 import com.googlecode.objectify.ObjectifyService;
 
 import java.util.HashMap;
@@ -15,19 +18,48 @@ import java.util.logging.Logger;
  */
 public class DeviceBiz {
 
-    private final static Logger LOGGER = Logger.getLogger(DeviceBiz.class.getName());
-    private Driver DRIVER = new Driver();
+    private User user;
 
-    public Boolean refreshDevice(Long deviceId, User user){
+    private final static Logger LOGGER = Logger.getLogger(DeviceBiz.class.getName());
+    private Firebase FIREBASE = null;
+
+    public DeviceBiz(User user) {
+        this.user = user;
+        FIREBASE = new Firebase( this.user );
+    }
+
+    public Device get(Long id) throws DropcubeException{
+
+        //We get datastore device info
+        Device device = ObjectifyService.ofy().load().key(Key.create(Device.class, id)).now();
+
+        if(device == null){
+            LOGGER.info("Device not found");
+            throw new DropcubeException("NOT FOUND", StatusCodes.STATUS_CODE_NOT_FOUND);
+        }
+
+        LOGGER.info(device.getUserId().toString());
+        LOGGER.info(this.user.getId().toString());
+        //If user doesn't have permission, we return 401 status
+        if (device.getUserId() != null && this.user.getId() != null && (device.getUserId().compareTo(this.user.getId()) != 0)) {
+            LOGGER.info("Unauthorized");
+            throw new DropcubeException("Unauthorized", StatusCodes.STATUS_CODE_UNAUTHORIZED);
+        }
+
+        return device;
+
+    }
+
+    public Boolean refreshDevice(Long deviceId){
 
         try{
             LOGGER.warning("refreshing " + deviceId + " device");
 
             Map<String,String> valores = new HashMap<>();
 
-            valores.put("MODE", getMode(deviceId,user));
+            valores.put("MODE", getMode(deviceId));
 
-            return DRIVER.write(String.valueOf(deviceId), valores);
+            return FIREBASE.write(String.valueOf(deviceId), valores);
 
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -36,13 +68,9 @@ public class DeviceBiz {
     }
 
 
-    private String getMode(Long deviceId, User user){
+    private String getMode(Long deviceId) throws DropcubeException{
 
-        Device device = ObjectifyService.ofy().load().type(Device.class).id(deviceId).now();
-
-        if(device.userId.compareTo(user.id) != 0){
-
-        }
+        Device device = get(deviceId);
 
         return device.getMode();
 
