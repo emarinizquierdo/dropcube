@@ -114,9 +114,21 @@
         <url-pattern>/</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>RefreshDevices</servlet-name>
+        <servlet-class>com.dropcube.tasks.RefreshDevices</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>RefreshDevices</servlet-name>
+        <url-pattern>/tasks/refreshDevices</url-pattern>
+    </servlet-mapping>
+
     <security-constraint>
         <web-resource-collection>
             <url-pattern>/_ah/sessioncleanup</url-pattern>
+            <url-pattern>/task/*</url-pattern>
+            <web-resource-name>cron</web-resource-name>
+            <url-pattern>/cron/*</url-pattern>
         </web-resource-collection>
         <auth-constraint>
             <role-name>admin</role-name>

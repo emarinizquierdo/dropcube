@@ -16,7 +16,7 @@ public class Currently {
     private String icon;
     @SerializedName("nearestStormDistance")
     @Expose
-    private Integer nearestStormDistance;
+    private Double nearestStormDistance;
     @SerializedName("precipIntensity")
     @Expose
     private Double precipIntensity;
@@ -25,7 +25,7 @@ public class Currently {
     private Double precipIntensityError;
     @SerializedName("precipProbability")
     @Expose
-    private Integer precipProbability;
+    private Double precipProbability;
     @SerializedName("precipType")
     @Expose
     private String precipType;
@@ -84,11 +84,11 @@ public class Currently {
         this.icon = icon;
     }
 
-    public Integer getNearestStormDistance() {
+    public Double getNearestStormDistance() {
         return nearestStormDistance;
     }
 
-    public void setNearestStormDistance(Integer nearestStormDistance) {
+    public void setNearestStormDistance(Double nearestStormDistance) {
         this.nearestStormDistance = nearestStormDistance;
     }
 
@@ -108,11 +108,11 @@ public class Currently {
         this.precipIntensityError = precipIntensityError;
     }
 
-    public Integer getPrecipProbability() {
+    public Double getPrecipProbability() {
         return precipProbability;
     }
 
-    public void setPrecipProbability(Integer precipProbability) {
+    public void setPrecipProbability(Double precipProbability) {
         this.precipProbability = precipProbability;
     }
 

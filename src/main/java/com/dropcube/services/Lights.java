@@ -3,9 +3,11 @@ package com.dropcube.services;
 import com.dropcube.beans.Device;
 import com.dropcube.beans.User;
 import com.dropcube.biz.DeviceBiz;
+import com.dropcube.biz.WeatherBiz;
 import com.dropcube.constants.Params;
 import com.dropcube.constants.Rest;
 import com.dropcube.exceptions.DropcubeException;
+import com.dropcube.utils.UserSessionBeanUtil;
 import com.googlecode.objectify.ObjectifyService;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
@@ -95,24 +97,20 @@ LOGGER.info("este es el weatherData..........." + weatherData);
     @Produces(MediaType.TEXT_HTML + Params.CHARSET_UTF8)
     public Response getParticleLights(
             @Context HttpServletRequest request,
-            @PathParam(Params.PARAM_ID) String id) throws JSONException {
+            @PathParam(Params.PARAM_ID) Long id) throws JSONException, DropcubeException{
 
         LOGGER.info("response");
 
         // We get datastore user info and update language
-        User user = getUser(request);
+        // We get datastore user info and update language
+        User user = UserSessionBeanUtil.get(request);
+
+        DeviceBiz DEVICE_BIZ = new DeviceBiz(user);
 
         //We get datastore device info
-        Device device = ObjectifyService.ofy().load().type(Device.class).filter("deviceId", id).first().now();
+        Device device = DEVICE_BIZ.get(id);
 
-        //If user doesn't have permission, we return 401 status
-        /*
-        if(device.userId.compareTo(user.id) != 0){
-            return Response.status(Response.Status.UNAUTHORIZED).build();
-        }
-        */
-
-        String timezoneData = getJSON(Params.URL_GMAPS + device.lat.toString() + "," + device.lng.toString() + Params.GMAPS_KEY, 60000);
+        String timezoneData = getJSON(Params.URL_GMAPS + device.getLat().toString() + "," + device.getLng().toString() + Params.GMAPS_KEY, 60000);
 
         JSONObject timezoneDataJson = new JSONObject(timezoneData);
         Integer rawOffset = (Integer) timezoneDataJson.get("rawOffset");

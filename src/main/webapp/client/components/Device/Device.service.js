@@ -8,7 +8,7 @@ angular.module('dropcubeApp')
     _Device.data = [];
 
     _Device.resource = $resource('/s/devices/:id', {
-        id: '@_id'
+        id: '@id'
     }, {
         get: {
             method: 'GET',

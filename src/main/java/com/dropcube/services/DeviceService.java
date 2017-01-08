@@ -6,6 +6,8 @@ import com.dropcube.biz.DeviceBiz;
 import com.dropcube.biz.BizResponse;
 import com.dropcube.constants.Params;
 import com.dropcube.constants.Rest;
+import com.dropcube.exceptions.DropcubeException;
+import com.dropcube.utils.UserSessionBeanUtil;
 import com.googlecode.objectify.ObjectifyService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -38,8 +40,7 @@ public class DeviceService {
         LOGGER.info("response");
 
         // We get datastore user info and update language
-        User user = getUser(request);
-
+        User user = UserSessionBeanUtil.get(request);
         List<Device> deviceList = ObjectifyService.ofy().load().type(Device.class).filter("userId", user.id).list();
 
         BizResponse response = new BizResponse(deviceList);
@@ -60,8 +61,7 @@ public class DeviceService {
             @PathParam(Params.PARAM_ID) Long id) {
 
         // We get datastore user info and update language
-        User user = getUser(request);
-
+        User user = UserSessionBeanUtil.get(request);
         Device device = ObjectifyService.ofy().load().type(Device.class).id(id).now();
 
         if(device.userId.compareTo(user.id) != 0){
@@ -81,8 +81,7 @@ public class DeviceService {
             DevicesPOJO json) throws IOException {
 
         // We get datastore user info and update language
-        User user = getUser(request);
-
+        User user = UserSessionBeanUtil.get(request);
         Device device = new Device(json.deviceId, json.name, user.id);
 
         ObjectifyService.ofy().save().entity(device).now();
@@ -99,10 +98,10 @@ public class DeviceService {
     public Response putDevice(
             @Context HttpServletRequest request,
             @PathParam(Params.PARAM_ID) Long id,
-            DevicesPOJO json) throws IOException {
+            DevicesPOJO json) throws IOException, DropcubeException{
 
         // We get datastore user info and update language
-        User user = getUser(request);
+        User user = UserSessionBeanUtil.get(request);
         DeviceBiz DEVICE_BIZ = new DeviceBiz(user);
 
         Device device = ObjectifyService.ofy().load().type(Device.class).id(id).now();
@@ -133,10 +132,10 @@ public class DeviceService {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response refreshDevice(
             @Context HttpServletRequest request,
-            @PathParam(Params.PARAM_ID) Long deviceId) throws IOException{
+            @PathParam(Params.PARAM_ID) Long deviceId) throws IOException, DropcubeException{
 
         // We get datastore user info and update language
-        User user = getUser(request);
+        User user = UserSessionBeanUtil.get(request);
         DeviceBiz DEVICE_BIZ = new DeviceBiz(user);
 
         BizResponse response = new BizResponse(DEVICE_BIZ.refreshDevice(deviceId));
@@ -172,8 +171,7 @@ public class DeviceService {
             @PathParam(Params.PARAM_ID) Long id) {
 
         // We get datastore user info and update language
-        User user = getUser(request);
-
+        User user = UserSessionBeanUtil.get(request);
         Device device = ObjectifyService.ofy().load().type(Device.class).id(id).now();
 
         if(device.userId.compareTo(user.id) != 0){
@@ -186,23 +184,5 @@ public class DeviceService {
         return Response.ok().entity(response.toJson()).build();
 
     }
-
-    public User getUser(HttpServletRequest request){
-        // We get the user logged info
-        String emailUser = (String) request.getSession().getAttribute("emailUser");
-        String screenName = (String) request.getSession().getAttribute("screenName");
-        User user = null;
-
-        if(emailUser != null){
-            // We get datastore user info and update language
-            user = ObjectifyService.ofy().load().type(User.class).filter("email", emailUser).first().now();
-        }else if(screenName != null){
-            // We get datastore user info and update language
-            user = ObjectifyService.ofy().load().type(User.class).filter("screenName", screenName).first().now();
-        }
-
-        return user;
-    }
-
 
 }

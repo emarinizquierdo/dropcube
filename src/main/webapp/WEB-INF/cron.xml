@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cronentries>
+
+    <cron>
+        <url>/tasks/refreshDevices</url>
+        <description>Refresh device weather info</description>
+        <schedule>every 30 minutes</schedule>
+        <timezone>Europe/Madrid</timezone>
+        <target>default</target>
+    </cron>
+
+</cronentries>

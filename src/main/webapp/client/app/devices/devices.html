@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col s12 l9">
             <ul class="collection device-list">
-                <li class="collection-item avatar pointer" ng-repeat="device in Device.data" ng-click="goToDetail(device._id)">
+                <li class="collection-item avatar pointer" ng-repeat="device in Device.data" ng-click="goToDetail(device.id)">
                     <span class="blue-cube circle"></span>
                     <h5 class="title">{{device.name}}</h5>
                     <p class="truncate">

@@ -31,7 +31,7 @@ public class Datum__ {
     private Double precipIntensityMax;
     @SerializedName("precipIntensityMaxTime")
     @Expose
-    private Integer precipIntensityMaxTime;
+    private Double precipIntensityMaxTime;
     @SerializedName("precipProbability")
     @Expose
     private Double precipProbability;
@@ -43,25 +43,25 @@ public class Datum__ {
     private Double temperatureMin;
     @SerializedName("temperatureMinTime")
     @Expose
-    private Integer temperatureMinTime;
+    private Double temperatureMinTime;
     @SerializedName("temperatureMax")
     @Expose
     private Double temperatureMax;
     @SerializedName("temperatureMaxTime")
     @Expose
-    private Integer temperatureMaxTime;
+    private Double temperatureMaxTime;
     @SerializedName("apparentTemperatureMin")
     @Expose
     private Double apparentTemperatureMin;
     @SerializedName("apparentTemperatureMinTime")
     @Expose
-    private Integer apparentTemperatureMinTime;
+    private Double apparentTemperatureMinTime;
     @SerializedName("apparentTemperatureMax")
     @Expose
     private Double apparentTemperatureMax;
     @SerializedName("apparentTemperatureMaxTime")
     @Expose
-    private Integer apparentTemperatureMaxTime;
+    private Double apparentTemperatureMaxTime;
     @SerializedName("dewPoint")
     @Expose
     private Double dewPoint;
@@ -151,11 +151,11 @@ public class Datum__ {
         this.precipIntensityMax = precipIntensityMax;
     }
 
-    public Integer getPrecipIntensityMaxTime() {
+    public Double getPrecipIntensityMaxTime() {
         return precipIntensityMaxTime;
     }
 
-    public void setPrecipIntensityMaxTime(Integer precipIntensityMaxTime) {
+    public void setPrecipIntensityMaxTime(Double precipIntensityMaxTime) {
         this.precipIntensityMaxTime = precipIntensityMaxTime;
     }
 
@@ -183,11 +183,11 @@ public class Datum__ {
         this.temperatureMin = temperatureMin;
     }
 
-    public Integer getTemperatureMinTime() {
+    public Double getTemperatureMinTime() {
         return temperatureMinTime;
     }
 
-    public void setTemperatureMinTime(Integer temperatureMinTime) {
+    public void setTemperatureMinTime(Double temperatureMinTime) {
         this.temperatureMinTime = temperatureMinTime;
     }
 
@@ -199,11 +199,11 @@ public class Datum__ {
         this.temperatureMax = temperatureMax;
     }
 
-    public Integer getTemperatureMaxTime() {
+    public Double getTemperatureMaxTime() {
         return temperatureMaxTime;
     }
 
-    public void setTemperatureMaxTime(Integer temperatureMaxTime) {
+    public void setTemperatureMaxTime(Double temperatureMaxTime) {
         this.temperatureMaxTime = temperatureMaxTime;
     }
 
@@ -215,11 +215,11 @@ public class Datum__ {
         this.apparentTemperatureMin = apparentTemperatureMin;
     }
 
-    public Integer getApparentTemperatureMinTime() {
+    public Double getApparentTemperatureMinTime() {
         return apparentTemperatureMinTime;
     }
 
-    public void setApparentTemperatureMinTime(Integer apparentTemperatureMinTime) {
+    public void setApparentTemperatureMinTime(Double apparentTemperatureMinTime) {
         this.apparentTemperatureMinTime = apparentTemperatureMinTime;
     }
 
@@ -231,11 +231,11 @@ public class Datum__ {
         this.apparentTemperatureMax = apparentTemperatureMax;
     }
 
-    public Integer getApparentTemperatureMaxTime() {
+    public Double getApparentTemperatureMaxTime() {
         return apparentTemperatureMaxTime;
     }
 
-    public void setApparentTemperatureMaxTime(Integer apparentTemperatureMaxTime) {
+    public void setApparentTemperatureMaxTime(Double apparentTemperatureMaxTime) {
         this.apparentTemperatureMaxTime = apparentTemperatureMaxTime;
     }
 

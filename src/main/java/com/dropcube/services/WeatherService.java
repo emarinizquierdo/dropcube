@@ -1,8 +1,10 @@
 package com.dropcube.services;
 
+import com.dropcube.beans.Device;
 import com.dropcube.beans.User;
 import com.dropcube.beans.mocks.Weather;
 import com.dropcube.biz.BizResponse;
+import com.dropcube.biz.DeviceBiz;
 import com.dropcube.biz.WeatherBiz;
 import com.dropcube.constants.Params;
 import com.dropcube.constants.Rest;
@@ -40,8 +42,10 @@ public class WeatherService {
         User user = UserSessionBeanUtil.get(request);
 
         WeatherBiz WEATHER_BIZ = new WeatherBiz(user);
+        DeviceBiz DEVICE_BIZ = new DeviceBiz(user);
 
-        Weather weather = WEATHER_BIZ.get(id);
+        Device device = DEVICE_BIZ.get(id);
+        Weather weather = WEATHER_BIZ.get(device.getLat(), device.getLng());
 
         BizResponse response = new BizResponse(weather);
         return Response.ok().entity(response.toJson()).build();

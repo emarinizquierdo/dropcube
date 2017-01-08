@@ -39,7 +39,7 @@ angular.module('dropcubeApp').controller('DevicesCtrl', ["$scope", "$location", 
 
     $scope.deleteDevice = function() {
         $('#modal1').closeModal();
-        Device.resource.delete({id : toDelete._id}, function(data) {
+        Device.resource.delete({id : toDelete.id}, function(data) {
             localDelete(Device.data, toDelete);
         }, function(e) {
 
@@ -48,7 +48,7 @@ angular.module('dropcubeApp').controller('DevicesCtrl', ["$scope", "$location", 
 
     function localDelete(array, data) {
         angular.forEach(array, function(item, index) {
-            if (item._id === data._id) {
+            if (item.id === data.id) {
                 array.splice(index, 1);
                 return false;
             }

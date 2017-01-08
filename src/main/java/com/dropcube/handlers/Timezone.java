@@ -38,9 +38,16 @@ public class Timezone {
 
         String response = REQUESTOR.request(path.toString());
 
+        LOGGER.info("Timezone request" + path);
+        LOGGER.info("Timezone response: " + response);
+
         TimezoneResponse timezoneResponse = GSON.fromJson(response, TimezoneResponse.class);
 
-        return toLocalTime(toLocalTime(timezoneResponse.getRawOffset()));
+        Integer offset = toLocalTime(toLocalTime(timezoneResponse.getRawOffset()));
+
+        LOGGER.info("Timezone ofset is: " + offset);
+
+        return offset;
 
     }
 
