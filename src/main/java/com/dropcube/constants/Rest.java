@@ -37,5 +37,6 @@ public class Rest {
     // /WEATHER
     // //////////////
     public static final String WEATHER_SERVICE_URL = "/weather";
+    public static final String WEATHER_SOME_URL = "/some";
 
 }

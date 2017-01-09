@@ -7,7 +7,7 @@ public class Currently {
 
     @SerializedName("time")
     @Expose
-    private Integer time;
+    private Long time;
     @SerializedName("summary")
     @Expose
     private String summary;
@@ -60,11 +60,11 @@ public class Currently {
     @Expose
     private Double ozone;
 
-    public Integer getTime() {
+    public Long getTime() {
         return time;
     }
 
-    public void setTime(Integer time) {
+    public void setTime(Long time) {
         this.time = time;
     }
 

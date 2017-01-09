@@ -7,7 +7,7 @@ public class Datum {
 
     @SerializedName("time")
     @Expose
-    private Integer time;
+    private Long time;
     @SerializedName("precipIntensity")
     @Expose
     private Double precipIntensity;
@@ -21,11 +21,11 @@ public class Datum {
     @Expose
     private String precipType;
 
-    public Integer getTime() {
+    public Long getTime() {
         return time;
     }
 
-    public void setTime(Integer time) {
+    public void setTime(Long time) {
         this.time = time;
     }
 

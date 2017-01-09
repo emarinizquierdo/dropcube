@@ -9,6 +9,10 @@ import com.dropcube.handlers.Requestor;
 import com.dropcube.handlers.Timezone;
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.logging.Logger;
 
 import static com.dropcube.constants.Params.*;
@@ -120,7 +124,7 @@ public class WeatherBiz {
 
         LOGGER.info("Getting weather for coordinates: " + lat + ", " + lng);
 
-        Integer offset = TIMEZONE.getOffset(lat, lng);
+        //Integer offset = TIMEZONE.getOffset(lat, lng);
 
         StringBuffer path = new StringBuffer();
         path.append(DARK_SKY_API_URL);
@@ -141,6 +145,60 @@ public class WeatherBiz {
         Weather weather = GSON.fromJson(response, Weather.class);
 
         return weather;
+
+    }
+
+    public void getSomeHours(Device device) throws DropcubeException{
+
+        List<Boolean> original = device.getHours();
+        List<Boolean> copy = new ArrayList<Boolean>(Arrays.asList(new Boolean[24]));
+        Double  lat = device.getLat(),
+                lng = device.getLng();
+        Weather weather = get(lat, lng);
+
+        int maxSnow = 0, maxRain = 0, maxHot = 0, maxWind = 0;
+        boolean storm = false;
+
+
+        Collections.fill(copy, Boolean.FALSE);
+
+        int localTime = TIMEZONE.localHour(weather.getCurrently().getTime(), lat, lng);
+
+        int i = localTime;
+        while(i <= 23){
+            copy.add(original.get(i));
+            i++;
+        }
+
+        i = 0;
+        while(i < localTime){
+            copy.add(original.get(i));
+            i++;
+        }
+
+        for(i = 0; i < 23; i++){
+            if(copy.get(i)){
+
+                if(     (weather.getHourly().getData().get(i).getPrecipType() != null) &&
+                        (weather.getHourly().getData().get(i).getPrecipType().compareTo("rain") == 0)
+                        ){
+
+                    maxRain = (maxRain < getRain(weather, i)) ? getRain(weather, i) : maxRain;
+                }
+
+                if(     (weather.getHourly().getData().get(i).getPrecipType() != null) &&
+                        (weather.getHourly().getData().get(i).getPrecipType().compareTo("snow") == 0)
+                        ) {
+                    maxSnow = (maxSnow < getRain(weather, i)) ? getRain(weather, i) : maxSnow;
+                }
+
+                maxHot = (maxHot < getHot(weather, i)) ? getHot(weather, i) : maxHot;
+                maxWind = (maxWind < getWind(weather, i)) ? getWind(weather, i) : maxWind;
+                storm = storm || getStorm(weather);
+            }
+        }
+
+        LOGGER.info("Copia es..........." + copy);
 
     }
 

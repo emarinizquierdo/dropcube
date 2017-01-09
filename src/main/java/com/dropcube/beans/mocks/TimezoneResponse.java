@@ -7,10 +7,10 @@ public class TimezoneResponse {
 
     @SerializedName("dstOffset")
     @Expose
-    private Integer dstOffset;
+    private Long dstOffset;
     @SerializedName("rawOffset")
     @Expose
-    private Integer rawOffset;
+    private Long rawOffset;
     @SerializedName("status")
     @Expose
     private String status;
@@ -21,19 +21,19 @@ public class TimezoneResponse {
     @Expose
     private String timeZoneName;
 
-    public Integer getDstOffset() {
+    public Long getDstOffset() {
         return dstOffset;
     }
 
-    public void setDstOffset(Integer dstOffset) {
+    public void setDstOffset(Long dstOffset) {
         this.dstOffset = dstOffset;
     }
 
-    public Integer getRawOffset() {
+    public Long getRawOffset() {
         return rawOffset;
     }
 
-    public void setRawOffset(Integer rawOffset) {
+    public void setRawOffset(Long rawOffset) {
         this.rawOffset = rawOffset;
     }
 

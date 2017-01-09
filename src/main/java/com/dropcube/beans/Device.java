@@ -5,8 +5,7 @@ import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.*;
 
 import java.lang.String;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 import com.dropcube.beans.User;
 
@@ -40,6 +39,7 @@ public class Device {
     public Double lng = -3.7025600;
     public Integer minHour = 8;
     public Integer maxHour = 18;
+    public List<Boolean> hours = new ArrayList<Boolean>(Arrays.asList(new Boolean[24]));
 
     public String mode;
 
@@ -51,8 +51,16 @@ public class Device {
         this.mode = mode;
     }
 
-    public Device(){
+    public List<Boolean> getHours() {
+        return hours;
+    }
 
+    public void setHours(List<Boolean> hours) {
+        this.hours = hours;
+    }
+
+    public Device(){
+        Collections.fill(hours, Boolean.FALSE);
     }
 
     public Device(String pDeviceId, String pName, Long pUserId){

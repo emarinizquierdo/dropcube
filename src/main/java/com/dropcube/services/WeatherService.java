@@ -52,4 +52,30 @@ public class WeatherService {
 
     }
 
+    /**
+     * Gets a user information.
+     *
+     * @return {@link Response} Response in Json with the rating information.
+     */
+    @GET
+    @Path(Rest.WEATHER_SOME_URL + Rest.GET_ID_URL)
+    @Produces(MediaType.APPLICATION_JSON + Params.CHARSET_UTF8)
+    public Response getSome(
+            @Context HttpServletRequest request,
+            @PathParam(Params.PARAM_ID) Long id) throws DropcubeException{
+
+        // We get datastore user info and update language
+        User user = UserSessionBeanUtil.get(request);
+
+        WeatherBiz WEATHER_BIZ = new WeatherBiz(user);
+        DeviceBiz DEVICE_BIZ = new DeviceBiz(user);
+
+        Device device = DEVICE_BIZ.get(id);
+        WEATHER_BIZ.getSomeHours(device);
+
+        BizResponse response = new BizResponse();
+        return Response.ok().entity(response.toJson()).build();
+
+    }
+
 }
