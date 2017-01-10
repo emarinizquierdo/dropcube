@@ -2,7 +2,7 @@ package com.dropcube.biz;
 
 import com.dropcube.beans.Device;
 import com.dropcube.beans.User;
-import com.dropcube.beans.mocks.Weather;
+import com.dropcube.beans.mocks.DWeather;
 import com.dropcube.constants.Params;
 import com.dropcube.constants.StatusCodes;
 import com.dropcube.exceptions.DropcubeException;
@@ -67,42 +67,38 @@ public class DeviceBiz {
     public Boolean refreshDevice(Long deviceId) throws DropcubeException{
 
         Device device = get(deviceId);
+        DWeather dWeather = null;
 
-        Weather weather = WEATHER_BIZ.get(device.getLat(), device.getLng());
+        if(device.getHourly()){
+
+            dWeather = WEATHER_BIZ.getCurrentHour(device);
+
+        }else{
+
+            dWeather = WEATHER_BIZ.getSomeHours(device);
+
+        }
 
         try{
 
             LOGGER.info("refreshing " + deviceId + " device");
 
-            Map<String,String> valores = new HashMap<>();
+            Map<String,String> params = new HashMap<>();
 
-            valores.put("MODE", getMode(deviceId));
+            params.put("MODE", getMode(deviceId));
+            params.put("HOT", dWeather.getHot().toString());
+            params.put("WIND", dWeather.getWind().toString());
+            params.put("RAIN", dWeather.getRain().toString());
+            params.put("SNOW", dWeather.getSnow().toString());
+            params.put("STORM", dWeather.getStorm().toString());
 
-            valores.put("HOT", String.valueOf(WEATHER_BIZ.getHot(weather, 0)));
-
-            valores.put("WIND", String.valueOf(WEATHER_BIZ.getWind(weather, 0)));
-
-            if(weather.getHourly().getData().get(0).getPrecipType() != null){
-                LOGGER.info("PrecipType is: " + weather.getHourly().getData().get(0).getPrecipType() );
-                if(weather.getHourly().getData().get(0).getPrecipType().compareTo("rain") == 0){
-                   valores.put("RAIN", String.valueOf(WEATHER_BIZ.getRain(weather, 0)));
-                    valores.put("SNOW", String.valueOf(0));
-                }else if(weather.getHourly().getData().get(0).getPrecipType().compareTo("snow") == 0){
-                    valores.put("SNOW", String.valueOf(WEATHER_BIZ.getRain(weather, 0)));
-                    valores.put("RAIN", String.valueOf(0));
-                }
-            }else{
-                valores.put("SNOW", String.valueOf(0));
-                valores.put("RAIN", String.valueOf(0));
-            }
-
-            valores.put("STORM", String.valueOf(WEATHER_BIZ.getStorm(weather)));
-
-            return FIREBASE.write(String.valueOf(deviceId), valores);
+            return FIREBASE.write(String.valueOf(deviceId), params);
 
         } catch (Exception ex) {
+
             ex.printStackTrace();
             return false;
+
         }
     }
 

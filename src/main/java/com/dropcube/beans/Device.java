@@ -40,8 +40,16 @@ public class Device {
     public Integer minHour = 8;
     public Integer maxHour = 18;
     public List<Boolean> hours = new ArrayList<Boolean>(Arrays.asList(new Boolean[24]));
-
+    public Boolean hourly = true;
     public String mode;
+
+    public Boolean getHourly() {
+        return hourly;
+    }
+
+    public void setHourly(Boolean hourly) {
+        this.hourly = hourly;
+    }
 
     public String getMode() {
         return mode;

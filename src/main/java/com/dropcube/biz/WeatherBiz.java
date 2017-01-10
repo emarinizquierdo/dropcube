@@ -2,6 +2,7 @@ package com.dropcube.biz;
 
 import com.dropcube.beans.Device;
 import com.dropcube.beans.User;
+import com.dropcube.beans.mocks.DWeather;
 import com.dropcube.beans.mocks.Weather;
 import com.dropcube.constants.Params;
 import com.dropcube.exceptions.DropcubeException;
@@ -148,15 +149,52 @@ public class WeatherBiz {
 
     }
 
-    public void getSomeHours(Device device) throws DropcubeException{
+    public DWeather getCurrentHour(Device device) throws DropcubeException{
+
+        DWeather dWeather = new DWeather();
+        Weather weather = get(device.getLat(), device.getLng());
+
+        dWeather.setHot(getHot(weather, 0));
+
+        dWeather.setWind(getWind(weather, 0));
+
+        if(weather.getHourly().getData().get(0).getPrecipType() != null){
+
+            if(weather.getHourly().getData().get(0).getPrecipType().compareTo("rain") == 0){
+                dWeather.setRain(getRain(weather, 0));
+                dWeather.setSnow(0);
+            }else if(weather.getHourly().getData().get(0).getPrecipType().compareTo("snow") == 0){
+                dWeather.setSnow(getRain(weather, 0));
+                dWeather.setRain(0);
+            }
+        }else{
+            dWeather.setSnow(0);
+            dWeather.setRain(0);
+        }
+
+        dWeather.setStorm(getStorm(weather));
+
+        return dWeather;
+
+    }
+
+    public DWeather getSomeHours(Device device) throws DropcubeException{
+
+        DWeather dWeather = new DWeather();
 
         List<Boolean> original = device.getHours();
         List<Boolean> copy = new ArrayList<Boolean>(Arrays.asList(new Boolean[24]));
+
         Double  lat = device.getLat(),
                 lng = device.getLng();
+
         Weather weather = get(lat, lng);
 
-        int maxSnow = 0, maxRain = 0, maxHot = 0, maxWind = 0;
+        int     maxSnow = 0,
+                maxRain = 0,
+                maxHot = 0,
+                maxWind = 0;
+
         boolean storm = false;
 
 
@@ -177,6 +215,7 @@ public class WeatherBiz {
         }
 
         for(i = 0; i < 23; i++){
+
             if(copy.get(i)){
 
                 if(     (weather.getHourly().getData().get(i).getPrecipType() != null) &&
@@ -196,9 +235,19 @@ public class WeatherBiz {
                 maxWind = (maxWind < getWind(weather, i)) ? getWind(weather, i) : maxWind;
                 storm = storm || getStorm(weather);
             }
+
         }
 
+        dWeather.setHot(maxHot);
+        dWeather.setRain(maxRain);
+        dWeather.setSnow(maxSnow);
+        dWeather.setWind(maxWind);
+        dWeather.setStorm(storm);
+
         LOGGER.info("Copia es..........." + copy);
+        LOGGER.info("MaxWeather es.........." + dWeather.toString());
+
+        return dWeather;
 
     }
 
