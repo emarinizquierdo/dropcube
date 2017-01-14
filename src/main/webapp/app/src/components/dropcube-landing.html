@@ -15,38 +15,39 @@
         <style>
             .main-title {
                 font-size: 11.0vh;
+                margin-bottom: 8vh;
+                color: #ffffff;
             }
 
             h3 {
                 font-size: 7.0vh;
+                color: #ffffff;
             }
 
-            .logo-img{
-              width: 15vh;
+            .logo-img {
+                width: 15vh;
+                height: auto;
             }
 
             @media (max-width: 639px) {
-              .main-title {
-                  font-size: 11.0vw;
-              }
-
-              h3 {
-                  font-size: 7.0vw;
-              }
-
-              .logo-img{
-                width: 15vw;
-              }
+                .main-title {
+                    font-size: 11.0vw;
+                    color: #ffffff;
+                }
+                h3 {
+                    font-size: 7.0vw;
+                    color: #ffffff;
+                }
+                .logo-img {
+                    width: 15vw;
+                }
             }
-
         </style>
 
         <div class="layout-column layout-container layout-align-center-center">
 
-            <h2 class="md-display-2 main-title light exo">drop cube</h2>
-
-            <img class="logo-img" src="/images/cube_100.png">
-
+            <h2 class="md-display-2 main-title light exo">dropcube</h2>
+            <iron-icon class="logo-img" icon="dropcube-icons:cube"></iron-icon>
             <h3 class="header thin exo trademark-main">{{ dictionary.MAIN_PAGE.PREPARE_FOR_RAIN}}</h3>
 
         </div>

@@ -1,6 +1,11 @@
 {
     "en_GB": {
 
+        "INTRO": {
+            "TITLE": "titulo",
+            "DESCRIPTION": "descripcion"
+        },
+
         "MAIN_PAGE": {
 
             "PREPARE_FOR_RAIN": "be prepare for raining",
@@ -47,6 +52,26 @@
 
     "es_ES": {
 
+        "INTRO": {
+            "TITLE": "Una forma diferente de conocer el tiempo",
+            "DESCRIPTION": "Ahora podrás saber si va a llover, nevar, hará calor de una forma completamente diferente. Ya no tienes que coger tu móvil, encenderlo y acceder a ninguna aplicación. Bastará con ver si dropcube luce algún color!"
+        },
+        "SUMMARY1": {
+            "TITLES" : {
+              "MAIN" : "Diferentes tipos de alertas y funciones",
+              "HOT" : "Alerta por calor",
+              "RAIN" : "Alerta por lluvias",
+              "SNOW" : "Alerta por nevadas",
+              "WIND" : "Alerta por viento"
+            },
+            "DESCRIPTIONS" : {
+              "MAIN" : "Diferentes tipos de alertas y funciones",
+              "HOT" : "Para días muy calurosos, dropcube te avisará si fuera hace más de 27ºC.",
+              "RAIN" : "Cada vez que vaya a llover, dropcube te avisará dando prioridad a esta alerta.",
+              "SNOW" : "Y si en vez de gotas caen copos, no te preocupes, dropcube se pondrá blanco como un muñeco de nieve.",
+              "WIND" : "Cuando fuera empiece a soplar fuerte, una luz naranja te avisará para que no se te escape el sombrero."
+            }
+        },
         "MAIN_PAGE": {
 
             "PREPARE_FOR_RAIN": "prepárate para la lluvia",

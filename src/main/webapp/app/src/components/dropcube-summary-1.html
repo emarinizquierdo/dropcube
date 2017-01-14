@@ -1,0 +1,189 @@
+<link rel="import" href="/bower_components/polymer/polymer.html">
+
+<!-- .............. POLYMER COMPONENTS  .............. -->
+<!--<link rel="import" href="/bower_components/parallax-element/parallax-element.html">-->
+
+
+<!-- .............. APP COMPONENTS  .............. -->
+<link rel="import" href="dropcube-container.html">
+
+<dom-module id="dropcube-summary-1">
+
+    <template>
+
+        <style include="dropcube-styles"></style>
+
+        <style is="custom-style">
+            :host {
+              margin-top: 50px;
+                display: block;
+            }
+
+            dropcube-container {
+
+            }
+
+            p {
+
+            }
+
+            .summary-title {
+                text-align: center;
+            }
+
+            .cube-icon {
+                width: 100%;
+                height: auto;
+            }
+
+            .weather-icon{
+              width:37px;
+              height: auto;
+            }
+
+            .functions {
+              cursor: pointer;
+            }
+        </style>
+
+        <dropcube-container big="true" class="layout-row layout-align-center-center">
+
+            <div class="layout-row layout-align-center-center summary-title">
+                <h3 class="flex header light">{{dictionary.SUMMARY1.TITLES.MAIN}}</h3>
+            </div>
+            <div class="functions layout-row layout-sm-column layout-margin layout-align-center-center layout-align-space-around">
+                <div class="flex-sm-100 flex-30">
+                    <div class="layout-column">
+                        <div on-mouseover="_rain">
+                          <div class="layout-row layout-margin">
+                              <div class="flex-start">
+                                  <iron-icon class="weather-icon" icon="dropcube-icons:rain"></iron-icon>
+                              </div>
+                              <div class="flex">
+                                <h5>{{dictionary.SUMMARY1.TITLES.RAIN}}</h5>
+                                <p class="md-body-2">{{dictionary.SUMMARY1.DESCRIPTIONS.RAIN}}</p>
+                              </div>
+                          </div>
+                        </div>
+                        <div on-mouseover="_snow">
+                          <div class="layout-row layout-margin">
+                              <div class="flex-start">
+                                  <iron-icon class="weather-icon" icon="dropcube-icons:snow"></iron-icon>
+                              </div>
+                              <div class="flex">
+                                <h5>{{dictionary.SUMMARY1.TITLES.SNOW}}</h5>
+                                <p class="md-body-2">{{dictionary.SUMMARY1.DESCRIPTIONS.SNOW}}</p>
+                              </div>
+                          </div>
+                        </div>
+                        <div on-mouseover="_snow">
+                            <div class="layout-row layout-margin">
+                                <div class="flex-start">
+                                    <iron-icon class="weather-icon" icon="dropcube-icons:rainbow"></iron-icon>
+                                </div>
+                                <div class="flex">
+                                  <h5>{{dictionary.SUMMARY1.TITLES.SNOW}}</h5>
+                                  <p class="md-body-2">{{dictionary.SUMMARY1.DESCRIPTIONS.SNOW}}</p>
+                                </div>
+                            </div>
+                          </div>
+                    </div>
+
+                </div>
+                <div class="flex-5">
+                </div>
+                <div class="flex-30">
+                    <iron-icon id="cubeColor" class="cube-icon" icon="dropcube-icons:cube-color"></iron-icon>
+                </div>
+                <div class="flex-5">
+                </div>
+                <div class="flex-sm-100 flex-30">
+                    <div on-mouseover="_wind">
+                        <div class="layout-row layout-margin">
+                            <div class="flex-start">
+                                <iron-icon class="weather-icon" icon="dropcube-icons:wind"></iron-icon>
+                            </div>
+                            <div class="flex">
+                              <h5>{{dictionary.SUMMARY1.TITLES.WIND}}</h5>
+                              <p class="md-body-2">{{dictionary.SUMMARY1.DESCRIPTIONS.WIND}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div on-mouseover="_hot">
+                      <div class="layout-row layout-margin">
+                          <div class="flex-start">
+                              <iron-icon class="weather-icon" icon="dropcube-icons:hot"></iron-icon>
+                          </div>
+                          <div class="flex">
+                            <h5>{{dictionary.SUMMARY1.TITLES.HOT}}</h5>
+                            <p class="md-body-2">{{dictionary.SUMMARY1.DESCRIPTIONS.HOT}}</p>
+                          </div>
+                      </div>
+                    </div>
+                    <div on-mouseover="_snow">
+                        <div class="layout-row layout-margin">
+                            <div class="flex-start">
+                                <iron-icon class="weather-icon" icon="dropcube-icons:rainbow"></iron-icon>
+                            </div>
+                            <div class="flex">
+                              <h5>{{dictionary.SUMMARY1.TITLES.SNOW}}</h5>
+                              <p class="md-body-2">{{dictionary.SUMMARY1.DESCRIPTIONS.SNOW}}</p>
+                            </div>
+                        </div>
+                      </div>
+                </div>
+            </div>
+
+        </dropcube-container>
+
+    </template>
+
+
+    <script>
+        Polymer({
+            is: "dropcube-summary-1",
+            properties: {
+                dictionary: {
+                    type: Object
+                },
+                _colors: {
+                    type: Object,
+                    value: {
+                        'rain': '#6fb5ec',
+                        'snow': '#eae8b4',
+                        'wind': '#ff9800',
+                        'hot': '#ff6b6b'
+                    }
+                }
+            },
+            _rain: function() {
+
+                this._changeColor(this._colors.rain);
+
+            },
+            _snow: function() {
+
+                this._changeColor(this._colors.snow);
+
+            },
+            _wind: function() {
+
+                this._changeColor(this._colors.wind);
+
+            },
+            _hot: function() {
+
+                this._changeColor(this._colors.hot);
+
+            },
+            _changeColor: function(color) {
+
+                var light = this.$.cubeColor.shadowRoot.getElementById('light');
+                light.style.fill = color;
+
+            }
+
+        });
+    </script>
+
+</dom-module>

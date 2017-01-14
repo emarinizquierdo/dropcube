@@ -1,0 +1,53 @@
+<link rel="import" href="/bower_components/polymer/polymer.html">
+
+<!-- .............. POLYMER COMPONENTS  .............. -->
+<!--<link rel="import" href="/bower_components/parallax-element/parallax-element.html">-->
+
+
+<!-- .............. APP COMPONENTS  .............. -->
+
+<dom-module id="dropcube-container">
+
+    <template>
+
+        <style include="dropcube-styles"></style>
+
+        <style>
+            :host {
+                width: 100%;
+            }
+        </style>
+
+        <div class="flex-100 layout-row layout-align-center-center">
+
+          <template is="dom-if" if="{{big}}">
+            <div class="flex flex-90 flex-gt-xs-80 flex-gt-md-70 flex-gt-lg-70">
+
+                <content></content>
+            </div>
+          </template>
+          <template is="dom-if" if="{{!big}}">
+            <div class="flex flex-90 flex-gt-xs-80 flex-gt-md-60 flex-gt-lg-40">
+
+                <content></content>
+            </div>
+          </template>
+        </div>
+
+    </template>
+
+
+    <script>
+        Polymer({
+            is: "dropcube-container",
+            properties: {
+              big:{
+                type: Boolean,
+                value: false
+              }
+            }
+
+        });
+    </script>
+
+</dom-module>

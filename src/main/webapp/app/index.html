@@ -19,7 +19,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <link rel="shortcut icon" sizes="32x32" href="/images/blue_cube_60.png">
     <link href="https://fonts.googleapis.com/css?family=Exo:400,100,700,300" rel="stylesheet" type="text/css">
-    
+
     <meta name="theme-color" content="#fff">
     <link rel="manifest" href="/manifest.json">
 
@@ -28,6 +28,34 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         html,
         body {
             overflow-x: hidden;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            line-height: 1.5;
+            font-family: "Roboto", sans-serif;
+            font-weight: normal;
+            color: rgba(0, 0, 0, 0.87);
+            font-size: 11px;
+        }
+
+        @media only screen and (min-width: 0) {
+            html {
+                font-size: 11px;
+            }
+        }
+
+        @media only screen and (min-width: 992px) {
+            html {
+                font-size: 11.5px;
+            }
+        }
+
+        @media only screen and (min-width: 1200px) {
+            html {
+                font-size: 12px;
+            }
         }
     </style>
 </head>
