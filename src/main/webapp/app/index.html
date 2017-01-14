@@ -1,0 +1,63 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+
+    <title>Dropcube</title>
+
+    <link rel="shortcut icon" sizes="32x32" href="/images/blue_cube_60.png">
+    <link href="https://fonts.googleapis.com/css?family=Exo:400,100,700,300" rel="stylesheet" type="text/css">
+    
+    <meta name="theme-color" content="#fff">
+    <link rel="manifest" href="/manifest.json">
+
+    <link rel="import" href="/src/dropcube-content.html" async>
+    <style>
+        html,
+        body {
+            overflow-x: hidden;
+        }
+    </style>
+</head>
+
+<body unresolved>
+
+    <dropcube-content></dropcube-content>
+
+    <script>
+        window.performance && performance.mark && performance.mark('index.html');
+
+        Polymer = {
+            lazyRegister: true,
+            dom: 'shadow'
+        };
+
+        (function() {
+            if ('registerElement' in document &&
+                'import' in document.createElement('link') &&
+                'content' in document.createElement('template')) {
+                // platform is good!
+            } else {
+                // polyfill the platform!
+                var e = document.createElement('script');
+                e.src = '/bower_components/webcomponentsjs/webcomponents-lite.min.js';
+                document.body.appendChild(e);
+            }
+        })();
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,49 @@
+<link rel="import" href="/bower_components/polymer/polymer.html">
+
+<!-- .............. POLYMER COMPONENTS  .............. -->
+<link rel="import" href="/bower_components/iron-ajax/iron-ajax.html">
+
+<dom-module id="lang-service">
+
+    <template>
+
+        <iron-ajax auto url="{{src}}" on-response="_loadDictionary" last-response="{{dictionaries}}"></iron-ajax>
+
+    </template>
+    <script>
+        // element registration
+        Polymer({
+            is: "lang-service",
+            properties: {
+                dictionary: {
+                    type: Object,
+                    notify: true,
+                    value: {}
+                },
+                src: {
+                    type: String
+                },
+                currentLang : {
+                   type : String,
+                   value : 'es_ES'
+                }
+            },
+
+
+            setLang: function(lang) {
+               this.currentLang = (lang == 'en_GB') ? 'en_GB' : 'es_ES';
+               this._loadDictionary();
+            },
+
+            _loadDictionary: function() {
+
+               if(this.dictionaries && this.dictionaries[this.currentLang]){
+                  this.dictionary = this.dictionaries[this.currentLang];
+               }
+
+            }
+
+        });
+    </script>
+
+</dom-module>

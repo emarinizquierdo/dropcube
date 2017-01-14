@@ -1,0 +1,33 @@
+<link rel="import" href="/bower_components/polymer/polymer.html">
+
+<dom-module id="user-service">
+
+    <script>
+        function User() {
+
+            this.data = null;
+
+            this.isAdmin = function() {
+                return (this.data.role == 'ADMIN');
+            }
+
+        }
+
+        // element registration
+        Polymer({
+            is: "user-service",
+            properties: {
+                user: {
+                    type: Object,
+                    notify: true,
+                    value: new User()
+                }
+            },
+            ready: function() {
+                this.user.data = userSession;
+            }
+
+        });
+    </script>
+
+</dom-module>

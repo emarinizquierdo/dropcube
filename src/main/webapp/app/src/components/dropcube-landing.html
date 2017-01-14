@@ -1,0 +1,70 @@
+<link rel="import" href="/bower_components/polymer/polymer.html">
+
+<!-- .............. POLYMER COMPONENTS  .............. -->
+<!--<link rel="import" href="/bower_components/parallax-element/parallax-element.html">-->
+
+
+<!-- .............. APP COMPONENTS  .............. -->
+
+<dom-module id="dropcube-landing">
+
+    <template>
+
+        <style include="dropcube-styles"></style>
+
+        <style>
+            .main-title {
+                font-size: 11.0vh;
+            }
+
+            h3 {
+                font-size: 7.0vh;
+            }
+
+            .logo-img{
+              width: 15vh;
+            }
+
+            @media (max-width: 639px) {
+              .main-title {
+                  font-size: 11.0vw;
+              }
+
+              h3 {
+                  font-size: 7.0vw;
+              }
+
+              .logo-img{
+                width: 15vw;
+              }
+            }
+
+        </style>
+
+        <div class="layout-column layout-container layout-align-center-center">
+
+            <h2 class="md-display-2 main-title light exo">drop cube</h2>
+
+            <img class="logo-img" src="/images/cube_100.png">
+
+            <h3 class="header thin exo trademark-main">{{ dictionary.MAIN_PAGE.PREPARE_FOR_RAIN}}</h3>
+
+        </div>
+
+
+    </template>
+
+
+    <script>
+        Polymer({
+            is: "dropcube-landing",
+            properties: {
+                dictionary: {
+                    type: Object
+                }
+            }
+
+        });
+    </script>
+
+</dom-module>

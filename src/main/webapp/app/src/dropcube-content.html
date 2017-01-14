@@ -1,0 +1,216 @@
+<link rel="import" href="/bower_components/polymer/polymer.html">
+
+<!-- .............. POLYMER COMPONENTS  .............. -->
+<link rel="import" href="/bower_components/app-route/app-location.html">
+<link rel="import" href="/bower_components/app-route/app-route.html">
+<link rel="import" href="/bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="/bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="/bower_components/app-layout/app-layout.html">
+<link rel="import" href="/bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="/bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="/bower_components/paper-progress/paper-progress.html">
+<link rel="import" href="/bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
+
+
+<!-- .............. APP COMPONENTS  .............. -->
+
+<link rel="import" href="styles/dropcube-styles.html">
+<link rel="import" href="components/dropcube-landing.html">
+<link rel="import" href="views/dropcube-main.html">
+<link rel="import" href="services/lang.html">
+
+<dom-module id="dropcube-content">
+
+    <template>
+
+        <style include="dropcube-styles"></style>
+
+        <style is="custom-style">
+            app-header {
+                position: fixed;
+                min-height: 64px;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                color: #fff;
+                background-color: var(--dropcube-main-blue);
+                --app-header-background-front-layer: {
+                    background-color: var(--dropcube-main-blue);
+                    background-position: left center;
+                }
+                ;
+            }
+
+            paper-icon-button {
+                --paper-icon-button-ink-color: white;
+            }
+
+            app-toolbar.tall {
+                height: calc(100% - 175px);
+            }
+
+            sample-content {
+                padding-top: 212px;
+            }
+
+            #logo-small {
+                background-image: url("/images/cube_60.png");
+                display: inline-block;
+                width: 43px;
+                height: 43px;
+                background-size: contain;
+                margin: 10px;
+                float: left;
+            }
+
+            [main-title] {
+                font-weight: lighter;
+                margin-left: 108px;
+            }
+
+            [condensed-title] {
+                margin-left: 30px;
+                font-size: 31px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+            [condensed-title] i {
+                font-weight: 100;
+                font-style: normal;
+            }
+
+            @media (max-width: 639px) {
+                [main-title] {
+                    margin-left: 50px;
+                    font-size: 30px;
+                }
+                [condensed-title] {
+                    font-size: 15px;
+                }
+            }
+
+            paper-scroll-header-panel {
+                position: absolute;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                left: 0;
+                background-color: var(--paper-grey-200, #eee);
+                /* background for toolbar when it is at its full size */
+                --paper-scroll-header-panel-full-header: {
+                    background-image: url(images/bg1.jpg);
+                    background-position: left center;
+                }
+                ;
+                /* background for toolbar when it is condensed */
+                --paper-scroll-header-panel-condensed-header: {
+                    background-color: var(--paper-deep-purple-500);
+                }
+                ;
+            }
+
+            paper-icon-button {
+                --paper-icon-button-ink-color: white;
+            }
+
+            paper-toolbar.tall {
+                background-color: transparent;
+            }
+
+            paper-toolbar.tall .title {
+                font-size: 40px;
+                margin-left: 60px;
+                -webkit-transform-origin: left center;
+                transform-origin: left center;
+            }
+
+            .content {
+                padding: 8px;
+            }
+
+            .spacer {
+                @apply(--layout-flex);
+            }
+        </style>
+
+        <!-- .............. GENERAL RESOURCES  .............. -->
+
+        <!-- ............ END GENERAL RESOURCES  .............. -->
+
+
+        <!-- ..............   MODEL CONTROL  .............. -->
+        <lang-service id="langService" dictionary="{{dictionary}}" src="lang/locales.json"></lang-service>
+        <user-service id="userService" user="{{_user}}"></user-service>
+
+        <!-- ..............  END MODEL CONTROL .............. -->
+
+        <app-header fixed reveal condenses effects="waterfall parallax-background">
+            <app-toolbar sticky>
+                <paper-icon-button icon="menu" on-click="_toggleDrawer"></paper-icon-button>
+                <div condensed-title><span id="logo-small"></span><span class="exo">drop cube</span></div>
+                <paper-icon-button icon="search"></paper-icon-button>
+            </app-toolbar>
+            <app-toolbar class="tall">
+                <dropcube-landing class="flex-100" dictionary="{{dictionary}}"></dropcube-landing>
+            </app-toolbar>
+        </app-header>
+
+        <app-drawer id="drawer" swipe-open></app-drawer>
+
+        <sample-content size="10">
+            <app-location id="appLocation" route="{{route}}"></app-location>
+            <app-route route="{{route}}" pattern="/:view" data="{{routeData}}" tail="{{subroute}}"></app-route>
+            <iron-pages selected="[[routeData.view]]" attr-for-selected="name">
+                <dropcube-main route="{{subroute}}" name="" dictionary="{{dictionary}}">
+                </dropcube-main>
+                <app-admin route="{{subroute}}" name="login" dictionary="{{dictionary}}">
+                </app-admin>
+                <app-devices route="{{subroute}}" name="devices" dictionary="{{dictionary}}">
+                </app-devices>
+            </iron-pages>
+        </sample-content>
+
+    </template>
+
+    <script>
+
+        Polymer.AppLayout.registerEffect('resizable-logo', {
+            setUp: function(config) {
+                // the effect's config is passed to the setUp.
+                this._fxResizeLogo = {
+                    logo: Polymer.dom(this).querySelector('[logo]')
+                };
+            },
+
+            run: function(progress) {
+                // the progress of the effect
+                this.transform('scale3d(' + progress + ', ' + progress + ', 1)', this._fxResizeLogo.logo);
+            },
+
+            tearDown: function() {
+                // clean up and reset of states
+                delete this._fxResizeLogo;
+            }
+        });
+
+        Polymer({
+            is: "dropcube-content",
+            properties: {
+
+            },
+            listeners: [{
+                'paper-header-transform': '_onPaperHeaderTransform'
+            }],
+            _toggleDrawer: function() {
+                this.$.drawer.toggle()
+            },
+            _onPaperHeaderTransform: function() {
+                debugger;
+            }
+
+        });
+    </script>
+
+</dom-module>
