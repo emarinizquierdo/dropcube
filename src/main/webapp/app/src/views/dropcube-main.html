@@ -3,11 +3,14 @@
 <!-- .............. POLYMER COMPONENTS  .............. -->
 <!--<link rel="import" href="/bower_components/parallax-element/parallax-element.html">-->
 
-
 <!-- .............. APP COMPONENTS  .............. -->
 <link rel="import" href="../styles/dropcube-icons.html">
+
+<link rel="import" href="../components/dropcube-main-header.html">
 <link rel="import" href="../components/dropcube-intro.html">
 <link rel="import" href="../components/dropcube-summary-1.html">
+<link rel="import" href="../components/dropcube-summary-2.html">
+<link rel="import" href="../components/dropcube-summary-3.html">
 
 
 <dom-module id="dropcube-main">
@@ -19,39 +22,6 @@
         </style>
 
         <style>
-            app-header {
-                position: fixed;
-                min-height: 64px;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                color: #fff;
-                background-color: var(--dropcube-main-blue);
-                --app-header-background-front-layer: {
-                    background-color: var(--dropcube-main-blue);
-                    background-position: left center;
-                }
-                ;
-                    z-index: 99999999999999999;
-            }
-
-            paper-icon-button {
-                --paper-icon-button-ink-color: white;
-            }
-
-            .condensed-toolbar {
-                background-color: #009FCF;
-                z-index: 9999999;
-                position: fixed;
-                width: 100%;
-                box-sizing: border-box;
-            }
-
-            app-toolbar.tall {
-                height: calc(100% - 68px);
-            }
-
             sample-content {
                 padding-top: 212px;
             }
@@ -59,65 +29,10 @@
             .spacer {
                 height: 100vh;
             }
-
-            #logo-small {
-                background-image: url("/images/cube_60.png");
-                display: inline-block;
-                width: 43px;
-                height: 43px;
-                background-size: contain;
-                margin: 10px;
-                float: left;
-            }
-
-            .logo-img {
-                width: 35px;
-                height: auto;
-            }
-
-            [main-title] {
-                font-weight: lighter;
-                margin-left: 108px;
-            }
-
-            [condensed-title] {
-                margin-left: 30px;
-                font-size: 31px;
-                overflow: hidden;
-                text-overflow: ellipsis;
-            }
-
-            [condensed-title] i {
-                font-weight: 100;
-                font-style: normal;
-            }
-
-            @media (max-width: 639px) {
-                [main-title] {
-                    margin-left: 50px;
-                    font-size: 30px;
-                }
-                [condensed-title] {
-                    font-size: 15px;
-                }
-            }
         </style>
 
         <!--  Parallax Section  -->
-        <app-header fixed reveal condenses effects="waterfall resize-title">
-            <app-toolbar class="condensed-toolbar" sticky>
-                <paper-icon-button icon="menu" on-click="_toggleDrawer"></paper-icon-button>
-                <div condensed-title class="layout-row layout-align-start-center layout-margin">
-                    <iron-icon class="logo-img" icon="dropcube-icons:cube"></iron-icon>
-                    <span class="exo">dropcube</span>
-                </div>
-                <paper-icon-button icon="search"></paper-icon-button>
-            </app-toolbar>
-            <app-toolbar class="tall">
-                <span main-title style="display:none"></span>
-                <dropcube-landing class="flex-100" dictionary="{{dictionary}}"></dropcube-landing>
-            </app-toolbar>
-        </app-header>
+        <dropcube-main-header dictionary="{{dictionary}}" user="{{user}}"></dropcube-main-header>
 
 
         <div class="spacer"></div>
@@ -126,7 +41,9 @@
 
         <dropcube-summary-1 dictionary="{{dictionary}}"></dropcube-summary-1>
 
-        <dropcube-intro dictionary="{{dictionary}}"></dropcube-intro>
+        <dropcube-summary-2 dictionary="{{dictionary}}"></dropcube-summary-2>
+
+        <dropcube-summary-3 dictionary="{{dictionary}}"></dropcube-summary-3>
 
     </template>
 
@@ -134,8 +51,22 @@
         Polymer({
             is: "dropcube-main",
             properties: {
+                user: {
+                    type: Object
+                },
                 dictionary: {
                     type: Object
+                },
+                dinosaurs: {
+                    type: Array,
+                    value: [
+                        'allosaurus',
+                        'brontosaurus',
+                        'carcharodontosaurus',
+                        'diplodocus',
+                        'ekrixinatosaurus',
+                        'fukuiraptor'
+                    ]
                 }
             }
 

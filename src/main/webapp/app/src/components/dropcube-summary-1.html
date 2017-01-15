@@ -49,10 +49,10 @@
         <dropcube-container big="true" class="layout-row layout-align-center-center">
 
             <div class="layout-row layout-align-center-center summary-title">
-                <h3 class="flex header light">{{dictionary.SUMMARY1.TITLES.MAIN}}</h3>
+                <h3 class="flow-h flex header light">{{dictionary.SUMMARY1.TITLES.MAIN}}</h3>
             </div>
-            <div class="functions layout-row layout-sm-column layout-margin layout-align-center-center layout-align-space-around">
-                <div class="flex-sm-100 flex-30">
+            <div class="functions layout-row layout-xs-column layout-sm-column layout-margin layout-align-center-center layout-align-space-around">
+                <div class="flex-xs-100 flex-sm-100 flex-30">
                     <div class="layout-column">
                         <div on-mouseover="_rain">
                           <div class="layout-row layout-margin">
@@ -97,7 +97,7 @@
                 </div>
                 <div class="flex-5">
                 </div>
-                <div class="flex-sm-100 flex-30">
+                <div class="flex-xs-100 flex-sm-100 flex-30">
                     <div on-mouseover="_wind">
                         <div class="layout-row layout-margin">
                             <div class="flex-start">
@@ -180,6 +180,73 @@
 
                 var light = this.$.cubeColor.shadowRoot.getElementById('light');
                 light.style.fill = color;
+
+            }, rainbow: function(){
+
+/*
+              //Rainbow control
+              void rainbow(){
+
+                x = random(3, 9);
+
+                if (value1 > current_value1){
+                  current_value1++;
+                  analogWrite(RED, current_value1);
+                  delay(x);
+                }
+
+                if (value1 < current_value1){
+                  current_value1--;
+                  analogWrite(RED, current_value1);
+                  delay(x);
+                }
+
+                if (value1 == current_value1){
+                  analogWrite(RED, current_value1);
+                  value1 = random(1023);
+                }
+
+                //////////////////////////
+
+                if (value2 > current_value2){
+                  current_value2++;
+                  analogWrite(GREEN, current_value2);
+                  delay(x);
+                }
+
+                if (value2 < current_value2){
+                  current_value2--;
+                  analogWrite(GREEN, current_value2);
+                  delay(x);
+                }
+
+                if (value2 == current_value2){
+                  analogWrite(GREEN, current_value2);
+                  value2 = random(1023);
+                }
+
+                ///////////////////////////////
+
+                if (value3 > current_value3){
+                  current_value3++;
+                  analogWrite(BLUE, current_value3);
+                  delay(x);
+                }
+
+                if (value3 < current_value3){
+                  current_value3--;
+                  analogWrite(BLUE, current_value3);
+                  delay(x);
+                }
+
+                if (value3 == current_value3){
+                  analogWrite(BLUE, current_value3);
+                  value3 = random(1023);
+                }
+
+              }
+
+*/
 
             }
 

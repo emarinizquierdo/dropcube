@@ -1,0 +1,121 @@
+<link rel="import" href="/bower_components/polymer/polymer.html">
+
+<!-- .............. POLYMER COMPONENTS  .............. -->
+<!--<link rel="import" href="/bower_components/parallax-element/parallax-element.html">-->
+
+<!-- .............. APP COMPONENTS  .............. -->
+<link rel="import" href="dropcube-container.html">
+<link rel="import" href="dropcube-user-button.html">
+
+<dom-module id="dropcube-main-header">
+
+    <template>
+
+        <style include="dropcube-styles"></style>
+        <style>
+            app-header {
+                position: fixed;
+                min-height: 64px;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                color: #fff;
+                background-color: var(--dropcube-main-blue);
+                --app-header-background-front-layer: {
+                    background-color: var(--dropcube-main-blue);
+                    background-position: left center;
+                }
+                ;
+                z-index: 99999999999999999;
+            }
+
+            .logo-img {
+                width: 35px;
+                height: auto;
+            }
+
+            paper-icon-button {
+                color: var(--dropcube-white);
+                --paper-icon-button-ink-color: white;
+            }
+
+            .condensed-toolbar {
+                background-color: #009FCF;
+                z-index: 9999999;
+                position: fixed;
+                width: 100%;
+                box-sizing: border-box;
+            }
+
+            app-toolbar.tall {
+                height: calc(100% - 68px);
+            }
+
+            [main-title] {
+                font-weight: lighter;
+                margin-left: 108px;
+            }
+
+            [condensed-title] {
+                margin-left: 30px;
+                font-size: 31px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+            [condensed-title] i {
+                font-weight: 100;
+                font-style: normal;
+            }
+
+            @media (max-width: 639px) {
+                [main-title] {
+                    margin-left: 50px;
+                    font-size: 30px;
+                }
+                [condensed-title] {
+                    font-size: 25px;
+                }
+                .logo-img {
+                    width: 28px;
+                }
+            }
+        </style>
+
+        <app-header fixed reveal condenses effects="waterfall resize-title">
+            <app-toolbar class="condensed-toolbar" sticky>
+                <a href="/devices">
+                    <paper-icon-button icon="home"></paper-icon-button>
+                </a>
+                <div condensed-title class="layout-row layout-align-start-center layout-align-xs-center-center layout-margin">
+                    <iron-icon class="logo-img" icon="dropcube-icons:cube"></iron-icon>
+                    <span class="exo">dropcube</span>
+                </div>
+                <dropcube-user-button user="{{user}}" dictionary="{{dictionary}}"></dropcube-user-button>
+            </app-toolbar>
+            <app-toolbar class="tall">
+                <span main-title style="display:none"></span>
+                <dropcube-landing class="flex-100" dictionary="{{dictionary}}"></dropcube-landing>
+            </app-toolbar>
+        </app-header>
+
+    </template>
+
+
+    <script>
+        Polymer({
+            is: "dropcube-main-header",
+            properties: {
+                user: {
+                    type: Object
+                },
+                dictionary: {
+                    type: Object
+                }
+            }
+
+        });
+    </script>
+
+</dom-module>

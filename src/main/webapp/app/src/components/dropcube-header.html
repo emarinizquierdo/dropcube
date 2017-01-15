@@ -1,0 +1,95 @@
+<link rel="import" href="/bower_components/polymer/polymer.html">
+
+<!-- .............. POLYMER COMPONENTS  .............. -->
+<!--<link rel="import" href="/bower_components/parallax-element/parallax-element.html">-->
+<link rel="import" href="/bower_components/paper-menu-button/paper-menu-button.html">
+
+<!-- .............. APP COMPONENTS  .............. -->
+<link rel="import" href="dropcube-container.html">
+<link rel="import" href="dropcube-user-button.html">
+
+<dom-module id="dropcube-header">
+
+    <template>
+
+        <style include="dropcube-styles"></style>
+        <style>
+            app-header {
+                position: fixed;
+                min-height: 64px;
+                top: 0;
+                left: 0;
+                width: 100%;
+                color: #fff;
+                background-color: var(--dropcube-main-blue);
+                --app-header-background-front-layer: {
+                    background-color: var(--dropcube-main-blue);
+                    background-position: left center;
+                }
+                ;
+                z-index: 99999999999999999;
+            }
+
+            .logo-img {
+                width: 35px;
+                height: auto;
+            }
+
+            .main-title {
+                margin-left: 30px;
+                font-size: 31px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+            .main-title i {
+                font-weight: 100;
+                font-style: normal;
+            }
+
+            paper-icon-button {
+                color: var(--dropcube-white);
+                --paper-icon-button-ink-color: white;
+            }
+
+            @media (max-width: 639px) {
+                .main-title {
+                    font-size: 25px;
+                }
+                .logo-img {
+                    width: 28px;
+                }
+            }
+
+        </style>
+
+        <app-header fixed shadow>
+            <app-toolbar>
+                <a href="/devices"><paper-icon-button icon="home"></paper-icon-button></a>
+                <div class="main-title flex layout-row layout-align-start-center layout-align-xs-center-center layout-margin">
+                    <iron-icon class="logo-img" icon="dropcube-icons:cube"></iron-icon>
+                    <span class="exo">dropcube</span>
+                </div>
+                <dropcube-user-button user="{{user}}" dictionary="{{dictionary}}"></dropcube-user-button>
+            </app-toolbar>
+        </app-header>
+
+    </template>
+
+
+    <script>
+        Polymer({
+            is: "dropcube-header",
+            properties: {
+                user: {
+                    type: Object
+                },
+                dictionary: {
+                    type: Object
+                }
+            }
+
+        });
+    </script>
+
+</dom-module>

@@ -1,0 +1,68 @@
+<link rel="import" href="/bower_components/polymer/polymer.html">
+
+<!-- .............. POLYMER COMPONENTS  .............. -->
+<!--<link rel="import" href="/bower_components/parallax-element/parallax-element.html">-->
+<link rel="import" href="/bower_components/paper-menu-button/paper-menu-button.html">
+
+<!-- .............. APP COMPONENTS  .............. -->
+<link rel="import" href="../styles/dropcube-icons.html">
+
+<link rel="import" href="../components/dropcube-new-device.html">
+<link rel="import" href="../components/dropcube-device-list.html">
+
+
+<dom-module id="dropcube-devices">
+
+    <template>
+
+        <style include="dropcube-styles">
+
+        </style>
+
+        <style>
+            paper-toolbar {
+                padding: 0 16px;
+                position: relative;
+                min-height: 64px;
+                top: -6px;
+                left: 0;
+                width: 100%;
+                color: var(--dropcube-black);
+                background-color: var(--dropcube-white);
+                border-bottom: 1px solid var(--dropcube-grey-border);
+            }
+
+        </style>
+
+        <!--  Parallax Section  -->
+        <paper-toolbar class="layout-row layout-align-start-center">
+            <h5 class="subtitle">Devices</h5>
+        </paper-toolbar>
+
+        <dropcube-new-device></dropcube-new-device>
+        <dropcube-device-list></dropcube-device-list>
+
+        </div>
+
+
+    </template>
+
+    <script>
+        Polymer({
+            is: "dropcube-devices",
+            properties: {
+                dictionary: {
+                    type: Object
+                }
+            },
+            _loginGoogle: function() {
+                window.location.href = '/auth/google';
+            },
+            _loginTwitter: function() {
+                window.location.href = '/auth/twitter';
+            }
+
+        });
+    </script>
+
+</dom-module>

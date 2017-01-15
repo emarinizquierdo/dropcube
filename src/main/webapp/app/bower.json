@@ -23,7 +23,13 @@
     "parallax-element": "vguillou/parallax-element#^1.1.1",
     "iron-icons": "^1.2.0",
     "paper-progress": "^1.0.11",
-    "paper-scroll-header-panel": "PolymerElements/paper-scroll-header-panel#^1.0.16"
+    "paper-scroll-header-panel": "PolymerElements/paper-scroll-header-panel#^1.0.16",
+    "paper-button": "PolymerElements/paper-button#^1.0.14",
+    "paper-menu-button": "PolymerElements/paper-menu-button#^1.5.2",
+    "iron-cookie": "wincinderith/iron-cookie#^1.0.0",
+    "paper-item": "PolymerElements/paper-item#^1.2.1",
+    "paper-card": "PolymerElements/paper-card#^1.1.4",
+    "google-map-static": "*"
   },
   "devDependencies": {
     "web-component-tester": "^4.0.0"

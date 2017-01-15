@@ -15,10 +15,18 @@
 <!-- .............. APP COMPONENTS  .............. -->
 
 <link rel="import" href="styles/dropcube-styles.html">
-<link rel="import" href="components/dropcube-landing.html">
-<link rel="import" href="views/dropcube-main.html">
-<link rel="import" href="services/lang.html">
 <link rel="import" href="styles/dropcube-icons.html">
+
+<link rel="import" href="services/lang.html">
+<link rel="import" href="services/user.html">
+
+<link rel="import" href="views/dropcube-main.html">
+<link rel="import" href="views/dropcube-login.html">
+<link rel="import" href="views/dropcube-devices.html">
+
+<link rel="import" href="components/dropcube-header.html">
+<link rel="import" href="components/dropcube-landing.html">
+<link rel="import" href="components/dropcube-footer.html">
 
 <dom-module id="dropcube-content">
 
@@ -27,21 +35,13 @@
         <style include="dropcube-styles"></style>
 
         <style is="custom-style">
-            app-header {
-                position: fixed;
-                min-height: 64px;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                color: #fff;
-                background-color: var(--dropcube-main-blue);
-                --app-header-background-front-layer: {
-                    background-color: var(--dropcube-main-blue);
-                    background-position: left center;
-                }
-                ;
 
+            .spacer {
+                height: 64px;
+            }
+
+            iron-pages {
+              height: 100%;
             }
 
         </style>
@@ -53,44 +53,45 @@
 
         <!-- ..............   MODEL CONTROL  .............. -->
         <lang-service id="langService" dictionary="{{dictionary}}" src="lang/locales.json"></lang-service>
-        <user-service id="userService" user="{{_user}}"></user-service>
+        <user-service id="userService" user="{{user}}"></user-service>
 
         <!-- ..............  END MODEL CONTROL .............. -->
 
+        <template is="dom-if" if="{{_isMain(routeData)}}">
+            <dropcube-header dictionary="{{dictionary}}" user="{{user}}"></dropcube-header>
+        </template>
 
+        <div class="layout-column layout-fill">
+          <div class="spacer"></div>
+            <div class="flex-grow">
+                <app-location id="appLocation" route="{{route}}"></app-location>
+                <app-route route="{{route}}" pattern="/:view" data="{{routeData}}" tail="{{subroute}}"></app-route>
+                <iron-pages selected="[[routeData.view]]" attr-for-selected="name">
+                    <dropcube-main route="{{subroute}}" name="devices" dictionary="{{dictionary}}" user="{{user}}">
+                    </dropcube-main>
+                    <dropcube-login route="{{subroute}}" name="login" dictionary="{{dictionary}}">
+                    </dropcube-login>
+                    <dropcube-devices route="{{subroute}}" name="" dictionary="{{dictionary}}">
+                    </dropcube-devices>
+                </iron-pages>
+            </div>
 
-        <app-drawer id="drawer" swipe-open></app-drawer>
-
-        <sample-content size="10">        <div class="spacer"></div>
-            <app-location id="appLocation" route="{{route}}"></app-location>
-            <app-route route="{{route}}" pattern="/:view" data="{{routeData}}" tail="{{subroute}}"></app-route>
-            <iron-pages selected="[[routeData.view]]" attr-for-selected="name">
-                <dropcube-main route="{{subroute}}" name="" dictionary="{{dictionary}}">
-                </dropcube-main>
-                <app-admin route="{{subroute}}" name="login" dictionary="{{dictionary}}">
-                </app-admin>
-                <app-devices route="{{subroute}}" name="devices" dictionary="{{dictionary}}">
-                </app-devices>
-            </iron-pages>
-        </sample-content>
-
+            <dropcube-footer dictionary="{{dictionary}}"></dropcube-footer>
+        </div>
     </template>
 
     <script>
-
         Polymer({
             is: "dropcube-content",
             properties: {
-
+              user : {
+                type : Object
+              }
             },
-            listeners: [{
-                'paper-header-transform': '_onPaperHeaderTransform'
-            }],
-            _toggleDrawer: function() {
-                this.$.drawer.toggle()
-            },
-            _onPaperHeaderTransform: function() {
-                debugger;
+            _isMain: function(route) {
+              //TODO
+              //return route.view != "";
+                return route.view == "";
             }
 
         });

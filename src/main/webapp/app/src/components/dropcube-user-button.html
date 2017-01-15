@@ -1,0 +1,98 @@
+<link rel="import" href="/bower_components/polymer/polymer.html">
+
+<!-- .............. POLYMER COMPONENTS  .............. -->
+<link rel="import" href="/bower_components/paper-menu-button/paper-menu-button.html">
+<link rel="import" href="/bower_components/paper-item/paper-item.html">
+
+<!-- .............. APP COMPONENTS  .............. -->
+
+<link rel="import" href="dropcube-user-image.html">
+
+<dom-module id="dropcube-user-button">
+
+    <template>
+
+        <style include="dropcube-styles"></style>
+
+        <style is="custom-style">
+            :host {
+                cursor: pointer;
+            }
+
+            paper-button {
+                background-color: white;
+                color: var(--dropcube-main-blue);
+                font-size: 12px;
+            }
+
+            dropcube-user-image {
+                width: 35px;
+            }
+
+            .dropdown-content {
+                display: block;
+                position: absolute;
+                right: 40px;
+                top: 60px;
+                position: fixed;
+                background-color: white;
+                color: var(--dropcube-black);
+            }
+
+            .dropdown-content:before {
+              content: "";
+              width: 0px;
+              height: 0px;
+              border-left: 8px solid transparent;
+              border-right: 8px solid transparent;
+              border-bottom: 8px solid var(--dropcube-white);
+              position: absolute;
+              top: -8px;
+              right: 8px;
+            }
+        </style>
+
+        <div class="layout-row layout-align-center-center layout-margin">
+            <template is="dom-if" if="{{user.isLogged}}">
+                <paper-menu-button>
+                    <paper-button class="dropdown-trigger" small>
+                        <span><a href="/login">Accede</a></span>
+                    </paper-button>
+                    <paper-menu class="dropdown-content">
+                        <paper-item>Share</paper-item>
+                        <paper-item>Settings</paper-item>
+                        <paper-item>Help</paper-item>
+                    </paper-menu>
+                </paper-menu-button>
+            </template>
+            <template is="dom-if" if="{{!user.isLogged}}">
+                <div class="flow-text hide-xs">{{user.data.name}}</div>
+                <paper-menu-button>
+                    <dropcube-user-image class="dropdown-trigger" src="{{user.data.profileCover}}"></dropcube-user-image>
+                    <paper-menu class="dropdown-content">
+                        <paper-item>Settings</paper-item>
+                        <paper-item>Logout</paper-item>
+                        <paper-item>Help</paper-item>
+                    </paper-menu>
+                </paper-menu-button>
+            </template>
+        </div>
+    </template>
+
+
+    <script>
+        Polymer({
+            is: "dropcube-user-button",
+            properties: {
+                user: {
+                    type: Object
+                },
+                dictionary: {
+                    type: Object
+                }
+            }
+
+        });
+    </script>
+
+</dom-module>

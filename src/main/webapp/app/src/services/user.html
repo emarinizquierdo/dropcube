@@ -1,8 +1,24 @@
 <link rel="import" href="/bower_components/polymer/polymer.html">
 
+<!-- .............. POLYMER COMPONENTS  .............. -->
+<link rel="import" href="/bower_components/iron-cookie/iron-cookie.html">
+
+
+<!-- .............. APP COMPONENTS  .............. -->
+
 <dom-module id="user-service">
 
+    <template>
+        JSESSIONID {{value}} {{expires}}
+        <iron-cookie name="JSESSIONID" value="{{value}}" uri-safe expires="{{expires}}"></iron-cookie>
+        <iron-ajax auto url="/s/users/me"  handle-as="json" on-response="_onResponse" last-response="{{userData}}"></iron-ajax>
+        <input value="{{value::input}}">
+    </template>
+
+
+
     <script>
+
         function User() {
 
             this.data = null;
@@ -20,11 +36,12 @@
                 user: {
                     type: Object,
                     notify: true,
-                    value: new User()
+                    value : new User()
                 }
             },
-            ready: function() {
-                this.user.data = userSession;
+
+            _onResponse : function(data){
+              this.set('user', this.userData);
             }
 
         });

@@ -1,0 +1,79 @@
+<link rel="import" href="/bower_components/polymer/polymer.html">
+
+<!-- .............. POLYMER COMPONENTS  .............. -->
+<!--<link rel="import" href="/bower_components/parallax-element/parallax-element.html">-->
+<link rel="import" href="/bower_components/paper-menu-button/paper-menu-button.html">
+
+<!-- .............. APP COMPONENTS  .............. -->
+<link rel="import" href="../styles/dropcube-icons.html">
+
+
+<dom-module id="dropcube-login">
+
+    <template>
+
+        <style include="dropcube-styles">
+
+        </style>
+
+        <style>
+        .cube-icon {
+            width: 60px;
+            height: auto;
+        }
+
+        paper-button.google{
+          background-color: #C62828;
+          color: var(--dropcube-white);
+        }
+
+        paper-button.twitter{
+          background-color: #40c4ff;
+          color: var(--dropcube-white);
+        }
+
+        </style>
+
+        <!--  Parallax Section  -->
+        <div class="layout-row layout-fill layout-align-center-center">
+            <div class="layout-column layout-align-center-center">
+                    <div class="layout-column flex-100 layout-align-center-center">
+                        <iron-icon id="cubeColor" class="cube-icon" icon="dropcube-icons:cube-color"></iron-icon>
+                        <h4 class="exo">dropcube</h4>
+                    </div>
+                    <div class="flow-text layout-column flex-100 layout-align-center-center">
+                        Sign in or create an account
+                    </div>
+                    <div class="button-wrapper layout-xs-column layout-row flex-100 layout-margin layout-align-space-around">
+                        <paper-button class="google" on-click="_loginGoogle">Connect with Google+</paper-button>
+                        <paper-button class="twitter" on-click="_loginTwitter">Connect with Twitter</paper-button>
+                    </div>
+                    <div class="layout-align-center-center">
+                        To use Drop Cube you must have cookies enabled.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </template>
+
+    <script>
+        Polymer({
+            is: "dropcube-login",
+            properties: {
+                dictionary: {
+                    type: Object
+                }
+            },
+            _loginGoogle : function(){
+              window.location.href = '/auth/google';
+            },
+            _loginTwitter: function(){
+              window.location.href = '/auth/twitter';
+            }
+
+        });
+    </script>
+
+</dom-module>

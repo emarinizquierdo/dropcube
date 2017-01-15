@@ -72,6 +72,26 @@
               "WIND" : "Cuando fuera empiece a soplar fuerte, una luz naranja te avisará para que no se te escape el sombrero."
             }
         },
+
+        "SUMMARY2": {
+            "TITLES" : {
+              "MAIN" : "Disponible en cualquier punto del mundo"
+            },
+            "DESCRIPTIONS" : {
+              "MAIN" : "Podrás elegir el lugar para el cuál quieres que dropcube te tenga informado. Bastará con seleccionarlo desde la configuración y ya estará listo."
+            }
+        },
+
+        "SUMMARY3": {
+            "TITLES" : {
+              "MAIN" : "¿Deseas saber si lloverá de forma diferente?",
+              "SECONDARY" :"¡Adquiere tu dropcube ahora!",
+              "THIRD": "Añadir al carrito"
+            },
+            "DESCRIPTIONS" : {
+              "MAIN" : "Podrás elegir el lugar para el cuál quieres que dropcube te tenga informado. Bastará con seleccionarlo desde la configuración y ya estará listo."
+            }
+        },
         "MAIN_PAGE": {
 
             "PREPARE_FOR_RAIN": "prepárate para la lluvia",

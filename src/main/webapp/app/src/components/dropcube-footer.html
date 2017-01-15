@@ -7,7 +7,7 @@
 <!-- .............. APP COMPONENTS  .............. -->
 <link rel="import" href="dropcube-container.html">
 
-<dom-module id="dropcube-intro">
+<dom-module id="dropcube-footer">
 
     <template>
 
@@ -15,16 +15,17 @@
 
         <style is="custom-style">
             :host {
-                background-color: var(--dropcube-grey-block);
+                background-color: var(--dropcube-main-blue);
                 display: block;
+                color: var(--dropcube-white);
             }
 
             h4 {
-                color: var(--dropcube-grey-text);
+                color: var(--dropcube-white);
             }
 
             dropcube-container {
-                height: 330px;
+                height: 100px;
             }
 
             .weather-cool {
@@ -36,13 +37,12 @@
         <dropcube-container class="layout-row layout-align-center-center">
 
             <div class="layout-row layout-margin layout-align-center-center layout-align-space-around">
-                <div class="hide-xs flex-20">
-                    <iron-icon class="weather-cool" icon="dropcube-icons:weather-cool"></iron-icon>
+              <div class="flex-60">
+
+              </div>
+                <div class="flex-20">
                 </div>
-                <div class="flex-xs-100 flex-60">
-                    <h4 class="flow-h">{{ dictionary.INTRO.TITLE }}</h4>
-                    <p class="flow-text">{{ dictionary.INTRO.DESCRIPTION }}</p>
-                </div>
+
             </div>
 
         </dropcube-container>
@@ -52,7 +52,7 @@
 
     <script>
         Polymer({
-            is: "dropcube-intro",
+            is: "dropcube-footer",
             properties: {
                 dictionary: {
                     type: Object
