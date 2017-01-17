@@ -14,6 +14,10 @@
 
         <style include="dropcube-styles"></style>
         <style>
+            a {
+                color: var(--dropcube-white);
+            }
+
             app-header {
                 position: fixed;
                 min-height: 64px;
@@ -60,16 +64,21 @@
                     width: 28px;
                 }
             }
-
         </style>
 
         <app-header fixed shadow>
             <app-toolbar>
-                <a href="/devices"><paper-icon-button icon="home"></paper-icon-button></a>
+                <a href="/devices">
+                    <paper-icon-button icon="home"></paper-icon-button>
+                </a>
+
                 <div class="main-title flex layout-row layout-align-start-center layout-align-xs-center-center layout-margin">
-                    <iron-icon class="logo-img" icon="dropcube-icons:cube"></iron-icon>
-                    <span class="exo">dropcube</span>
+                    <a href="/">
+                        <iron-icon class="logo-img" icon="dropcube-icons:cube"></iron-icon>
+                        <span class="exo">dropcube</span>
+                    </a>
                 </div>
+
                 <dropcube-user-button user="{{user}}" dictionary="{{dictionary}}"></dropcube-user-button>
             </app-toolbar>
         </app-header>

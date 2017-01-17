@@ -9,10 +9,8 @@
 <dom-module id="user-service">
 
     <template>
-        JSESSIONID {{value}} {{expires}}
         <iron-cookie name="JSESSIONID" value="{{value}}" uri-safe expires="{{expires}}"></iron-cookie>
         <iron-ajax auto url="/s/users/me"  handle-as="json" on-response="_onResponse" last-response="{{userData}}"></iron-ajax>
-        <input value="{{value::input}}">
     </template>
 
 

@@ -37,6 +37,12 @@ for( var _i = 0; _i < configuration.rest_services.length; _i++){
 	app.delete(configuration.rest_services[_i], _proxy);
 }
 
+app.get('/*', function(req, res, next) {
+
+    return res.sendfile('/app/index.html', { root: __dirname + '/' });
+  next();
+});
+
 function _proxy(req,res){
 	"use strict";
     console.log('Serving ' + req.url + ' from proxy ' + configuration.proxy_host + ':' + configuration.proxy_port);

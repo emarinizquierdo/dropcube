@@ -29,7 +29,9 @@
     "iron-cookie": "wincinderith/iron-cookie#^1.0.0",
     "paper-item": "PolymerElements/paper-item#^1.2.1",
     "paper-card": "PolymerElements/paper-card#^1.1.4",
-    "google-map-static": "*"
+    "google-map-static": "*",
+    "paper-tabs": "PolymerElements/paper-tabs#^1.7.0",
+    "google-map": "GoogleWebComponents/google-map#^1.2.0"
   },
   "devDependencies": {
     "web-component-tester": "^4.0.0"

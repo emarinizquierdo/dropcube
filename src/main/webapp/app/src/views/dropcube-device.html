@@ -1,0 +1,110 @@
+<link rel="import" href="/bower_components/polymer/polymer.html">
+
+<!-- .............. POLYMER COMPONENTS  .............. -->
+<!--<link rel="import" href="/bower_components/parallax-element/parallax-element.html">-->
+<link rel="import" href="/bower_components/paper-menu-button/paper-menu-button.html">
+<link rel="import" href="/bower_components/paper-tabs/paper-tabs.html">
+<link rel="import" href="/bower_components/iron-ajax/iron-ajax.html">
+
+<!-- .............. APP COMPONENTS  .............. -->
+<link rel="import" href="../styles/dropcube-icons.html">
+
+<link rel="import" href="../components/dropcube-device-main-info.html">
+<link rel="import" href="../components/dropcube-device-map.html">
+
+
+<dom-module id="dropcube-device">
+
+    <template>
+
+        <style include="dropcube-styles">
+
+        </style>
+
+        <style is="custom-style">
+
+            :host {
+                --paper-tabs-selection-bar-color: var(--dropcube-main-blue);
+            }
+
+            paper-toolbar {
+                padding: 0 16px;
+                position: relative;
+                min-height: 64px;
+                top: -6px;
+                left: 0;
+                width: 100%;
+                color: var(--dropcube-black);
+                background-color: var(--dropcube-white);
+                border-bottom: 1px solid var(--dropcube-grey-border);
+            }
+
+            paper-tabs {
+                border-bottom: 1px solid #d3d3d3;
+            }
+
+            iron-pages {
+                height: calc(100% - 12px);
+            }
+
+            .iron-selected {
+                height: calc(100% - 100px);
+            }
+        </style>
+
+        <!--  Parallax Section  -->
+        <paper-toolbar class="layout-row layout-align-start-center">
+            <h5 class="subtitle">Devices</h5>
+        </paper-toolbar>
+
+        <iron-ajax auto url="/s/devices/[[route.id]]" handle-as="json" on-response="_onResponse" last-response="{{device}}"></iron-ajax>
+
+        <paper-tabs selected="{{selected}}" scrollable>
+            <paper-tab>General</paper-tab>
+            <paper-tab>Mapa</paper-tab>
+            <paper-tab>Configuración</paper-tab>
+        </paper-tabs>
+        <iron-pages selected="{{selected}}">
+            <div>
+                <dropcube-device-main-info device="{{device.data}}"></dropcube-device-main-info>
+            </div>
+            <div>
+                <dropcube-device-map device="{{device.data}}"></dropcube-device-map>
+            </div>
+            <div>
+                3
+            </div>
+        </iron-pages>
+
+        </div>
+
+    </template>
+
+    <script>
+        Polymer({
+            is: "dropcube-device",
+            properties: {
+                dictionary: {
+                    type: Object
+                },
+                route: {
+                    type: Object
+                },
+                selected: {
+                    type: Number,
+                    value: 0
+                }
+            },
+            observers: [
+                '_routeChanged(route.*)',
+            ],
+            _routeChanged: function(changeRecord) {
+
+                if (changeRecord.path === 'path') {
+                    console.log('Path changed!');
+                }
+            }
+        });
+    </script>
+
+</dom-module>

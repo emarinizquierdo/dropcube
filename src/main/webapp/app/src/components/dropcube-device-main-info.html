@@ -1,0 +1,62 @@
+<link rel="import" href="/bower_components/polymer/polymer.html">
+
+<!-- .............. POLYMER COMPONENTS  .............. -->
+<!--<link rel="import" href="/bower_components/parallax-element/parallax-element.html">-->
+<link rel="import" href="/bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="/bower_components/paper-card/paper-card.html">
+
+
+<!-- .............. APP COMPONENTS  .............. -->
+<link rel="import" href="dropcube-container.html">
+
+<dom-module id="dropcube-device-main-info">
+
+    <template>
+
+        <style include="dropcube-styles"></style>
+
+        <style is="custom-style">
+
+
+            paper-card {
+
+            }
+
+            .card-content {
+
+            }
+
+        </style>
+
+        <dropcube-container>
+
+            <p class="flow-text">Dispositivo</p>
+            <div class="layout-row">
+              <paper-card class="flex-xs-100 flex">
+                <div class="card-content">
+{{device.name}}
+                </div>
+            </paper-card>
+            </div>
+
+        </dropcube-container>
+
+    </template>
+
+
+    <script>
+        Polymer({
+            is: "dropcube-device-main-info",
+            properties: {
+                dictionary: {
+                    type: Object
+                },
+                device: {
+                    type: Object
+                }
+            }
+
+        });
+    </script>
+
+</dom-module>

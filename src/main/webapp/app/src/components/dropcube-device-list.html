@@ -17,27 +17,27 @@
         <style include="dropcube-styles"></style>
 
         <style is="custom-style">
+
             paper-button {
                 background-color: var(--dropcube-main-blue);
                 color: var(--dropcube-white);
             }
 
-            #notes {
-                @apply(--layout-vertical);
-                @apply(--layout-wrap);
-                height: 344px;
-                width: 384px;
-            }
-
-            #notes> paper-card {
+            paper-card {
                 box-sizing: border-box;
-                max-width: 184px;
+                max-width: 220px;
                 margin: 4px;
                 flex: 0 0 auto;
+                overflow: hidden;
+                cursor: pointer;
             }
 
             .card-content{
               padding: 0!important;
+              left: 50%;
+              right: 50%;
+              width: 600px;
+              margin-left: -300px;
             }
         </style>
 
@@ -45,20 +45,20 @@
 
         <dropcube-container>
 
-            <div id="notes">
+            <div class="layout-row layout-wrap layout-margin layout-align-space-between">
                 <template is="dom-repeat" items="[[devices.data]]" as="device">
-                    <paper-card class="cyan">
+                    <a href="/device/[[device.id]]">
+                      <paper-card class="cyan flex-xs-100">
                         <div class="card-content">
-                            <google-map-static api-key="AIzaSyCgLJCZYhd_cFHlI5JZXNsGuCqamoQiGpM" lat="[[device.lat]]" lng="[[device.lng]]" size-x="184" size-y="100"></google-map-static>
+                            <google-map-static api-key="AIzaSyCgLJCZYhd_cFHlI5JZXNsGuCqamoQiGpM" lat="[[device.lat]]" lng="[[device.lng]]" size-x="600" size-y="100"></google-map-static>
                         </div>
                         <div class="card-actions">
-                            Device:
-                            <span>[[device.name]]</span>
+                            <span class="flow-text">[[device.name]]</span>
                         </div>
                     </paper-card>
+                  </a>
                 </template>
             </div>
-
 
         </dropcube-container>
 
