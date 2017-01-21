@@ -114,6 +114,8 @@ public class DeviceService {
         device.setMode(json.mode);
         device.setLat(json.lat);
         device.setLng(json.lng);
+        device.setHourly(json.hourly);
+        device.setHours(json.hours);
         device.setMinHour(json.minHour);
         device.setMaxHour(json.maxHour);
 
@@ -152,6 +154,8 @@ public class DeviceService {
         public Double lat;
         public Double lng;
         public String mode;
+        public Boolean hourly;
+        public List<Boolean> hours;
         public Integer minHour;
         public Integer maxHour;
 

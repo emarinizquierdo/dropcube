@@ -11,15 +11,14 @@
 
 <link rel="import" href="../components/dropcube-device-main-info.html">
 <link rel="import" href="../components/dropcube-device-map.html">
+<link rel="import" href="../components/dropcube-edit-position.html">
 
 
 <dom-module id="dropcube-device">
 
     <template>
 
-        <style include="dropcube-styles">
 
-        </style>
 
         <style is="custom-style">
 
@@ -31,7 +30,6 @@
                 padding: 0 16px;
                 position: relative;
                 min-height: 64px;
-                top: -6px;
                 left: 0;
                 width: 100%;
                 color: var(--dropcube-black);
@@ -50,11 +48,13 @@
             .iron-selected {
                 height: calc(100% - 100px);
             }
+
         </style>
 
         <!--  Parallax Section  -->
-        <paper-toolbar class="layout-row layout-align-start-center">
+        <paper-toolbar class="layout-row layout-align-start-center layout-align-space-between">
             <h5 class="subtitle">Devices</h5>
+            <dropcube-edit-position show="{{_showMapButtons(selected)}}"></dropcube-edit-position>
         </paper-toolbar>
 
         <iron-ajax auto url="/s/devices/[[route.id]]" handle-as="json" on-response="_onResponse" last-response="{{device}}"></iron-ajax>
@@ -103,6 +103,9 @@
                 if (changeRecord.path === 'path') {
                     console.log('Path changed!');
                 }
+            },
+            _showMapButtons : function( tab ){
+              return (tab == 1);
             }
         });
     </script>

@@ -1,1 +1,1 @@
-<%@ include file="/dist/public/index.html" %>
+<%@ include file="/app/index.html" %>

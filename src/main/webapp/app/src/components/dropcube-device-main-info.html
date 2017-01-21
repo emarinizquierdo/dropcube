@@ -4,39 +4,107 @@
 <!--<link rel="import" href="/bower_components/parallax-element/parallax-element.html">-->
 <link rel="import" href="/bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="/bower_components/paper-card/paper-card.html">
+<link rel="import" href="/bower_components/paper-radio-group/paper-radio-group.html">
+<link rel="import" href="/bower_components/paper-toggle-button/paper-toggle-button.html">
 
 
 <!-- .............. APP COMPONENTS  .............. -->
 <link rel="import" href="dropcube-container.html">
+<link rel="import" href="dropcube-hour-selector.html">
 
 <dom-module id="dropcube-device-main-info">
 
     <template>
 
-        <style include="dropcube-styles"></style>
-
         <style is="custom-style">
-
-
-            paper-card {
-
+            :host {
+                --paper-radio-button-checked-color: var(--dropcube-main-blue);
+                --paper-toggle-button-checked-button-color: var(--dropcube-main-blue);
             }
 
-            .card-content {
+            paper-card {}
 
+            paper-toggle-button {
+                width: 37px;
             }
 
+            .card-content {}
+
+            .labels {
+                width: 150px;
+            }
+
+            .values {
+                color: var(--dropcube-black);
+            }
         </style>
+
+        <iron-ajax id="putDevice" method="PUT" url="/s/devices/[[device.id]]" content-type="application/json;charset=UTF-8" handle-as="json" on-response="_onResponse" last-response="{{data}}"></iron-ajax>
 
         <dropcube-container>
 
-            <p class="flow-text">Dispositivo</p>
             <div class="layout-row">
-              <paper-card class="flex-xs-100 flex">
-                <div class="card-content">
-{{device.name}}
+                <div class="layout-align-start-center">
+                    <p class="flow-text labels">Dispositivo:</p>
                 </div>
-            </paper-card>
+                <div class="flex values">
+                    <p class="flow-text values">{{device.name}}</p>
+                </div>
+            </div>
+            <div class="layout-row">
+                <paper-card class="flex-xs-100 flex">
+                    <div class="card-content">
+                        <div class="layout-column">
+                            <div class="layout-row layout-xs-column">
+                                <div class="labels layout-align-start-center">
+                                    <p class="flow-text labels">Dropcube ID:</p>
+                                </div>
+                                <div class="flex values">
+                                    <p class="flow-text values">{{device.id}}</p>
+                                </div>
+                            </div>
+                            <div class="layout-row layout-xs-column">
+                                <div class="labels layout-align-start-center">
+                                    <p class="flow-text labels">Modo:</p>
+                                </div>
+                                <div class="flex values layout-row layout-align-start-center">
+                                    <paper-radio-group on-paper-radio-group-changed="_updateDevice" selected="{{device.mode}}" aria-labelledby="label2">
+                                        <paper-radio-button class="flow-text" name="NORMAL">Normal</paper-radio-button>
+                                        <paper-radio-button class="flow-text" name="RAINBOW">Rainbow</paper-radio-button>
+                                        <paper-radio-button class="flow-text" name="TEST_RAIN">Test lluvia</paper-radio-button>
+                                        <paper-radio-button class="flow-text" name="TEST_SNOW">Test Nieve</paper-radio-button>
+                                        <paper-radio-button class="flow-text" name="TEST_WIND">Test Viento</paper-radio-button>
+                                        <paper-radio-button class="flow-text" name="TEST_STORM">Test Tormenta</paper-radio-button>
+                                        <paper-radio-button class="flow-text" name="TEST_HOT">Test Calor</paper-radio-button>
+                                    </paper-radio-group>
+                                </div>
+                            </div>
+                            <div class="layout-row layout-xs-column">
+                                <div class="labels layout-align-start-center">
+                                    <p class="flow-text labels">Alertas</p>
+                                </div>
+                                <div class="flex values layout-row layout-margin">
+                                    <p class="flow-text values">Por día</p>
+                                    <paper-toggle-button active="{{device.hourly}}" on-change="_updateDevice"></paper-toggle-button>
+                                    <p class="flow-text values">Por hora</p>
+                                </div>
+                            </div>
+                            <template is="dom-if" if="{{device.hourly}}">
+                                <div class="layout-column">
+                                    <div class="layout-row layout-xs-column">
+                                        <div class="labels layout-align-start-center">
+                                            <p class="flow-text labels"></p>
+                                        </div>
+                                        <div class="flex values layout-column layout-margin">
+                                            <p class="flow-text">Selecciona las horas en las que normalmente transitas por la calle</p>
+                                            <dropcube-hour-selector hours="{{device.hours}}" on-hour-changed="_updateDevice"></dropcube-hour-selector>
+                                        </div>
+                                    </div>
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+                </paper-card>
             </div>
 
         </dropcube-container>
@@ -54,6 +122,15 @@
                 device: {
                     type: Object
                 }
+            },
+            _updateDevice: function(event) {
+
+                this.$.putDevice.body = JSON.stringify(this.device);
+                this.$.putDevice.generateRequest();
+
+            },
+            _onResponse: function() {
+                this.device = (this.data && this.data.data) ? this.data.data : this.device;
             }
 
         });
