@@ -13,17 +13,37 @@
 
     <template>
 
-    
+
         <style is="custom-style">
           :host{
             height: 100%;
           }
 
+          #marker{
+            position: fixed;
+            top: calc(50% + 15px);
+            left: calc(50% - 12px);
+          }
         </style>
-        <div class="layout-row layout-fill">
-        <google-map class="flex"  fit-to-markers api-key="AIzaSyAEbV5WJ71OUVwG79dBWnth7YobLVlWByk">
-          <google-map-marker latitude="[[device.lat]]" longitude="[[device.lng]]" draggable="true"></google-map-marker>
+        <div class="layout-row layout-fill" >
+
+        <google-map class="flex"
+          drag-events="false"
+          draggable="{{_isDraggable(disableControl)}}"
+          draggable="false"
+          disable-default-ui="{{disableControl}}"
+          disable-zoom="{{disableControl}}"
+          disable-map-type-control="{{disableControl}}"
+          disable-street-view-control
+          no-auto-tilt
+          fit-to-markers
+          api-key="AIzaSyAEbV5WJ71OUVwG79dBWnth7YobLVlWByk"
+          zoom="16"
+          latitude="{{device.lat}}"
+          longitude="{{device.lng}}">
+          <span id="marker"><iron-icon class="location" icon="dropcube-icons:location"></iron-icon></span>
         </google-map>
+
       </div>
 
     </template>
@@ -38,7 +58,14 @@
                 },
                 device: {
                     type: Object
+                },
+                disableControl : {
+                  type : Boolean,
+                  value : false
                 }
+            },
+            _isDraggable : function(isDraggable){
+              return !isDraggable;
             }
 
         });

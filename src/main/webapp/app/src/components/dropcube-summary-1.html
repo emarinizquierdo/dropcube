@@ -177,7 +177,10 @@
             },
             _changeColor: function(color) {
 
-                var light = this.$.cubeColor.shadowRoot.getElementById('light');
+                var light = (this.$.cubeColor.shadowRoot) ? this.$.cubeColor.shadowRoot :
+                (this.$.cubeColor.shadyRoot) ? this.$.cubeColor.shadyRoot : null;
+
+                light = light.getElementById('light');
                 light.style.fill = color;
 
             }, rainbow: function(){

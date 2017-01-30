@@ -16,6 +16,7 @@
 
     <template>
 
+
         <style is="custom-style">
             :host {
                 --paper-radio-button-checked-color: var(--dropcube-main-blue);
@@ -89,7 +90,7 @@
                                     <p class="flow-text values">Por hora</p>
                                 </div>
                             </div>
-                            <template is="dom-if" if="{{device.hourly}}">
+                            <template is="dom-if" if="{{!device.hourly}}">
                                 <div class="layout-column">
                                     <div class="layout-row layout-xs-column">
                                         <div class="labels layout-align-start-center">

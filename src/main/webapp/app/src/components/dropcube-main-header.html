@@ -88,9 +88,11 @@
 
         <app-header fixed reveal condenses effects="waterfall resize-title">
             <app-toolbar class="condensed-toolbar" sticky>
-                <a href="/devices">
-                    <paper-icon-button icon="home"></paper-icon-button>
-                </a>
+                <template is="dom-if" if="{{user.isLogged}}">
+                    <a href="/devices">
+                        <paper-icon-button icon="home"></paper-icon-button>
+                    </a>
+                </template>
                 <div condensed-title class="layout-row layout-align-start-center layout-align-xs-center-center layout-margin">
                     <a href="/">
                         <iron-icon class="logo-img" icon="dropcube-icons:cube"></iron-icon>

@@ -18,8 +18,6 @@
 
     <template>
 
-
-
         <style is="custom-style">
 
             :host {
@@ -54,10 +52,11 @@
         <!--  Parallax Section  -->
         <paper-toolbar class="layout-row layout-align-start-center layout-align-space-between">
             <h5 class="subtitle">Devices</h5>
-            <dropcube-edit-position show="{{_showMapButtons(selected)}}"></dropcube-edit-position>
+            <dropcube-edit-position show="{{_showMapButtons(selected)}}" is-editing="{{_editPosition}}" on-save="_onSave"></dropcube-edit-position>
         </paper-toolbar>
 
-        <iron-ajax auto url="/s/devices/[[route.id]]" handle-as="json" on-response="_onResponse" last-response="{{device}}"></iron-ajax>
+        <iron-ajax id="deviceGet" url="/s/devices/[[route.id]]" handle-as="json" on-response="_onResponse" last-response="{{deviceData}}"></iron-ajax>
+        <iron-ajax id="putDevice" method="PUT" url="/s/devices/[[route.id]]" content-type="application/json;charset=UTF-8" handle-as="json" on-response="_onResponse" last-response="{{deviceData}}"></iron-ajax>
 
         <paper-tabs selected="{{selected}}" scrollable>
             <paper-tab>General</paper-tab>
@@ -66,10 +65,10 @@
         </paper-tabs>
         <iron-pages selected="{{selected}}">
             <div>
-                <dropcube-device-main-info device="{{device.data}}"></dropcube-device-main-info>
+                <dropcube-device-main-info device="{{device}}"></dropcube-device-main-info>
             </div>
             <div>
-                <dropcube-device-map device="{{device.data}}"></dropcube-device-map>
+                <dropcube-device-map device="{{device}}" disable-control="{{!_editPosition}}"></dropcube-device-map>
             </div>
             <div>
                 3
@@ -93,19 +92,31 @@
                 selected: {
                     type: Number,
                     value: 0
+                },
+                _editPosition : {
+                  type : Boolean,
+                  value : false
                 }
             },
             observers: [
                 '_routeChanged(route.*)',
             ],
-            _routeChanged: function(changeRecord) {
+            _routeChanged: function(route) {
 
-                if (changeRecord.path === 'path') {
-                    console.log('Path changed!');
+                if (route && route.value && route.value.id) {
+                    this.$.deviceGet.generateRequest();
                 }
+
             },
             _showMapButtons : function( tab ){
               return (tab == 1);
+            },
+            _onResponse : function(){
+              this.device = (this.deviceData && this.deviceData.data) ? this.deviceData.data : null;
+            },
+            _onSave : function(){
+              this.$.putDevice.body = JSON.stringify(this.device);
+              this.$.putDevice.generateRequest();
             }
         });
     </script>

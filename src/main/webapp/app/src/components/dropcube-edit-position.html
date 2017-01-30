@@ -10,7 +10,7 @@
 
     <template>
 
-        
+
         <style is="custom-style">
             paper-button {
                 background-color: var(--dropcube-main-blue);
@@ -30,7 +30,6 @@
                 </template>
                 <template is="dom-if" if="{{isEditing}}">
                     <paper-button on-click="_save">Aceptar</paper-button>
-                    <paper-button cancel on-click="_cancel">Cancelar</paper-button>
                 </template>
             </template>
         </div>
@@ -59,7 +58,8 @@
               this.isEditing = true;
             },
             _save : function(){
-              this.isEditing = true;
+              this.fire("save");
+              this.isEditing = false;
             },
             _cancel : function(){
               this.isEditing = false;

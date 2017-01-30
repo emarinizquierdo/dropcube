@@ -12,7 +12,6 @@ import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -197,24 +196,24 @@ public class WeatherBiz {
 
         boolean storm = false;
 
-
-        Collections.fill(copy, Boolean.FALSE);
-
         int localTime = TIMEZONE.localHour(weather.getCurrently().getTime(), lat, lng);
 
         int i = localTime;
+        int j = 0;
         while(i <= 23){
-            copy.add(original.get(i));
+            copy.set(j, original.get(i));
             i++;
+            j++;
         }
 
         i = 0;
         while(i < localTime){
-            copy.add(original.get(i));
+            copy.set(j, original.get(i));
             i++;
+            j++;
         }
 
-        for(i = 0; i < 23; i++){
+        for(i = 0; i < 24; i++){
 
             if(copy.get(i)){
 
@@ -243,9 +242,6 @@ public class WeatherBiz {
         dWeather.setSnow(maxSnow);
         dWeather.setWind(maxWind);
         dWeather.setStorm(storm);
-
-        LOGGER.info("Copia es..........." + copy);
-        LOGGER.info("MaxWeather es.........." + dWeather.toString());
 
         return dWeather;
 

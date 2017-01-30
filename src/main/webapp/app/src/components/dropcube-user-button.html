@@ -12,6 +12,7 @@
 
     <template>
 
+
         <style is="custom-style">
             :host {
                 cursor: pointer;
@@ -38,32 +39,27 @@
             }
 
             .dropdown-content:before {
-              content: "";
-              width: 0px;
-              height: 0px;
-              border-left: 8px solid transparent;
-              border-right: 8px solid transparent;
-              border-bottom: 8px solid var(--dropcube-white);
-              position: absolute;
-              top: -8px;
-              right: 8px;
+                content: "";
+                width: 0px;
+                height: 0px;
+                border-left: 8px solid transparent;
+                border-right: 8px solid transparent;
+                border-bottom: 8px solid var(--dropcube-white);
+                position: absolute;
+                top: -8px;
+                right: 8px;
             }
         </style>
 
         <div class="layout-row layout-align-center-center layout-margin">
-            <template is="dom-if" if="{{user.isLogged}}">
+            <template is="dom-if" if="{{!user.isLogged}}">
                 <paper-menu-button>
-                    <paper-button class="dropdown-trigger" small>
-                        <span><a href="/login">Accede</a></span>
+                    <paper-button noink class="dropdown-trigger" small on-click="_onClick">
+                        <span>Accede</span>
                     </paper-button>
-                    <paper-menu class="dropdown-content">
-                        <paper-item>Share</paper-item>
-                        <paper-item>Settings</paper-item>
-                        <paper-item>Help</paper-item>
-                    </paper-menu>
                 </paper-menu-button>
             </template>
-            <template is="dom-if" if="{{!user.isLogged}}">
+            <template is="dom-if" if="{{user.isLogged}}">
                 <div class="flow-text hide-xs">{{user.data.name}}</div>
                 <paper-menu-button>
                     <dropcube-user-image class="dropdown-trigger" src="{{user.data.profileCover}}"></dropcube-user-image>
@@ -88,6 +84,12 @@
                 dictionary: {
                     type: Object
                 }
+            },
+            _onClick: function(el) {
+                // Wait for ripple to finish.
+
+                location.href = '/login';
+
             }
 
         });
