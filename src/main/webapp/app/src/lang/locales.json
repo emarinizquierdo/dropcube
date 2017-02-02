@@ -1,6 +1,9 @@
 {
     "en_GB": {
 
+        "GENERIC" : {
+          "CANCEL" : "CANCEL"
+        },
         "INTRO": {
             "TITLE": "titulo",
             "DESCRIPTION": "descripcion"
@@ -46,12 +49,16 @@
         },
 
         "DEVICES": {
-            "ADD_NEW": "Add a new Dropcube"
+            "ADD_NEW": "Add a new Dropcube",
+            "NEW_ADVICE": "Add a descriptive name for your dropcube, for example, lounge dropcube"
         }
     },
 
     "es_ES": {
 
+        "GENERIC" : {
+          "CANCEL" : "CANCELAR"
+        },
         "INTRO": {
             "TITLE": "Una forma diferente de conocer el tiempo",
             "DESCRIPTION": "Ahora podrás saber si va a llover, nevar, hará calor de una forma completamente diferente. Ya no tienes que coger tu móvil, encenderlo y acceder a ninguna aplicación. Bastará con ver si dropcube luce algún color!"
@@ -62,14 +69,16 @@
               "HOT" : "Alerta por calor",
               "RAIN" : "Alerta por lluvias",
               "SNOW" : "Alerta por nevadas",
-              "WIND" : "Alerta por viento"
+              "WIND" : "Alerta por viento",
+              "RAINBOW" : "Función Arcoiris"
             },
             "DESCRIPTIONS" : {
               "MAIN" : "Diferentes tipos de alertas y funciones",
               "HOT" : "Para días muy calurosos, dropcube te avisará si fuera hace más de 27ºC.",
               "RAIN" : "Cada vez que vaya a llover, dropcube te avisará dando prioridad a esta alerta.",
               "SNOW" : "Y si en vez de gotas caen copos, no te preocupes, dropcube se pondrá blanco como un muñeco de nieve.",
-              "WIND" : "Cuando fuera empiece a soplar fuerte, una luz naranja te avisará para que no se te escape el sombrero."
+              "WIND" : "Cuando fuera empiece a soplar fuerte, una luz naranja te avisará para que no se te escape el sombrero.",
+              "RAINBOW" : "Con este modo activo, podrás difrutar de una transición de colores ideal para relajarese después de un día duro ;-)"
             }
         },
 
@@ -133,7 +142,8 @@
         },
 
         "DEVICES": {
-            "ADD_NEW": "Añade un nuevo Dropcube"
+            "ADD_NEW": "Añade un nuevo Dropcube",
+            "NEW_ADVICE": "Añade un nombre descriptivo, por ejemplo, dropcube del salón"
         }
     }
 

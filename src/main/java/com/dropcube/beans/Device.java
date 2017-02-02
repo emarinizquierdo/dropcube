@@ -41,7 +41,7 @@ public class Device {
     public Integer maxHour = 18;
     public List<Boolean> hours = new ArrayList<Boolean>(Arrays.asList(new Boolean[24]));
     public Boolean hourly = true;
-    public String mode;
+    public String mode = "NORMAL";
 
     public Boolean getHourly() {
         return hourly;

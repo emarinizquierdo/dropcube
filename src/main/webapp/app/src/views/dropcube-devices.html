@@ -1,16 +1,3 @@
-<link rel="import" href="/bower_components/polymer/polymer.html">
-
-<!-- .............. POLYMER COMPONENTS  .............. -->
-<!--<link rel="import" href="/bower_components/parallax-element/parallax-element.html">-->
-<link rel="import" href="/bower_components/paper-menu-button/paper-menu-button.html">
-
-<!-- .............. APP COMPONENTS  .............. -->
-<link rel="import" href="../styles/dropcube-icons.html">
-
-<link rel="import" href="../components/dropcube-new-device.html">
-<link rel="import" href="../components/dropcube-device-list.html">
-
-
 <dom-module id="dropcube-devices">
 
     <template>
@@ -29,17 +16,60 @@
                 border-bottom: 1px solid var(--dropcube-grey-border);
             }
 
+            paper-dialog {
+                max-width: 400px;
+            }
+
+            paper-button {
+                color: var(--dropcube-main-blue);
+            }
+
+            paper-button.dismiss:hover {
+                background: var(--dropcube-grey-border);
+                color: var(--dropcube-white);
+            }
+
+            paper-button.confirm {
+                background-color: var(--dropcube-main-blue);
+                color: var(--dropcube-white);
+            }
+
+            paper-button.confirm[disabled] {
+                color: var(--dropcube-grey);
+            }
+
+            paper-dialog .buttons {
+                margin: 10px;
+            }
+
+            paper-input {
+                --paper-input-container-focus-color: var(--dropcube-main-blue);
+            }
+
         </style>
+
+        <iron-ajax id="newDevice" method="POST" url="/s/devices" content-type="application/json;charset=UTF-8" handle-as="json" on-response="_onResponse" last-response="{{deviceData}}" loading="{{_loading2}}"></iron-ajax>
 
         <!--  Parallax Section  -->
         <paper-toolbar class="layout-row layout-align-start-center">
             <h5 class="subtitle">Devices</h5>
         </paper-toolbar>
 
-        <dropcube-new-device></dropcube-new-device>
-        <dropcube-device-list></dropcube-device-list>
+        <dropcube-new-device on-clik="_openModal"></dropcube-new-device>
+        <dropcube-device-list loading="{{loading}}"></dropcube-device-list>
 
-        </div>
+        <paper-dialog id="actions">
+            <h2>{{dictionary.DEVICES.ADD_NEW}}</h2>
+
+            <paper-input noink name="name" label="Name" value="{{_deviceName}}" required></paper-input>
+            <p>
+                {{dictionary.DEVICES.NEW_ADVICE}}
+            </p>
+            <div class="buttons">
+                <paper-button class="dismiss" noink dialog-dismiss>{{dictionary.GENERIC.CANCEL}}</paper-button>
+                <paper-button class="confirm" noink on-click="_newDevice" disabled="{{disableAccept}}">Accept</paper-button>
+            </div>
+        </paper-dialog>
 
 
     </template>
@@ -50,7 +80,22 @@
             properties: {
                 dictionary: {
                     type: Object
+                },
+                loading: {
+                    type: Boolean,
+                    notify: true
                 }
+            },
+            listeners: {
+                'clik': '_openModal'
+            },
+            _openModal: function() {
+                actions.open();
+            },
+            _newDevice : function(){
+              this.$.newDevice.body = JSON.stringify({name : this._deviceName});
+              this.$.newDevice.generateRequest();
+              actions.close();
             }
         });
     </script>

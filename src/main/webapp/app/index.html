@@ -24,19 +24,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <link rel="manifest" href="/manifest.json">
 
     <script src="/bower_components/webcomponentsjs/webcomponents-lite.js"></script>
-      <script>
+    <script>
         /* this script must run before Polymer is imported */
         window.Polymer = {
-          lazyRegister: true
+            lazyRegister: true
         };
-      </script>
+    </script>
 
-      <link rel="import" href="/src/styles/dropcube-styles.html">
-      <link rel="import" href="/src/dropcube-content.html" >
+    <!--<link rel="import" href="/src/elements.html">-->
+    <link rel="import" href="/src/elements.vulcanized.html" >
+    <!-- vulcanize src/elements.html -o src/e.html -->
 
 
     <style>
-
         html,
         body {
             height: 100%;
@@ -93,26 +93,31 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <body>
 
-  <dropcube-layout>
-    <dropcube-content>
+    <dropcube-layout>
+        <dropcube-content>
 
 
-        <div unresolved class="landing">
-            <div class="landing-cube">
-                <svg viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet" style="pointer-events: none; display: block; width: 100%; height: 100%;">
-                    <g viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;">
-                        <polygon class="border-cube" style="fill:#43D3E8;" points="256.004,256 82.456,356.206 256.004,456.394 429.562,356.209 "></polygon>
-                        <path style="fill:#ffffff;" d="M256.004,512L34.3,384V128L256.004,0L477.7,128.008v256L256.004,512z M53.876,372.698   l202.127,116.698l202.122-116.69V139.31L256.004,22.605L53.876,139.302V372.698z"></path>
-                        <polygon class="border-cube" style="fill:#ffffff;" points="256.004,267.302 39.195,142.129 48.982,125.174 256.004,244.698 463.018,125.181    472.808,142.134  "></polygon>
-                        <rect x="246.222" y="256" style="fill:#ffffff;" width="19.576" height="244.685"></rect>
-                    </g>
-                </svg>
+            <div unresolved class="landing">
+                <div class="landing-cube">
+                    <svg viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet" style="pointer-events: none; display: block; width: 100%; height: 100%;">
+                        <g viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;">
+                            <polygon class="border-cube" style="fill:#43D3E8;" points="256.004,256 82.456,356.206 256.004,456.394 429.562,356.209 "></polygon>
+                            <path style="fill:#ffffff;" d="M256.004,512L34.3,384V128L256.004,0L477.7,128.008v256L256.004,512z M53.876,372.698   l202.127,116.698l202.122-116.69V139.31L256.004,22.605L53.876,139.302V372.698z"></path>
+                            <polygon class="border-cube" style="fill:#ffffff;" points="256.004,267.302 39.195,142.129 48.982,125.174 256.004,244.698 463.018,125.181    472.808,142.134  "></polygon>
+                            <rect x="246.222" y="256" style="fill:#ffffff;" width="19.576" height="244.685"></rect>
+                        </g>
+                    </svg>
+                </div>
             </div>
-        </div>
 
         </dropcube-content>
-</dropcube-layout>
-
+    </dropcube-layout>
+    <script>
+        // Register service worker if supported.
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/service-worker.js');
+        }
+    </script>
 </body>
 
 </html>

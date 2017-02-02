@@ -33,7 +33,9 @@
     "paper-tabs": "PolymerElements/paper-tabs#^1.7.0",
     "google-map": "GoogleWebComponents/google-map#^1.2.0",
     "paper-radio-group": "PolymerElements/paper-radio-group#^1.2.1",
-    "paper-toggle-button": "PolymerElements/paper-toggle-button#^1.2.1"
+    "paper-toggle-button": "PolymerElements/paper-toggle-button#^1.2.1",
+    "paper-dialog": "PolymerElements/paper-dialog#^1.1.0",
+    "paper-input": "PolymerElements/paper-input#^1.1.23"
   },
   "devDependencies": {
     "web-component-tester": "^4.0.0"
