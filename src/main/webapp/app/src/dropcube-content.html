@@ -4,8 +4,9 @@
 
         <style is="custom-style">
             .main-wrapper {
-              padding-top: 64px;
+                padding-top: 64px;
             }
+
             .spacer {
                 height: 64px;
             }
@@ -13,7 +14,6 @@
             iron-pages {
                 height: 100%;
             }
-
         </style>
         <!-- .............. GENERAL RESOURCES  .............. -->
         <dropcube-icons-set></dropcube-icons-set>
@@ -37,14 +37,12 @@
                 <app-route route="{{subroute}}" pattern="/:id" data="{{subrouteData}}">
                 </app-route>
                 <iron-pages selected="[[routeData.view]]" attr-for-selected="name">
-                    <dropcube-main name="" dictionary="{{dictionary}}" user="{{user}}" >
-                    </dropcube-main>
-                    <dropcube-login name="login" dictionary="{{dictionary}}" >
-                    </dropcube-login>
-                    <dropcube-devices name="devices" dictionary="{{dictionary}}" loading="{{_loading1}}">
-                    </dropcube-devices>
-                    <dropcube-device route="{{subrouteData}}" name="device" dictionary="{{dictionary}}" loading="{{_loading2}}">
-                    </dropcube-device>
+                  <dropcube-helps name="help"></dropcube-helps>
+                    <dropcube-main name="" dictionary="{{dictionary}}" user="{{user}}"></dropcube-main>
+                    <dropcube-login name="login" dictionary="{{dictionary}}"></dropcube-login>
+                    <dropcube-devices name="devices" dictionary="{{dictionary}}" loading="{{_loading1}}"></dropcube-devices>
+                    <dropcube-device route="{{subrouteData}}" name="device" dictionary="{{dictionary}}" loading="{{_loading2}}"></dropcube-device>
+
                 </iron-pages>
             </div>
             <dropcube-footer class="flex-nogrow" dictionary="{{dictionary}}"></dropcube-footer>
@@ -59,17 +57,17 @@
                 user: {
                     type: Object
                 },
-                loading :{
-                  type : Boolean,
-                  value : true
+                loading: {
+                    type: Boolean,
+                    value: false
                 },
-                _loading1 :{
-                  type : Boolean,
-                  value: false
+                _loading1: {
+                    type: Boolean,
+                    value: false
                 },
-                _loading2 :{
-                  type : Boolean,
-                  value: false
+                _loading2: {
+                    type: Boolean,
+                    value: false
                 }
             },
             observers: [
@@ -78,8 +76,10 @@
             _isMain: function(route) {
                 return route.view != "";
             },
-            _loading : function(loading1, loading2){
-              this.loading = loading1 || loading2;
+            _loading: function(loading1, loading2) {
+                console.log(loading1);
+                console.log(loading2);
+                this.loading = loading1 || loading2;
             }
 
         });

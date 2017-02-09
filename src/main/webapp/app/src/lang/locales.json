@@ -57,11 +57,13 @@
     "es_ES": {
 
         "GENERIC" : {
-          "CANCEL" : "CANCELAR"
+          "CANCEL" : "CANCELAR",
+          "CLOSE" : "Cerrar"
         },
         "INTRO": {
             "TITLE": "Una forma diferente de conocer el tiempo",
-            "DESCRIPTION": "Ahora podrás saber si va a llover, nevar, hará calor de una forma completamente diferente. Ya no tienes que coger tu móvil, encenderlo y acceder a ninguna aplicación. Bastará con ver si dropcube luce algún color!"
+            "DESCRIPTION": "Ahora podrás saber si va a llover, nevar, hará calor de una forma completamente diferente. Ya no tienes que coger tu móvil, encenderlo y acceder a ninguna aplicación. Bastará con ver si dropcube luce algún color!",
+            "VIDEO": "Mira cómo funciona!"
         },
         "SUMMARY1": {
             "TITLES" : {

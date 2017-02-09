@@ -1,0 +1,90 @@
+<dom-module id="dropcube-device-weather-info">
+
+    <template>
+
+
+        <style is="custom-style">
+            :host {
+                --paper-radio-button-checked-color: var(--dropcube-main-blue);
+                --paper-toggle-button-checked-button-color: var(--dropcube-main-blue);
+            }
+
+            paper-card {
+              margin-bottom: 40px;
+            }
+
+            paper-toggle-button {
+                width: 37px;
+            }
+
+            .card-content {}
+
+            .labels {
+                width: 150px;
+            }
+
+            .values {
+                color: var(--dropcube-black);
+            }
+        </style>
+
+        <iron-ajax id="getWeather" method="GET" url="/s/weather/[[device.id]]" content-type="application/json;charset=UTF-8" handle-as="json" on-response="_onResponse" last-response="{{weather}}" loading="{{loading}}"></iron-ajax>
+
+        <dropcube-container>
+
+            <div class="layout-row">
+                <div class="layout-align-start-center">
+                    <p class="flow-text labels">Dispositivo:</p>
+                </div>
+                <div class="flex values">
+                    <p class="flow-text values">{{device.name}}</p>
+                </div>
+            </div>
+            <div class="layout-row">
+                <paper-card class="flex-xs-100 flex">
+                    <div class="card-content">
+                        <div class="layout-column layout-gt-sm-row layout-align-gt-sm-space-around-start layout-align-start-center">
+                            <div><dropcube-current-weather weather="[[weather.data]]"></dropcube-current-weather></div>
+                            <div><dropcube-hourly-weather weather="[[weather.data]]"></dropcube-hourly-weather></div>
+                        </div>
+                    </div>
+                </paper-card>
+            </div>
+
+        </dropcube-container>
+
+    </template>
+
+
+    <script>
+        Polymer({
+            is: "dropcube-device-weather-info",
+            properties: {
+                dictionary: {
+                    type: Object
+                },
+                device: {
+                    type: Object,
+                    observer : '_getWeather'
+                },
+                loading: {
+                    type: Boolean,
+                    notify: true
+                }
+            },
+            _getWeather: function(event) {
+
+              if(this.device != null){
+                this.$.getWeather.generateRequest();
+              }
+
+
+            },
+            _onResponse: function() {
+
+            }
+
+        });
+    </script>
+
+</dom-module>

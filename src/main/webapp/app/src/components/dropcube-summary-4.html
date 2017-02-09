@@ -1,0 +1,55 @@
+<dom-module id="dropcube-summary-4">
+
+    <template>
+
+        <style is="custom-style">
+            :host {
+                display: block;
+                margin: 50px 0 70px 0;
+                text-align: center;
+            }
+
+            h4 {
+                color: var(--dropcube-grey-text);
+            }
+
+            paper-button {
+              margin-top: 20px;
+                background: var(--dropcube-main-blue);
+                color: var(--dropcube-white);
+            }
+
+
+
+        </style>
+
+        <dropcube-container class="layout-row layout-align-center-center">
+
+            <div class="layout-row layout-align-center-center summary-title">
+                <h3 class="flow-h flex header light">{{dictionary.SUMMARY3.TITLES.MAIN}}</h3>
+            </div>
+            <div class="layout-row layout-align-center-center summary-title">
+                <h4 class="flow-h flex header light">{{dictionary.SUMMARY3.TITLES.SECONDARY}}</h4>
+            </div>
+            <div class="layout-row layout-align-center-center summary-title">
+                <paper-button><span class="flow-text">{{dictionary.SUMMARY3.TITLES.THIRD}}</span></paper-button>
+            </div>
+
+        </dropcube-container>
+
+    </template>
+
+
+    <script>
+        Polymer({
+            is: "dropcube-summary-4",
+            properties: {
+                dictionary: {
+                    type: Object
+                }
+            }
+
+        });
+    </script>
+
+</dom-module>

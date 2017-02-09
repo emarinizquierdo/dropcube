@@ -1,0 +1,131 @@
+<dom-module id="dropcube-hourly-weather">
+
+    <template>
+
+
+        <style is="custom-style">
+            :host {
+                background-color: var(--dropcube-white);
+                display: block;
+            }
+
+            iron-icon {
+                width: 37px;
+                height: auto;
+                margin-bottom: 7px;
+            }
+
+            ul {}
+
+            li {
+                border: 1px solid #d3d3d3;
+                text-align: center;
+                border-radius: 2px;
+                cursor: pointer;
+                padding: 8px;
+            }
+
+            li[selected] {
+                background-color: var(--dropcube-main-blue);
+                color: var(--dropcube-white);
+            }
+
+            ul[disabled] li {
+                opacity: 0.5;
+            }
+
+            .arrow-wind {
+                width: 20px;
+                height: auto;
+                margin-top: 6px
+            }
+        </style>
+
+        <div>
+          <div>
+              <h4>Próximas 6 horas:</h4>
+          </div>
+            <ul class="layout-wrap layout-row layout-margin layout-align-center-center" disabled$="{{disabled}}">
+                <template is="dom-repeat" items="[[_limit(weather.hourly.data)]]" as="item">
+                    <li class="layout-column layout-align-center-center">
+                        <h5><span class="flex">[[_getHour(item.time)]]h</span></h5>
+                        <iron-icon class="weather-icon" icon="dropcube-icons-weather:[[_getIcon(item.icon)]]"></iron-icon>
+                        <div><span class="flex">[[_getTemp(item.temperature)]] <sup>ºC</sup></span></div>
+                        <div><span class="flex">[[_getWindSpeed(item.windSpeed)]] km/h</span></div>
+                        <iron-icon class="arrow-wind" style="{{_getRotate(item.windBearing)}}" icon="dropcube-icons:arrow-wind"></iron-icon>
+                    </li>
+                </template>
+            </ul>
+        </div>
+
+    </template>
+
+
+    <script>
+        Polymer({
+            is: "dropcube-hourly-weather",
+            properties: {
+                dictionary: {
+                    type: Object
+                },
+                disabled: {
+                    type: Boolean
+                },
+                weather: {
+                    type: Object
+                }
+            },
+            _isSelected: function(hours, index) {
+                return hours[index];
+            },
+            _select: function(event) {
+                if (this.disabled) {
+                    return;
+                }
+                var _index = event.model.get('item').value;
+                this.hours[_index] = !this.hours[_index];
+                this.fire('hour-changed');
+            },
+            _getHour: function(timestamp){
+              var _time = new Date(timestamp * 1000);
+              return _time.getHours();
+            },
+            _getIcon: function(icon) {
+
+                if (icon == 'clear-day' || icon == 'clear-night' ||
+                    icon == 'rain' || icon == 'snow' ||
+                    icon == 'sleet' || icon == 'fog' ||
+                    icon == 'wind' || icon == 'cloudy' ||
+                    icon == 'partly-cloudy-day' || icon == 'partly-cloudy-night') {
+
+                    if (icon == 'sleet') {
+                        icon = 'snow';
+                    }
+
+                    return icon;
+
+                } else {
+                    return 'clear-day';
+                }
+
+            },
+            _getWindSpeed: function(windSpeed) {
+                return Math.round(windSpeed * 1.61, 2);
+            },
+            _getTemp: function(temp) {
+                return Math.round(temp, 2);
+            },
+            _limit(data) {
+                return data.slice(1, 7);
+            },
+            _getRotate: function(windBearing) {
+                if (windBearing != null) {
+                    var windBearing = windBearing - 1333;
+                    return "transform:rotate(" + windBearing + "deg)";
+                }
+            }
+
+        });
+    </script>
+
+</dom-module>

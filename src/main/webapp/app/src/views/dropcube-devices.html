@@ -45,7 +45,6 @@
             paper-input {
                 --paper-input-container-focus-color: var(--dropcube-main-blue);
             }
-
         </style>
 
         <iron-ajax id="newDevice" method="POST" url="/s/devices" content-type="application/json;charset=UTF-8" handle-as="json" on-response="_onResponse" last-response="{{deviceData}}" loading="{{_loading2}}"></iron-ajax>
@@ -55,8 +54,10 @@
             <h5 class="subtitle">Devices</h5>
         </paper-toolbar>
 
-        <dropcube-new-device on-clik="_openModal"></dropcube-new-device>
-        <dropcube-device-list loading="{{loading}}"></dropcube-device-list>
+        <template is="dom-if" if="{{!loading}}">
+            <dropcube-new-device on-clik="_openModal"></dropcube-new-device>
+            <dropcube-device-list loading="{{_loading1}}"></dropcube-device-list>
+        </template>
 
         <paper-dialog id="actions">
             <h2>{{dictionary.DEVICES.ADD_NEW}}</h2>
@@ -81,21 +82,37 @@
                 dictionary: {
                     type: Object
                 },
-                loading: {
-                    type: Boolean,
-                    notify: true
+                loading :{
+                  type : Boolean,
+                  notify : true
+                },
+                _loading1 :{
+                  type : Boolean
+                },
+                _loading2 :{
+                  type : Boolean
                 }
             },
             listeners: {
                 'clik': '_openModal'
             },
+            observers: [
+                '_loading(_loading1, _loading2)'
+            ],
             _openModal: function() {
                 actions.open();
             },
-            _newDevice : function(){
-              this.$.newDevice.body = JSON.stringify({name : this._deviceName});
-              this.$.newDevice.generateRequest();
-              actions.close();
+            _newDevice: function() {
+                this.$.newDevice.body = JSON.stringify({
+                    name: this._deviceName
+                });
+                this.$.newDevice.generateRequest();
+                actions.close();
+            },
+            _loading : function(loading1, loading2){
+              console.log(loading1);
+              console.log(loading2);
+              this.loading = loading1 || loading2;
             }
         });
     </script>

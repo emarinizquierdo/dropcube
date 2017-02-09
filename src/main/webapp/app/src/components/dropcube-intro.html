@@ -17,9 +17,35 @@
                 height: 330px;
             }
 
+            paper-dialog {
+                z-index: 9999999999999999999;
+            }
+
+            iron-overlay-backdrop {
+                z-index: 9999999999999999999;
+            }
+
+            paper-button {
+                background-color: var(--dropcube-main-blue);
+                color: var(--dropcube-white);
+            }
+
+            iframe{
+              width: 100%;
+              height: auto;
+            }
+
             .weather-cool {
                 width: 100%;
                 height: auto;
+            }
+
+            .play {
+                vertical-align: sub;
+            }
+
+            .play-wrapper {
+                cursor: pointer;
             }
         </style>
 
@@ -32,10 +58,21 @@
                 <div class="flex-xs-100 flex-60">
                     <h4 class="flow-h">{{ dictionary.INTRO.TITLE }}</h4>
                     <p class="flow-text">{{ dictionary.INTRO.DESCRIPTION }}</p>
+                    <p class="flow-text play-wrapper">
+                        <a on-click="_openModal">
+                            <iron-icon class="play" icon="dropcube-icons:play"></iron-icon> {{ dictionary.INTRO.VIDEO }}</a>
+                    </p>
                 </div>
             </div>
 
         </dropcube-container>
+
+        <paper-dialog id="videoWrapper" always-on-top modal>
+            <iframe src="https://www.youtube.com/embed/t-Pb_2xvipQ?rel=0&amp;controls=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
+            <div class="buttons">
+                <paper-button dialog-confirm autofocus>{{dictionary.GENERIC.CLOSE}}</paper-button>
+            </div>
+        </paper-dialog>
 
     </template>
 
@@ -47,7 +84,10 @@
                 dictionary: {
                     type: Object
                 }
-            }
+            },
+            _openModal: function() {
+                videoWrapper.open();
+            },
 
         });
     </script>

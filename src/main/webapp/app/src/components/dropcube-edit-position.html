@@ -9,18 +9,27 @@
                 color: var(--dropcube-white);
             }
 
-            paper-button[cancel]{
+            paper-button[cancel] {
                 background-color: var(--dropcube-white);
                 color: var(--dropcube-main-blue);
             }
+
+            .gps-location {
+                margin-right: 20px;
+                cursor: pointer;
+            }
+            .gps-location:hover {
+                opacity: 0.8;
+            }
         </style>
 
-        <div>
+        <div class="layout-align-center-center">
             <template is="dom-if" if="{{show}}">
                 <template is="dom-if" if="{{!isEditing}}">
                     <paper-button on-click="_edit">Modificar posición</paper-button>
                 </template>
                 <template is="dom-if" if="{{isEditing}}">
+                    <iron-icon on-click="_geolocate" class="gps-location" icon="dropcube-icons:gps-location"></iron-icon>
                     <paper-button on-click="_save">Aceptar</paper-button>
                 </template>
             </template>
@@ -40,21 +49,37 @@
                     type: Boolean,
                     value: false
                 },
-                isEditing : {
-                  type : Boolean,
-                  value : false,
-                  notify: true
+                device: {
+                    type: Object,
+                    notify: true
+                },
+                isEditing: {
+                    type: Boolean,
+                    value: false,
+                    notify: true
                 }
             },
-            _edit : function(){
-              this.isEditing = true;
+            _edit: function() {
+                this.isEditing = true;
             },
-            _save : function(){
-              this.fire("save");
-              this.isEditing = false;
+            _save: function() {
+                this.fire("save");
+                this.isEditing = false;
             },
-            _cancel : function(){
-              this.isEditing = false;
+            _cancel: function() {
+                this.isEditing = false;
+            },
+            _geolocate: function() {
+
+                if (navigator.geolocation) {
+
+                    navigator.geolocation.getCurrentPosition(function(position) {
+                        this.set('device.lat', position.coords.latitude)
+                        this.set('device.lng', position.coords.longitude)
+                    }.bind(this));
+
+                }
+
             }
 
         });

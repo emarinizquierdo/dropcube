@@ -5,7 +5,7 @@
 
         <style is="custom-style">
             :host {
-                background-color: var(--dropcube-grey-block);
+                background-color: var(--dropcube-white);
                 display: block;
             }
 
@@ -24,10 +24,14 @@
                 background-color: var(--dropcube-main-blue);
                 color: var(--dropcube-white);
             }
+
+            ul[disabled] li {
+                opacity: 0.5;
+            }
         </style>
 
         <div>
-            <ul class="layout-wrap layout-row layout-margin">
+            <ul class="layout-wrap layout-row layout-margin" disabled$="{{disabled}}">
                 <template is="dom-repeat" items="[[hors]]" as="item">
                     <li class="layout-row layout-align-center-center" on-click="_select" selected$="{{_isSelected(hours, index)}}"><span class="flex">[[item.value]]</span></li>
                 </template>
@@ -43,6 +47,9 @@
             properties: {
                 dictionary: {
                     type: Object
+                },
+                disabled: {
+                    type: Boolean
                 },
                 hors: {
                     type: Array,
@@ -101,6 +108,9 @@
                 return hours[index];
             },
             _select: function(event) {
+                if (this.disabled) {
+                    return;
+                }
                 var _index = event.model.get('item').value;
                 this.hours[_index] = !this.hours[_index];
                 this.fire('hour-changed');

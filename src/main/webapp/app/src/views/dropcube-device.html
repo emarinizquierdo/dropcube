@@ -3,7 +3,6 @@
     <template>
 
         <style is="custom-style">
-
             :host {
                 --paper-tabs-selection-bar-color: var(--dropcube-main-blue);
             }
@@ -30,13 +29,14 @@
             .iron-selected {
                 height: calc(100% - 100px);
             }
-
         </style>
 
         <!--  Parallax Section  -->
         <paper-toolbar class="layout-row layout-align-start-center layout-align-space-between">
-            <h5 class="subtitle">Devices</h5>
-            <dropcube-edit-position show="{{_showMapButtons(selected)}}" is-editing="{{_editPosition}}" on-save="_onSave"></dropcube-edit-position>
+            <a href="/devices">
+                <h5 class="subtitle">Devices</h5>
+            </a>
+            <dropcube-edit-position device="{{device}}" show="{{_showMapButtons(selected)}}" is-editing="{{_editPosition}}" on-save="_onSave"></dropcube-edit-position>
         </paper-toolbar>
 
         <iron-ajax id="deviceGet" url="/s/devices/[[route.id]]" handle-as="json" on-response="_onResponse" last-response="{{deviceData}}" loading="{{_loading1}}"></iron-ajax>
@@ -49,13 +49,13 @@
         </paper-tabs>
         <iron-pages selected="{{selected}}">
             <div>
-                <dropcube-device-main-info device="{{device}}"></dropcube-device-main-info>
+              <dropcube-device-weather-info device="{{device}}" loading="{{_loading4}}"></dropcube-device-weather-info>
             </div>
             <div>
                 <dropcube-device-map device="{{device}}" disable-control="{{!_editPosition}}"></dropcube-device-map>
             </div>
             <div>
-                3
+                <dropcube-device-main-info device="{{device}}" loading="{{_loading3}}"></dropcube-device-main-info>
             </div>
         </iron-pages>
 
@@ -70,6 +70,9 @@
                 dictionary: {
                     type: Object
                 },
+                device : {
+                  type: Object
+                },
                 route: {
                     type: Object
                 },
@@ -77,24 +80,32 @@
                     type: Number,
                     value: 0
                 },
-                loading : {
-                  type: Boolean,
-                  notify : true
+                loading: {
+                    type: Boolean,
+                    notify: true
                 },
-                _loading1 : {
-                  type: Boolean
+                _loading1: {
+                    type: Boolean,
+                    value: false,
+                    observer: '_loadingObs'
                 },
-                _loading2 : {
-                  type: Boolean
+                _loading2: {
+                    type: Boolean,
+                    value: false,
+                    observer: '_loadingObs'
                 },
-                _editPosition : {
-                  type : Boolean,
-                  value : false
+                _loading3: {
+                    type: Boolean,
+                    value: false,
+                    observer: '_loadingObs'
+                },
+                _editPosition: {
+                    type: Boolean,
+                    value: false
                 }
             },
             observers: [
-                '_routeChanged(route.*)',
-                '_loading(_loading1, _loading2)'
+                '_routeChanged(route.*)'
             ],
             _routeChanged: function(route) {
 
@@ -103,19 +114,18 @@
                 }
 
             },
-            _loading : function(loading1, loading2){
-              debugger;
-              this.loading = loading1 || loading2;
+            _loadingObs: function() {
+                this.loading = this._loading1 || this._loading2 || this._loading3;
             },
-            _showMapButtons : function( tab ){
-              return (tab == 1);
+            _showMapButtons: function(tab) {
+                return (tab == 1);
             },
-            _onResponse : function(){
-              this.device = (this.deviceData && this.deviceData.data) ? this.deviceData.data : null;
+            _onResponse: function() {
+                this.device = (this.deviceData && this.deviceData.data) ? this.deviceData.data : null;
             },
-            _onSave : function(){
-              this.$.putDevice.body = JSON.stringify(this.device);
-              this.$.putDevice.generateRequest();
+            _onSave: function() {
+                this.$.putDevice.body = JSON.stringify(this.device);
+                this.$.putDevice.generateRequest();
             }
         });
     </script>

@@ -11,11 +11,9 @@
 
             paper-card {
                 box-sizing: border-box;
-                max-width: 220px;
-                margin: 4px;
-                flex: 0 0 auto;
                 overflow: hidden;
                 cursor: pointer;
+                margin-bottom: 20px;
             }
 
             .card-content {
@@ -25,24 +23,36 @@
                 width: 600px;
                 margin-left: -300px;
             }
+
+            .card-actions {
+                border-top: 1px solid #e8e8e8;
+                padding: 5px 16px;
+                position: relative;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
         </style>
 
         <iron-ajax auto url="/s/devices" handle-as="json" last-response="{{devices}}" loading="{{loading}}"></iron-ajax>
 
         <dropcube-container>
 
-            <div class="layout-row layout-wrap layout-margin layout-align-space-between">
+            <div class="layout-row layout-wrap layout-align-space-between layout-align-xs-center-center">
                 <template is="dom-repeat" items="[[devices.data]]" as="device">
-                    <a href="/device/[[device.id]]">
-                        <paper-card class="cyan flex-xs-100">
-                            <div class="card-content">
+
+                    <paper-card class="cyan flex-45 flex-xs-100 flex-md-30 flex-gt-md-30 flex-gt-lg-20">
+                        <div class="card-content">
+                            <a href="/device/[[device.id]]">
                                 <google-map-static api-key="AIzaSyCgLJCZYhd_cFHlI5JZXNsGuCqamoQiGpM" lat="[[device.lat]]" lng="[[device.lng]]" size-x="600" size-y="100"></google-map-static>
-                            </div>
-                            <div class="card-actions">
+                            </a>
+                        </div>
+                        <div class="card-actions">
+                            <a href="/device/[[device.id]]">
                                 <span class="flow-text">[[device.name]]</span>
-                            </div>
-                        </paper-card>
-                    </a>
+                            </a>
+                        </div>
+                    </paper-card>
                 </template>
             </div>
 

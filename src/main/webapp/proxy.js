@@ -19,7 +19,7 @@ configuration = {
 		  , "/_ah/*"
 		  , "/settings"
 		  , "/devices"
-		  , "/devices/detail/"
+		  , "/device/*"
 		  , "/login"
 		  , "/checkout"
 		  , "/diy"

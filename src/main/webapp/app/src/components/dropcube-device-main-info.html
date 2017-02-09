@@ -9,7 +9,9 @@
                 --paper-toggle-button-checked-button-color: var(--dropcube-main-blue);
             }
 
-            paper-card {}
+            paper-card {
+                margin-bottom: 40px;
+            }
 
             paper-toggle-button {
                 width: 37px;
@@ -26,7 +28,7 @@
             }
         </style>
 
-        <iron-ajax id="putDevice" method="PUT" url="/s/devices/[[device.id]]" content-type="application/json;charset=UTF-8" handle-as="json" on-response="_onResponse" last-response="{{data}}"></iron-ajax>
+        <iron-ajax id="putDevice" method="PUT" url="/s/devices/[[device.id]]" content-type="application/json;charset=UTF-8" handle-as="json" on-response="_onResponse" last-response="{{data}}" loading="{{loading}}"></iron-ajax>
 
         <dropcube-container>
 
@@ -56,13 +58,13 @@
                                 </div>
                                 <div class="flex values layout-row layout-align-start-center">
                                     <paper-radio-group on-paper-radio-group-changed="_updateDevice" selected="{{device.mode}}" aria-labelledby="label2">
-                                        <paper-radio-button class="flow-text" name="NORMAL">Normal</paper-radio-button>
-                                        <paper-radio-button class="flow-text" name="RAINBOW">Rainbow</paper-radio-button>
-                                        <paper-radio-button class="flow-text" name="TEST_RAIN">Test lluvia</paper-radio-button>
-                                        <paper-radio-button class="flow-text" name="TEST_SNOW">Test Nieve</paper-radio-button>
-                                        <paper-radio-button class="flow-text" name="TEST_WIND">Test Viento</paper-radio-button>
-                                        <paper-radio-button class="flow-text" name="TEST_STORM">Test Tormenta</paper-radio-button>
-                                        <paper-radio-button class="flow-text" name="TEST_HOT">Test Calor</paper-radio-button>
+                                        <paper-radio-button noink class="flow-text" disabled="{{loading}}" name="NORMAL">Normal</paper-radio-button>
+                                        <paper-radio-button noink class="flow-text" disabled="{{loading}}" name="RAINBOW">Rainbow</paper-radio-button>
+                                        <paper-radio-button noink class="flow-text" disabled="{{loading}}" name="TEST_RAIN">Test lluvia</paper-radio-button>
+                                        <paper-radio-button noink class="flow-text" disabled="{{loading}}" name="TEST_SNOW">Test Nieve</paper-radio-button>
+                                        <paper-radio-button noink class="flow-text" disabled="{{loading}}" name="TEST_WIND">Test Viento</paper-radio-button>
+                                        <paper-radio-button noink class="flow-text" disabled="{{loading}}" name="TEST_STORM">Test Tormenta</paper-radio-button>
+                                        <paper-radio-button noink class="flow-text" disabled="{{loading}}" name="TEST_HOT">Test Calor</paper-radio-button>
                                     </paper-radio-group>
                                 </div>
                             </div>
@@ -72,7 +74,7 @@
                                 </div>
                                 <div class="flex values layout-row layout-margin">
                                     <p class="flow-text values">Por día</p>
-                                    <paper-toggle-button active="{{device.hourly}}" on-change="_updateDevice"></paper-toggle-button>
+                                    <paper-toggle-button noink disabled="{{loading}}" active="{{device.hourly}}" on-change="_updateDevice"></paper-toggle-button>
                                     <p class="flow-text values">Por hora</p>
                                 </div>
                             </div>
@@ -84,7 +86,7 @@
                                         </div>
                                         <div class="flex values layout-column layout-margin">
                                             <p class="flow-text">Selecciona las horas en las que normalmente transitas por la calle</p>
-                                            <dropcube-hour-selector hours="{{device.hours}}" on-hour-changed="_updateDevice"></dropcube-hour-selector>
+                                            <dropcube-hour-selector disabled="{{loading}}" hours="{{device.hours}}" on-hour-changed="_updateDevice"></dropcube-hour-selector>
                                         </div>
                                     </div>
                                 </div>
@@ -108,6 +110,10 @@
                 },
                 device: {
                     type: Object
+                },
+                loading: {
+                    type: Boolean,
+                    notify: true
                 }
             },
             _updateDevice: function(event) {

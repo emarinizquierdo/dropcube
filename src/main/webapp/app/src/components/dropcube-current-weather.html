@@ -1,0 +1,100 @@
+<dom-module id="dropcube-current-weather">
+
+    <template>
+
+
+        <style is="custom-style">
+            :host {
+                min-width: 275px;
+            }
+
+            iron-icon {
+                width: 80px;
+                height: auto;
+            }
+
+            .arrow-wind {
+                -ms-transform: rotate(0deg);
+                -webkit-transform: rotate(0deg);
+                transform: rotate(0deg);
+                width: 20px;
+                height: auto;
+                vertical-align: text-top;
+            }
+
+            p {
+                margin: 2px;
+                font-size: 19px;
+            }
+        </style>
+
+        <div class="weather-box layout-column">
+
+            <div>
+                <h4>Ahora en tu posición:</h4>
+            </div>
+            <div class="layout-row layout-margin layout-align-space-between">
+                <h1>[[_getTemp(weather.currently.temperature)]] <sup>ºC</sup></h1>
+                <iron-icon class="weather-icon" icon="dropcube-icons-weather:[[_getIcon(weather.currently.icon)]]"></iron-icon>
+            </div>
+            <p class="flow-text">Wind speed: [[_getWindSpeed(weather.currently.windSpeed)]] km/h
+                <iron-icon id="arrowWind" class="arrow-wind" icon="dropcube-icons:arrow-wind"></iron-icon>
+            </p>
+            <p class="flow-text">Pressure: [[weather.currently.pressure]] km/h</p>
+            <p class="flow-text">Humidity: [[weather.currently.humidity]] %</p>
+
+        </div>
+    </template>
+
+
+    <script>
+        //clear-day, clear-night, rain, snow, sleet, wind, fog, cloudy, partly-cloudy-day, partly-cloudy-night
+
+        Polymer({
+            is: "dropcube-current-weather",
+            properties: {
+                dictionary: {
+                    type: Object
+                },
+                weather: {
+                    type: Object,
+                    observer: '_getRotate'
+                }
+            },
+            _getIcon: function(icon) {
+
+                if (icon == 'clear-day' || icon == 'clear-night' ||
+                    icon == 'rain' || icon == 'snow' ||
+                    icon == 'sleet' || icon == 'fog' ||
+                    icon == 'wind' || icon == 'cloudy' ||
+                    icon == 'partly-cloudy-day' || icon == 'partly-cloudy-night') {
+
+                    if (icon == 'sleet') {
+                        icon = 'snow';
+                    }
+
+                    return icon;
+
+                } else {
+                    return 'clear-day';
+                }
+
+            },
+            _getWindSpeed: function(windSpeed) {
+                return Math.round(windSpeed * 1.61, 2);
+            },
+            _getTemp: function(temp) {
+                return Math.round(temp, 2);
+            },
+            _getRotate: function() {
+                if (this.weather != null) {
+                    var windBearing = this.weather.currently.windBearing - 1333;
+                    this.$.arrowWind.style.transform = "rotate(" + windBearing + "deg)";
+                }
+            }
+
+
+        });
+    </script>
+
+</dom-module>
