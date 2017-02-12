@@ -103,9 +103,6 @@
                                         <div class="flex values layout-column layout-margin">
                                             <p class="flow-text">{{dictionary.DEVICE.SELECT_HOURS}}</p>
                                             <dropcube-hour-selector disabled="{{loading}}" hours="{{device.hours}}" on-hour-changed="_updateDevice"></dropcube-hour-selector>
-                                            <paper-radio-group on-paper-radio-group-changed="_updateDevice" selected="{{device.mode}}" aria-labelledby="label2">
-                                                <paper-radio-button noink class="flow-text" disabled="{{loading}}" name="NORMAL">Normal</paper-radio-button>
-                                                <paper-radio-button noink class="flow-text" disabled="{{loading}}" name="RAINBOW">Rainbow</paper-radio-button>
                                         </div>
                                     </div>
                                 </div>
