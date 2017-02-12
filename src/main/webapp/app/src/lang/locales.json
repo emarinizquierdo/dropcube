@@ -1,8 +1,9 @@
 {
     "en_GB": {
 
-        "GENERIC" : {
-          "CANCEL" : "CANCEL"
+        "GENERIC": {
+            "CANCEL": "CANCEL",
+            "ACCEPT": "ACCEPT"
         },
         "INTRO": {
             "TITLE": "titulo",
@@ -56,9 +57,11 @@
 
     "es_ES": {
 
-        "GENERIC" : {
-          "CANCEL" : "CANCELAR",
-          "CLOSE" : "Cerrar"
+        "GENERIC": {
+            "CANCEL": "CANCELAR",
+            "CLOSE": "Cerrar",
+            "ACCEPT": "ACEPTAR",
+            "DELETE_DROPCUBE": "BORRAR DROPCUBE"
         },
         "INTRO": {
             "TITLE": "Una forma diferente de conocer el tiempo",
@@ -66,41 +69,41 @@
             "VIDEO": "Mira cómo funciona!"
         },
         "SUMMARY1": {
-            "TITLES" : {
-              "MAIN" : "Diferentes tipos de alertas y funciones",
-              "HOT" : "Alerta por calor",
-              "RAIN" : "Alerta por lluvias",
-              "SNOW" : "Alerta por nevadas",
-              "WIND" : "Alerta por viento",
-              "RAINBOW" : "Función Arcoiris"
+            "TITLES": {
+                "MAIN": "Diferentes tipos de alertas y funciones",
+                "HOT": "Alerta por calor",
+                "RAIN": "Alerta por lluvias",
+                "SNOW": "Alerta por nevadas",
+                "WIND": "Alerta por viento",
+                "RAINBOW": "Función Arcoiris"
             },
-            "DESCRIPTIONS" : {
-              "MAIN" : "Diferentes tipos de alertas y funciones",
-              "HOT" : "Para días muy calurosos, dropcube te avisará si fuera hace más de 27ºC.",
-              "RAIN" : "Cada vez que vaya a llover, dropcube te avisará dando prioridad a esta alerta.",
-              "SNOW" : "Y si en vez de gotas caen copos, no te preocupes, dropcube se pondrá blanco como un muñeco de nieve.",
-              "WIND" : "Cuando fuera empiece a soplar fuerte, una luz naranja te avisará para que no se te escape el sombrero.",
-              "RAINBOW" : "Con este modo activo, podrás difrutar de una transición de colores ideal para relajarese después de un día duro ;-)"
+            "DESCRIPTIONS": {
+                "MAIN": "Diferentes tipos de alertas y funciones",
+                "HOT": "Para días muy calurosos, dropcube te avisará si fuera hace más de 27ºC.",
+                "RAIN": "Cada vez que vaya a llover, dropcube te avisará dando prioridad a esta alerta.",
+                "SNOW": "Y si en vez de gotas caen copos, no te preocupes, dropcube se pondrá blanco como un muñeco de nieve.",
+                "WIND": "Cuando fuera empiece a soplar fuerte, una luz naranja te avisará para que no se te escape el sombrero.",
+                "RAINBOW": "Con este modo activo, podrás difrutar de una transición de colores ideal para relajarese después de un día duro ;-)"
             }
         },
 
         "SUMMARY2": {
-            "TITLES" : {
-              "MAIN" : "Disponible en cualquier punto del mundo"
+            "TITLES": {
+                "MAIN": "Disponible en cualquier punto del mundo"
             },
-            "DESCRIPTIONS" : {
-              "MAIN" : "Podrás elegir el lugar para el cuál quieres que dropcube te tenga informado. Bastará con seleccionarlo desde la configuración y ya estará listo."
+            "DESCRIPTIONS": {
+                "MAIN": "Podrás elegir el lugar para el cuál quieres que dropcube te tenga informado. Bastará con seleccionarlo desde la configuración y ya estará listo."
             }
         },
 
         "SUMMARY3": {
-            "TITLES" : {
-              "MAIN" : "¿Deseas saber si lloverá de forma diferente?",
-              "SECONDARY" :"¡Adquiere tu dropcube ahora!",
-              "THIRD": "Añadir al carrito"
+            "TITLES": {
+                "MAIN": "¿Deseas saber si lloverá de forma diferente?",
+                "SECONDARY": "¡Adquiere tu dropcube ahora!",
+                "THIRD": "Añadir al carrito"
             },
-            "DESCRIPTIONS" : {
-              "MAIN" : "Podrás elegir el lugar para el cuál quieres que dropcube te tenga informado. Bastará con seleccionarlo desde la configuración y ya estará listo."
+            "DESCRIPTIONS": {
+                "MAIN": "Podrás elegir el lugar para el cuál quieres que dropcube te tenga informado. Bastará con seleccionarlo desde la configuración y ya estará listo."
             }
         },
         "MAIN_PAGE": {
@@ -143,9 +146,29 @@
             "NOTES_02": "Añade nuevos dispositivos 'dropcube'."
         },
 
+        "DEVICE": {
+            "DEVICE": "Dispositivo",
+            "MODE": "Modo",
+            "WARNINGS": "Alertas",
+            "BY_DAYS": "Seleccionar ciertas horas",
+            "BY_HOURS": "En tiempo real",
+            "SELECT_HOURS": "Selecciona las horas en las que normalmente transitas por la calle",
+            "DELETE_DROPCUBE": "BORRAR DROPCUBE",
+            "UPDATE_POS": "Modificar posición"
+        },
         "DEVICES": {
+            "YOUR_DROPCUBES": "Tus dispositivos dropcube",
             "ADD_NEW": "Añade un nuevo Dropcube",
-            "NEW_ADVICE": "Añade un nombre descriptivo, por ejemplo, dropcube del salón"
+            "ADD_NEW_DEVICE": "Añadir nuevo dispositivo",
+            "NEW_ADVICE": "Añade un nombre descriptivo, por ejemplo, dropcube del salón",
+            "DELETE": "Borrar dropcube",
+            "DELETE_ADVICE": "¿Estás seguro de que deseas eliminar este dropcube?"
+        },
+        "WEATHER": {
+            "NOW": "Ahora en tu posición",
+            "SPEED_WIND": "Wind speed",
+            "PRESSURE": "Pressure",
+            "HUMIDITY": "Humedad"
         }
     }
 

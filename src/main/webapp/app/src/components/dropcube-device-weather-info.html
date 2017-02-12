@@ -17,7 +17,9 @@
                 width: 37px;
             }
 
-            .card-content {}
+            .card-content {
+              min-height: 300px;
+            }
 
             .labels {
                 width: 150px;
@@ -34,7 +36,7 @@
 
             <div class="layout-row">
                 <div class="layout-align-start-center">
-                    <p class="flow-text labels">Dispositivo:</p>
+                    <p class="flow-text labels">{{dictionary.DEVICE.DEVICE}}:</p>
                 </div>
                 <div class="flex values">
                     <p class="flow-text values">{{device.name}}</p>
@@ -43,10 +45,12 @@
             <div class="layout-row">
                 <paper-card class="flex-xs-100 flex">
                     <div class="card-content">
+                      <template is="dom-if" if="{{!loading}}">
                         <div class="layout-column layout-gt-sm-row layout-align-gt-sm-space-around-start layout-align-start-center">
-                            <div><dropcube-current-weather weather="[[weather.data]]"></dropcube-current-weather></div>
-                            <div><dropcube-hourly-weather weather="[[weather.data]]"></dropcube-hourly-weather></div>
+                            <div><dropcube-current-weather dictionary="{{dictionary}}" weather="[[weather.data]]"></dropcube-current-weather></div>
+                            <div><dropcube-hourly-weather dictionary="{{dictionary}}" weather="[[weather.data]]"></dropcube-hourly-weather></div>
                         </div>
+                        </template>
                     </div>
                 </paper-card>
             </div>

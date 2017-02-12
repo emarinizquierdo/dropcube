@@ -49,13 +49,13 @@
         </paper-tabs>
         <iron-pages selected="{{selected}}">
             <div>
-              <dropcube-device-weather-info device="{{device}}" loading="{{_loading4}}"></dropcube-device-weather-info>
+              <dropcube-device-weather-info device="{{device}}" dictionary="{{dictionary}}" loading="{{_loading4}}"></dropcube-device-weather-info>
             </div>
             <div>
-                <dropcube-device-map device="{{device}}" disable-control="{{!_editPosition}}"></dropcube-device-map>
+                <dropcube-device-map device="{{device}}" dictionary="{{dictionary}}" disable-control="{{!_editPosition}}"></dropcube-device-map>
             </div>
             <div>
-                <dropcube-device-main-info device="{{device}}" loading="{{_loading3}}"></dropcube-device-main-info>
+                <dropcube-device-main-info id="mainInfo" dictionary="{{dictionary}}" device="{{device}}" loading="{{_loading3}}"></dropcube-device-main-info>
             </div>
         </iron-pages>
 
@@ -99,6 +99,11 @@
                     value: false,
                     observer: '_loadingObs'
                 },
+                _loading4: {
+                    type: Boolean,
+                    value: false,
+                    observer: '_loadingObs'
+                },
                 _editPosition: {
                     type: Boolean,
                     value: false
@@ -115,7 +120,7 @@
 
             },
             _loadingObs: function() {
-                this.loading = this._loading1 || this._loading2 || this._loading3;
+                this.loading = this._loading1 || this._loading2 || this._loading3 || this._loading4;
             },
             _showMapButtons: function(tab) {
                 return (tab == 1);

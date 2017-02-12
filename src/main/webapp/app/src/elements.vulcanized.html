@@ -28061,17 +28061,7 @@ The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
 The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
 Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
---><!--
-@license
-Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
---><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic,500,500italic,700,700italic">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono:400,700">
-<style is="custom-style">
+--><style is="custom-style">
 
   :root {
 
@@ -53213,6 +53203,13 @@ Custom property | Description | Default
                         <rect x="246.222" y="256" style="fill:#ffffff;" width="19.576" height="244.685"></rect>
                     </g>
 
+                    <g id="blue-cube" class="currentLayer" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;">
+                        <polygon style="fill:#43D3E8" points="256.004,256 82.456,356.206 256.004,456.394 429.562,356.209 " id="light" class="" fill-opacity="1" fill="#ffffff"></polygon>
+                        <path d="M256.004,512L34.3,384V128L256.004,0L477.7,128.008v256L256.004,512z M53.876,372.698   l202.127,116.698l202.122-116.69V139.31L256.004,22.605L53.876,139.302V372.698z" id="svg_3" fill="#009fcf"></path>
+                        <polygon points="256.004,267.302 39.195,142.129 48.982,125.174 256.004,244.698 463.018,125.181    472.808,142.134  " id="svg_4" fill="#009fcf"></polygon>
+                        <rect x="246.2220001220703" y="256" width="19.576000213623047" height="244.68499755859375" id="svg_5" fill="#009fcf"></rect>
+                    </g>
+
                     <g id="red-cloud" viewBox="0 0 408.76 408.76" style="enable-background:new 0 0 408.76 408.76;">
                         <path style="fill:#FFBE00;" d="M204.385,408.76c-58.121,0-113.675-24.867-152.418-68.227
                     		C18.46,303.057,0.005,254.703,0.005,204.381C0.005,91.685,91.69,0,204.385,0c50.317,0,98.674,18.455,136.163,51.964
@@ -53332,15 +53329,11 @@ Custom property | Description | Default
                         </g>
                     </g>
 
-
-
                     <g id="cube-color" class="currentLayer" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;">
                         <polygon style="transition: fill 1s ease;" points="256.004,256 82.456,356.206 256.004,456.394 429.562,356.209 " id="light" class="" fill-opacity="1" fill="#ffffff"></polygon>
                         <path d="M256.004,512L34.3,384V128L256.004,0L477.7,128.008v256L256.004,512z M53.876,372.698   l202.127,116.698l202.122-116.69V139.31L256.004,22.605L53.876,139.302V372.698z" id="svg_3" fill="#009fcf"></path>
                         <polygon points="256.004,267.302 39.195,142.129 48.982,125.174 256.004,244.698 463.018,125.181    472.808,142.134  " id="svg_4" fill="#009fcf"></polygon>
                         <rect x="246.2220001220703" y="256" width="19.576000213623047" height="244.68499755859375" id="svg_5" fill="#009fcf"></rect>
-
-
                     </g>
 
                     <g id="wind" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;">
@@ -54411,7 +54404,7 @@ Custom property | Description | Default
         <div class="layout-row layout-fill layout-align-center-center">
             <div class="layout-column layout-align-center-center">
                     <div class="layout-column flex-100 layout-align-center-center">
-                        <iron-icon id="cubeColor" class="cube-icon" icon="dropcube-icons:cube-color"></iron-icon>
+                        <iron-icon id="cubeColor" class="cube-icon" icon="dropcube-icons:blue-cube"></iron-icon>
                         <h4 class="exo">dropcube</h4>
                     </div>
                     <div class="flow-text layout-column flex-100 layout-align-center-center">
@@ -54506,10 +54499,10 @@ Custom property | Description | Default
             <h5 class="subtitle">Devices</h5>
         </paper-toolbar>
 
-        <template is="dom-if" if="{{!loading}}">
+
             <dropcube-new-device on-clik="_openModal"></dropcube-new-device>
-            <dropcube-device-list loading="{{_loading1}}"></dropcube-device-list>
-        </template>
+            <dropcube-device-list id="deviceList" loading="{{_loading1}}"></dropcube-device-list>
+
 
         <paper-dialog id="actions">
             <h2>{{dictionary.DEVICES.ADD_NEW}}</h2>
@@ -54546,7 +54539,8 @@ Custom property | Description | Default
                 }
             },
             listeners: {
-                'clik': '_openModal'
+                'clik': '_openModal',
+                'afterdelete': '_onResponse'
             },
             observers: [
                 '_loading(_loading1, _loading2)'
@@ -54565,6 +54559,9 @@ Custom property | Description | Default
               console.log(loading1);
               console.log(loading2);
               this.loading = loading1 || loading2;
+            },
+            _onResponse : function(){
+              this.$.deviceList.fire("get");
             }
         });
     </script>
@@ -54621,13 +54618,13 @@ Custom property | Description | Default
         </paper-tabs>
         <iron-pages selected="{{selected}}">
             <div>
-              <dropcube-device-weather-info device="{{device}}" loading="{{_loading4}}"></dropcube-device-weather-info>
+              <dropcube-device-weather-info device="{{device}}" dictionary="{{dictionary}}" loading="{{_loading4}}"></dropcube-device-weather-info>
             </div>
             <div>
-                <dropcube-device-map device="{{device}}" disable-control="{{!_editPosition}}"></dropcube-device-map>
+                <dropcube-device-map device="{{device}}" dictionary="{{dictionary}}" disable-control="{{!_editPosition}}"></dropcube-device-map>
             </div>
             <div>
-                <dropcube-device-main-info device="{{device}}" loading="{{_loading3}}"></dropcube-device-main-info>
+                <dropcube-device-main-info id="mainInfo" dictionary="{{dictionary}}" device="{{device}}" loading="{{_loading3}}"></dropcube-device-main-info>
             </div>
         </iron-pages>
 
@@ -54671,6 +54668,11 @@ Custom property | Description | Default
                     value: false,
                     observer: '_loadingObs'
                 },
+                _loading4: {
+                    type: Boolean,
+                    value: false,
+                    observer: '_loadingObs'
+                },
                 _editPosition: {
                     type: Boolean,
                     value: false
@@ -54687,7 +54689,7 @@ Custom property | Description | Default
 
             },
             _loadingObs: function() {
-                this.loading = this._loading1 || this._loading2 || this._loading3;
+                this.loading = this._loading1 || this._loading2 || this._loading3 || this._loading4;
             },
             _showMapButtons: function(tab) {
                 return (tab == 1);
@@ -54774,8 +54776,8 @@ Polymer({
                   <dropcube-helps name="help"></dropcube-helps>
                     <dropcube-main name="" dictionary="{{dictionary}}" user="{{user}}"></dropcube-main>
                     <dropcube-login name="login" dictionary="{{dictionary}}"></dropcube-login>
-                    <dropcube-devices name="devices" dictionary="{{dictionary}}" loading="{{_loading1}}"></dropcube-devices>
-                    <dropcube-device route="{{subrouteData}}" name="device" dictionary="{{dictionary}}" loading="{{_loading2}}"></dropcube-device>
+                    <dropcube-devices id="dropcubeDevices" name="devices" dictionary="{{dictionary}}" loading="{{_loading1}}"></dropcube-devices>
+                    <dropcube-device id="dropcubeDevice" route="{{subrouteData}}" name="device" dictionary="{{dictionary}}" loading="{{_loading2}}"></dropcube-device>
 
                 </iron-pages>
             </div>
@@ -54807,6 +54809,9 @@ Polymer({
             observers: [
                 '_loading(_loading1, _loading2)'
             ],
+            listeners : {
+              "deleted" : "_onDeleted"
+            },
             _isMain: function(route) {
                 return route.view != "";
             },
@@ -54814,6 +54819,10 @@ Polymer({
                 console.log(loading1);
                 console.log(loading2);
                 this.loading = loading1 || loading2;
+            },
+            _onDeleted: function(){
+              this.set("route.path", "/devices");
+              this.$.dropcubeDevices.fire("afterdelete");
             }
 
         });
@@ -55361,9 +55370,25 @@ Polymer({
             .values {
                 color: var(--dropcube-black);
             }
+
+            .dialog-header {
+                background: #ff5252;
+                margin-top: 0;
+                padding: 20px;
+            }
+
+            .dialog-header h2 {
+                color: var(--dropcube-white);
+            }
+
+            .dialog-header h2 iron-icon {
+              vertical-align: sub;
+            }
         </style>
 
-        <iron-ajax id="putDevice" method="PUT" url="/s/devices/[[device.id]]" content-type="application/json;charset=UTF-8" handle-as="json" on-response="_onResponse" last-response="{{data}}" loading="{{loading}}"></iron-ajax>
+        <iron-ajax id="putDevice" method="PUT" url="/s/devices/[[device.id]]" content-type="application/json;charset=UTF-8" handle-as="json" on-response="_onResponse" last-response="{{data}}" loading="{{_loading1}}"></iron-ajax>
+
+        <iron-ajax id="deleteDevice" method="DELETE" url="/s/devices/[[device.id]]" content-type="application/json;charset=UTF-8" handle-as="json" on-response="_onDeleted" loading="{{_loading2}}"></iron-ajax>
 
         <dropcube-container>
 
@@ -55389,7 +55414,7 @@ Polymer({
                             </div>
                             <div class="layout-row layout-xs-column">
                                 <div class="labels layout-align-start-center">
-                                    <p class="flow-text labels">Modo:</p>
+                                    <p class="flow-text labels">{{dictionary.DEVICE.MODE}}:</p>
                                 </div>
                                 <div class="flex values layout-row layout-align-start-center">
                                     <paper-radio-group on-paper-radio-group-changed="_updateDevice" selected="{{device.mode}}" aria-labelledby="label2">
@@ -55405,12 +55430,12 @@ Polymer({
                             </div>
                             <div class="layout-row layout-xs-column">
                                 <div class="labels layout-align-start-center">
-                                    <p class="flow-text labels">Alertas</p>
+                                    <p class="flow-text labels">{{dictionary.DEVICE.WARNINGS}}</p>
                                 </div>
                                 <div class="flex values layout-row layout-margin">
-                                    <p class="flow-text values">Por día</p>
+                                    <p class="flow-text values">{{dictionary.DEVICE.BY_DAYS}}</p>
                                     <paper-toggle-button noink="" disabled="{{loading}}" active="{{device.hourly}}" on-change="_updateDevice"></paper-toggle-button>
-                                    <p class="flow-text values">Por hora</p>
+                                    <p class="flow-text values">{{dictionary.DEVICE.BY_HOURS}}</p>
                                 </div>
                             </div>
                             <template is="dom-if" if="{{!device.hourly}}">
@@ -55420,18 +55445,40 @@ Polymer({
                                             <p class="flow-text labels"></p>
                                         </div>
                                         <div class="flex values layout-column layout-margin">
-                                            <p class="flow-text">Selecciona las horas en las que normalmente transitas por la calle</p>
+                                            <p class="flow-text">{{dictionary.DEVICE.SELECT_HOURS}}</p>
                                             <dropcube-hour-selector disabled="{{loading}}" hours="{{device.hours}}" on-hour-changed="_updateDevice"></dropcube-hour-selector>
-                                        </div>
+                                            <paper-radio-group on-paper-radio-group-changed="_updateDevice" selected="{{device.mode}}" aria-labelledby="label2">
+                                                <paper-radio-button noink="" class="flow-text" disabled="{{loading}}" name="NORMAL">Normal</paper-radio-button>
+                                                <paper-radio-button noink="" class="flow-text" disabled="{{loading}}" name="RAINBOW">Rainbow</paper-radio-button>
+                                        </paper-radio-group></div>
                                     </div>
                                 </div>
                             </template>
+                            <div class="layout-row layout-xs-column">
+                                <div class="flex values layout-row layout-margin layout-align-center-center">
+                                    <paper-button on-click="_onDelete">
+                                        <iron-icon icon="delete"></iron-icon>{{dictionary.DEVICE.DELETE_DROPCUBE}}</paper-button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </paper-card>
             </div>
 
         </dropcube-container>
+
+        <paper-dialog id="deleteDialog">
+            <div class="dialog-header">
+                <h2><iron-icon icon="warning"></iron-icon> {{dictionary.DEVICES.DELETE}}</h2>
+            </div>
+            <p>
+                {{dictionary.DEVICES.DELETE_ADVICE}}
+            </p>
+            <div class="buttons">
+                <paper-button class="dismiss" noink="" dialog-dismiss="">{{dictionary.GENERIC.CANCEL}}</paper-button>
+                <paper-button class="confirm" noink="" on-click="_deleteDevice">{{dictionary.GENERIC.DELETE_DROPCUBE}}</paper-button>
+            </div>
+        </paper-dialog>
 
     </template>
 
@@ -55449,7 +55496,17 @@ Polymer({
                 loading: {
                     type: Boolean,
                     notify: true
-                }
+                },
+                _loading1: {
+                    type: Boolean,
+                    value: false,
+                    observer: '_loadingObs'
+                },
+                _loading2: {
+                    type: Boolean,
+                    value: false,
+                    observer: '_loadingObs'
+                },
             },
             _updateDevice: function(event) {
 
@@ -55457,8 +55514,20 @@ Polymer({
                 this.$.putDevice.generateRequest();
 
             },
+            _loadingObs: function() {
+                this.loading = this._loading1 || this._loading2;
+            },
             _onResponse: function() {
                 this.device = (this.data && this.data.data) ? this.data.data : this.device;
+            },
+            _onDelete: function() {
+                this.$.deleteDialog.open();
+            },
+            _deleteDevice: function(){
+              this.$.deleteDevice.generateRequest();
+            },
+            _onDeleted : function(){
+              this.fire("deleted");
             }
 
         });
@@ -55484,7 +55553,9 @@ Polymer({
                 width: 37px;
             }
 
-            .card-content {}
+            .card-content {
+              min-height: 300px;
+            }
 
             .labels {
                 width: 150px;
@@ -55501,7 +55572,7 @@ Polymer({
 
             <div class="layout-row">
                 <div class="layout-align-start-center">
-                    <p class="flow-text labels">Dispositivo:</p>
+                    <p class="flow-text labels">{{dictionary.DEVICE.DEVICE}}:</p>
                 </div>
                 <div class="flex values">
                     <p class="flow-text values">{{device.name}}</p>
@@ -55510,10 +55581,12 @@ Polymer({
             <div class="layout-row">
                 <paper-card class="flex-xs-100 flex">
                     <div class="card-content">
+                      <template is="dom-if" if="{{!loading}}">
                         <div class="layout-column layout-gt-sm-row layout-align-gt-sm-space-around-start layout-align-start-center">
-                            <div><dropcube-current-weather weather="[[weather.data]]"></dropcube-current-weather></div>
-                            <div><dropcube-hourly-weather weather="[[weather.data]]"></dropcube-hourly-weather></div>
+                            <div><dropcube-current-weather dictionary="{{dictionary}}" weather="[[weather.data]]"></dropcube-current-weather></div>
+                            <div><dropcube-hourly-weather dictionary="{{dictionary}}" weather="[[weather.data]]"></dropcube-hourly-weather></div>
                         </div>
+                        </template>
                     </div>
                 </paper-card>
             </div>
@@ -55719,17 +55792,17 @@ Polymer({
         <div class="weather-box layout-column">
 
             <div>
-                <h4>Ahora en tu posición:</h4>
+                <h4>{{dictionary.WEATHER.NOW}}:</h4>
             </div>
             <div class="layout-row layout-margin layout-align-space-between">
                 <h1>[[_getTemp(weather.currently.temperature)]] <sup>ºC</sup></h1>
                 <iron-icon class="weather-icon" icon="dropcube-icons-weather:[[_getIcon(weather.currently.icon)]]"></iron-icon>
             </div>
-            <p class="flow-text">Wind speed: [[_getWindSpeed(weather.currently.windSpeed)]] km/h
+            <p class="flow-text">{{dictionary.WEATHER.SPEED_WIND}}: [[_getWindSpeed(weather.currently.windSpeed)]] km/h
                 <iron-icon id="arrowWind" class="arrow-wind" icon="dropcube-icons:arrow-wind"></iron-icon>
             </p>
-            <p class="flow-text">Pressure: [[weather.currently.pressure]] km/h</p>
-            <p class="flow-text">Humidity: [[weather.currently.humidity]] %</p>
+            <p class="flow-text">{{dictionary.WEATHER.PRESSURE}}: [[weather.currently.pressure]] hPa</p>
+            <p class="flow-text">{{dictionary.WEATHER.HUMIDITY}}: [[_getHumidity(weather.currently.humidity)]] %</p>
 
         </div>
     </template>
@@ -55779,6 +55852,9 @@ Polymer({
                     var windBearing = this.weather.currently.windBearing - 1333;
                     this.$.arrowWind.style.transform = "rotate(" + windBearing + "deg)";
                 }
+            },
+            _getHumidity : function(humidity){
+              return Math.round(humidity * 100);
             }
 
 
@@ -55864,11 +55940,11 @@ Polymer({
         <div class="layout-align-center-center">
             <template is="dom-if" if="{{show}}">
                 <template is="dom-if" if="{{!isEditing}}">
-                    <paper-button on-click="_edit">Modificar posición</paper-button>
+                    <paper-button on-click="_edit">{{dictionary.DEVICE.UPDATE_POS}}</paper-button>
                 </template>
                 <template is="dom-if" if="{{isEditing}}">
                     <iron-icon on-click="_geolocate" class="gps-location" icon="dropcube-icons:gps-location"></iron-icon>
-                    <paper-button on-click="_save">Aceptar</paper-button>
+                    <paper-button on-click="_save">{{dictionary.GENERIC.ACCEPT}}</paper-button>
                 </template>
             </template>
         </div>
@@ -55938,9 +56014,9 @@ Polymer({
 
         <dropcube-container>
             <div class="layout-row layout-align-start-center layout-align-space-between">
-                <p class="flow-text">Tus dispositivos dropcube</p>
+                <p class="flow-text">{{dictionary.DEVICES.YOUR_DROPCUBES}}</p>
                 <div>
-                  <paper-button on-click="_onClick">Añadir nuevo dispositivo</paper-button>
+                  <paper-button on-click="_onClick">{{dictionary.DEVICES.ADD_NEW_DEVICE}}</paper-button>
                 </div>
             </div>
         </dropcube-container>
@@ -55998,16 +56074,23 @@ Polymer({
                 overflow: hidden;
                 text-overflow: ellipsis;
             }
+
+            .ldayout-wrap:after {
+              content: "";
+              flex: auto;
+              max-width: 30%;
+            }
+
         </style>
 
-        <iron-ajax auto="" url="/s/devices" handle-as="json" last-response="{{devices}}" loading="{{loading}}"></iron-ajax>
+        <iron-ajax id="devicesGet" auto="" url="/s/devices" handle-as="json" last-response="{{devices}}" loading="{{loading}}"></iron-ajax>
 
         <dropcube-container>
 
-            <div class="layout-row layout-wrap layout-align-space-between layout-align-xs-center-center">
+            <div class="layout-row layout-wrap layout-align-space-around layout-align-xs-center-center">
                 <template is="dom-repeat" items="[[devices.data]]" as="device">
 
-                    <paper-card class="cyan flex-45 flex-xs-100 flex-md-30 flex-gt-md-30 flex-gt-lg-20">
+                    <paper-card class="cyan flex-45 flex-xs-100 flex-md-30 flex-gt-md-30">
                         <div class="card-content">
                             <a href="/device/[[device.id]]">
                                 <google-map-static api-key="AIzaSyCgLJCZYhd_cFHlI5JZXNsGuCqamoQiGpM" lat="[[device.lat]]" lng="[[device.lng]]" size-x="600" size-y="100"></google-map-static>
@@ -56020,6 +56103,8 @@ Polymer({
                         </div>
                     </paper-card>
                 </template>
+                <div class="cyan flex-45 flex-xs-100 flex-md-30 flex-gt-md-30"></div>
+                <div class="cyan flex-45 flex-xs-100 flex-md-30 flex-gt-md-30"></div>
             </div>
 
         </dropcube-container>
@@ -56038,6 +56123,12 @@ Polymer({
                     type: Boolean,
                     notify: true
                 }
+            },
+            listeners : {
+              'get' : '_getDevices'
+            },
+            _getDevices : function(){
+              this.$.devicesGet.generateRequest();
             }
 
         });

@@ -32,16 +32,23 @@
                 overflow: hidden;
                 text-overflow: ellipsis;
             }
+
+            .ldayout-wrap:after {
+              content: "";
+              flex: auto;
+              max-width: 30%;
+            }
+
         </style>
 
-        <iron-ajax auto url="/s/devices" handle-as="json" last-response="{{devices}}" loading="{{loading}}"></iron-ajax>
+        <iron-ajax id="devicesGet" auto url="/s/devices" handle-as="json" last-response="{{devices}}" loading="{{loading}}"></iron-ajax>
 
         <dropcube-container>
 
-            <div class="layout-row layout-wrap layout-align-space-between layout-align-xs-center-center">
+            <div class="layout-row layout-wrap layout-align-space-around layout-align-xs-center-center">
                 <template is="dom-repeat" items="[[devices.data]]" as="device">
 
-                    <paper-card class="cyan flex-45 flex-xs-100 flex-md-30 flex-gt-md-30 flex-gt-lg-20">
+                    <paper-card class="cyan flex-45 flex-xs-100 flex-md-30 flex-gt-md-30">
                         <div class="card-content">
                             <a href="/device/[[device.id]]">
                                 <google-map-static api-key="AIzaSyCgLJCZYhd_cFHlI5JZXNsGuCqamoQiGpM" lat="[[device.lat]]" lng="[[device.lng]]" size-x="600" size-y="100"></google-map-static>
@@ -54,6 +61,8 @@
                         </div>
                     </paper-card>
                 </template>
+                <div class="cyan flex-45 flex-xs-100 flex-md-30 flex-gt-md-30"></div>
+                <div class="cyan flex-45 flex-xs-100 flex-md-30 flex-gt-md-30"></div>
             </div>
 
         </dropcube-container>
@@ -72,6 +81,12 @@
                     type: Boolean,
                     notify: true
                 }
+            },
+            listeners : {
+              'get' : '_getDevices'
+            },
+            _getDevices : function(){
+              this.$.devicesGet.generateRequest();
             }
 
         });

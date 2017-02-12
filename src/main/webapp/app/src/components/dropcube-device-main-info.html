@@ -26,9 +26,25 @@
             .values {
                 color: var(--dropcube-black);
             }
+
+            .dialog-header {
+                background: #ff5252;
+                margin-top: 0;
+                padding: 20px;
+            }
+
+            .dialog-header h2 {
+                color: var(--dropcube-white);
+            }
+
+            .dialog-header h2 iron-icon {
+              vertical-align: sub;
+            }
         </style>
 
-        <iron-ajax id="putDevice" method="PUT" url="/s/devices/[[device.id]]" content-type="application/json;charset=UTF-8" handle-as="json" on-response="_onResponse" last-response="{{data}}" loading="{{loading}}"></iron-ajax>
+        <iron-ajax id="putDevice" method="PUT" url="/s/devices/[[device.id]]" content-type="application/json;charset=UTF-8" handle-as="json" on-response="_onResponse" last-response="{{data}}" loading="{{_loading1}}"></iron-ajax>
+
+        <iron-ajax id="deleteDevice" method="DELETE" url="/s/devices/[[device.id]]" content-type="application/json;charset=UTF-8" handle-as="json" on-response="_onDeleted" loading="{{_loading2}}"></iron-ajax>
 
         <dropcube-container>
 
@@ -54,7 +70,7 @@
                             </div>
                             <div class="layout-row layout-xs-column">
                                 <div class="labels layout-align-start-center">
-                                    <p class="flow-text labels">Modo:</p>
+                                    <p class="flow-text labels">{{dictionary.DEVICE.MODE}}:</p>
                                 </div>
                                 <div class="flex values layout-row layout-align-start-center">
                                     <paper-radio-group on-paper-radio-group-changed="_updateDevice" selected="{{device.mode}}" aria-labelledby="label2">
@@ -70,12 +86,12 @@
                             </div>
                             <div class="layout-row layout-xs-column">
                                 <div class="labels layout-align-start-center">
-                                    <p class="flow-text labels">Alertas</p>
+                                    <p class="flow-text labels">{{dictionary.DEVICE.WARNINGS}}</p>
                                 </div>
                                 <div class="flex values layout-row layout-margin">
-                                    <p class="flow-text values">Por día</p>
+                                    <p class="flow-text values">{{dictionary.DEVICE.BY_DAYS}}</p>
                                     <paper-toggle-button noink disabled="{{loading}}" active="{{device.hourly}}" on-change="_updateDevice"></paper-toggle-button>
-                                    <p class="flow-text values">Por hora</p>
+                                    <p class="flow-text values">{{dictionary.DEVICE.BY_HOURS}}</p>
                                 </div>
                             </div>
                             <template is="dom-if" if="{{!device.hourly}}">
@@ -85,18 +101,40 @@
                                             <p class="flow-text labels"></p>
                                         </div>
                                         <div class="flex values layout-column layout-margin">
-                                            <p class="flow-text">Selecciona las horas en las que normalmente transitas por la calle</p>
+                                            <p class="flow-text">{{dictionary.DEVICE.SELECT_HOURS}}</p>
                                             <dropcube-hour-selector disabled="{{loading}}" hours="{{device.hours}}" on-hour-changed="_updateDevice"></dropcube-hour-selector>
+                                            <paper-radio-group on-paper-radio-group-changed="_updateDevice" selected="{{device.mode}}" aria-labelledby="label2">
+                                                <paper-radio-button noink class="flow-text" disabled="{{loading}}" name="NORMAL">Normal</paper-radio-button>
+                                                <paper-radio-button noink class="flow-text" disabled="{{loading}}" name="RAINBOW">Rainbow</paper-radio-button>
                                         </div>
                                     </div>
                                 </div>
                             </template>
+                            <div class="layout-row layout-xs-column">
+                                <div class="flex values layout-row layout-margin layout-align-center-center">
+                                    <paper-button on-click="_onDelete">
+                                        <iron-icon icon="delete"></iron-icon>{{dictionary.DEVICE.DELETE_DROPCUBE}}</paper-button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </paper-card>
             </div>
 
         </dropcube-container>
+
+        <paper-dialog id="deleteDialog">
+            <div class="dialog-header">
+                <h2><iron-icon icon="warning"></iron-icon> {{dictionary.DEVICES.DELETE}}</h2>
+            </div>
+            <p>
+                {{dictionary.DEVICES.DELETE_ADVICE}}
+            </p>
+            <div class="buttons">
+                <paper-button class="dismiss" noink dialog-dismiss>{{dictionary.GENERIC.CANCEL}}</paper-button>
+                <paper-button class="confirm" noink on-click="_deleteDevice">{{dictionary.GENERIC.DELETE_DROPCUBE}}</paper-button>
+            </div>
+        </paper-dialog>
 
     </template>
 
@@ -114,7 +152,17 @@
                 loading: {
                     type: Boolean,
                     notify: true
-                }
+                },
+                _loading1: {
+                    type: Boolean,
+                    value: false,
+                    observer: '_loadingObs'
+                },
+                _loading2: {
+                    type: Boolean,
+                    value: false,
+                    observer: '_loadingObs'
+                },
             },
             _updateDevice: function(event) {
 
@@ -122,8 +170,20 @@
                 this.$.putDevice.generateRequest();
 
             },
+            _loadingObs: function() {
+                this.loading = this._loading1 || this._loading2;
+            },
             _onResponse: function() {
                 this.device = (this.data && this.data.data) ? this.data.data : this.device;
+            },
+            _onDelete: function() {
+                this.$.deleteDialog.open();
+            },
+            _deleteDevice: function(){
+              this.$.deleteDevice.generateRequest();
+            },
+            _onDeleted : function(){
+              this.fire("deleted");
             }
 
         });

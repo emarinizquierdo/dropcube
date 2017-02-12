@@ -40,8 +40,8 @@
                   <dropcube-helps name="help"></dropcube-helps>
                     <dropcube-main name="" dictionary="{{dictionary}}" user="{{user}}"></dropcube-main>
                     <dropcube-login name="login" dictionary="{{dictionary}}"></dropcube-login>
-                    <dropcube-devices name="devices" dictionary="{{dictionary}}" loading="{{_loading1}}"></dropcube-devices>
-                    <dropcube-device route="{{subrouteData}}" name="device" dictionary="{{dictionary}}" loading="{{_loading2}}"></dropcube-device>
+                    <dropcube-devices id="dropcubeDevices" name="devices" dictionary="{{dictionary}}" loading="{{_loading1}}"></dropcube-devices>
+                    <dropcube-device id="dropcubeDevice" route="{{subrouteData}}" name="device" dictionary="{{dictionary}}" loading="{{_loading2}}"></dropcube-device>
 
                 </iron-pages>
             </div>
@@ -73,6 +73,9 @@
             observers: [
                 '_loading(_loading1, _loading2)'
             ],
+            listeners : {
+              "deleted" : "_onDeleted"
+            },
             _isMain: function(route) {
                 return route.view != "";
             },
@@ -80,6 +83,10 @@
                 console.log(loading1);
                 console.log(loading2);
                 this.loading = loading1 || loading2;
+            },
+            _onDeleted: function(){
+              this.set("route.path", "/devices");
+              this.$.dropcubeDevices.fire("afterdelete");
             }
 
         });

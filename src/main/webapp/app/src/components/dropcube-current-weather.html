@@ -31,17 +31,17 @@
         <div class="weather-box layout-column">
 
             <div>
-                <h4>Ahora en tu posición:</h4>
+                <h4>{{dictionary.WEATHER.NOW}}:</h4>
             </div>
             <div class="layout-row layout-margin layout-align-space-between">
                 <h1>[[_getTemp(weather.currently.temperature)]] <sup>ºC</sup></h1>
                 <iron-icon class="weather-icon" icon="dropcube-icons-weather:[[_getIcon(weather.currently.icon)]]"></iron-icon>
             </div>
-            <p class="flow-text">Wind speed: [[_getWindSpeed(weather.currently.windSpeed)]] km/h
+            <p class="flow-text">{{dictionary.WEATHER.SPEED_WIND}}: [[_getWindSpeed(weather.currently.windSpeed)]] km/h
                 <iron-icon id="arrowWind" class="arrow-wind" icon="dropcube-icons:arrow-wind"></iron-icon>
             </p>
-            <p class="flow-text">Pressure: [[weather.currently.pressure]] km/h</p>
-            <p class="flow-text">Humidity: [[weather.currently.humidity]] %</p>
+            <p class="flow-text">{{dictionary.WEATHER.PRESSURE}}: [[weather.currently.pressure]] hPa</p>
+            <p class="flow-text">{{dictionary.WEATHER.HUMIDITY}}: [[_getHumidity(weather.currently.humidity)]] %</p>
 
         </div>
     </template>
@@ -91,6 +91,9 @@
                     var windBearing = this.weather.currently.windBearing - 1333;
                     this.$.arrowWind.style.transform = "rotate(" + windBearing + "deg)";
                 }
+            },
+            _getHumidity : function(humidity){
+              return Math.round(humidity * 100);
             }
 
 

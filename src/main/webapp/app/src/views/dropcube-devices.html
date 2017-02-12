@@ -54,10 +54,10 @@
             <h5 class="subtitle">Devices</h5>
         </paper-toolbar>
 
-        <template is="dom-if" if="{{!loading}}">
+
             <dropcube-new-device on-clik="_openModal"></dropcube-new-device>
-            <dropcube-device-list loading="{{_loading1}}"></dropcube-device-list>
-        </template>
+            <dropcube-device-list id="deviceList" loading="{{_loading1}}"></dropcube-device-list>
+
 
         <paper-dialog id="actions">
             <h2>{{dictionary.DEVICES.ADD_NEW}}</h2>
@@ -94,7 +94,8 @@
                 }
             },
             listeners: {
-                'clik': '_openModal'
+                'clik': '_openModal',
+                'afterdelete': '_onResponse'
             },
             observers: [
                 '_loading(_loading1, _loading2)'
@@ -113,6 +114,9 @@
               console.log(loading1);
               console.log(loading2);
               this.loading = loading1 || loading2;
+            },
+            _onResponse : function(){
+              this.$.deviceList.fire("get");
             }
         });
     </script>

@@ -26,11 +26,11 @@
         <div class="layout-align-center-center">
             <template is="dom-if" if="{{show}}">
                 <template is="dom-if" if="{{!isEditing}}">
-                    <paper-button on-click="_edit">Modificar posición</paper-button>
+                    <paper-button on-click="_edit">{{dictionary.DEVICE.UPDATE_POS}}</paper-button>
                 </template>
                 <template is="dom-if" if="{{isEditing}}">
                     <iron-icon on-click="_geolocate" class="gps-location" icon="dropcube-icons:gps-location"></iron-icon>
-                    <paper-button on-click="_save">Aceptar</paper-button>
+                    <paper-button on-click="_save">{{dictionary.GENERIC.ACCEPT}}</paper-button>
                 </template>
             </template>
         </div>
