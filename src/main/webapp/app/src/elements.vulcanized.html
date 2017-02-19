@@ -54250,21 +54250,29 @@ Custom property | Description | Default
                 currentLang : {
                    type : String,
                    value : 'es_ES'
+                },
+                langService : {
+                  type : Object,
+                  notify: true
                 }
             },
 
 
             setLang: function(lang) {
-               this.currentLang = (lang == 'en_GB') ? 'en_GB' : 'es_ES';
+               this.currentLang = (lang == 'en_US') ? 'en_US' : 'es_ES';
                this._loadDictionary();
             },
 
             _loadDictionary: function() {
 
                if(this.dictionaries && this.dictionaries[this.currentLang]){
-                  this.dictionary = this.dictionaries[this.currentLang];
+                  this.set('dictionary', this.dictionaries[this.currentLang]);
                }
 
+            },
+
+            ready: function(){
+              this.langService = this;
             }
 
         });
@@ -54276,13 +54284,14 @@ Custom property | Description | Default
     <template>
         <iron-cookie name="JSESSIONID" value="{{value}}" uri-safe="" expires="{{expires}}"></iron-cookie>
         <iron-ajax auto="" url="/s/users/me" handle-as="json" on-response="_onResponse" last-response="{{userData}}"></iron-ajax>
+        <iron-ajax id="userLogout" url="/s/users/logout" handle-as="json" on-response="_onLogout"></iron-ajax>
     </template>
 
 
 
     <script>
 
-        function User() {
+        function User( ) {
 
             this.data = null;
 
@@ -54291,6 +54300,8 @@ Custom property | Description | Default
             }
 
             this.isLogged = false;
+
+            this.logout = function(){}
 
         }
 
@@ -54302,15 +54313,38 @@ Custom property | Description | Default
                     type: Object,
                     notify: true,
                     value : new User()
+                },
+                langService : {
+                  type : Object
                 }
             },
 
+            listeners : {
+              'logout' : '_logout'
+            },
+
+            _logout : function(){
+              this.$.userLogout.generateRequest();
+            },
+
             _onResponse : function(data){
+
+              var _user = new User();
+
               if(this.userData){
-                this.userData.isLogged = true;
+                _user.isLogged = true;
+                _user.data = this.userData.data;
+                _user.logout = this._logout.bind(this);
+                if(this.userData && this.userData.data && this.userData.data.lang){
+                  this.langService.setLang(this.userData.data.lang);
+                }
               }
 
-              this.set('user', this.userData);
+              this.set('user', _user);
+            },
+
+            _onLogout : function(){
+              this.set('user.isLogged', false);
             }
 
         });
@@ -54500,8 +54534,8 @@ Custom property | Description | Default
         </paper-toolbar>
 
 
-            <dropcube-new-device on-clik="_openModal"></dropcube-new-device>
-            <dropcube-device-list id="deviceList" loading="{{_loading1}}"></dropcube-device-list>
+            <dropcube-new-device dictionary="{{dictionary}}" on-clik="_openModal"></dropcube-new-device>
+            <dropcube-device-list dictionary="{{dictionary}}" id="deviceList" loading="{{_loading1}}"></dropcube-device-list>
 
 
         <paper-dialog id="actions">
@@ -54605,7 +54639,7 @@ Custom property | Description | Default
             <a href="/devices">
                 <h5 class="subtitle">Devices</h5>
             </a>
-            <dropcube-edit-position device="{{device}}" show="{{_showMapButtons(selected)}}" is-editing="{{_editPosition}}" on-save="_onSave"></dropcube-edit-position>
+            <dropcube-edit-position dictionary="{{dictionary}}" device="{{device}}" show="{{_showMapButtons(selected)}}" is-editing="{{_editPosition}}" on-save="_onSave"></dropcube-edit-position>
         </paper-toolbar>
 
         <iron-ajax id="deviceGet" url="/s/devices/[[route.id]]" handle-as="json" on-response="_onResponse" last-response="{{deviceData}}" loading="{{_loading1}}"></iron-ajax>
@@ -54734,6 +54768,140 @@ Polymer({
   });
 </script>
 </dom-module>
+<dom-module id="dropcube-settings" assetpath="views/">
+
+    <template>
+
+        <style is="custom-style">
+            :host {
+                --paper-tabs-selection-bar-color: var(--dropcube-main-blue);
+                --paper-radio-button-checked-color: var(--dropcube-main-blue);
+                --paper-toggle-button-checked-button-color: var(--dropcube-main-blue);
+            }
+
+            paper-toolbar {
+                padding: 0 16px;
+                position: relative;
+                min-height: 64px;
+                left: 0;
+                width: 100%;
+                color: var(--dropcube-black);
+                background-color: var(--dropcube-white);
+                border-bottom: 1px solid var(--dropcube-grey-border);
+            }
+
+            paper-tabs {
+                border-bottom: 1px solid #d3d3d3;
+            }
+
+            iron-pages {
+                height: calc(100% - 12px);
+            }
+
+            .iron-selected {
+                height: calc(100% - 100px);
+            }
+        </style>
+
+        <!--  Parallax Section  -->
+        <paper-toolbar class="layout-row layout-align-start-center layout-align-space-between">
+            <a>
+                <h5 class="subtitle">Settings</h5>
+            </a>
+        </paper-toolbar>
+
+        <iron-ajax id="putUser" method="PUT" url="/s/users/me" content-type="application/json;charset=UTF-8" handle-as="json" on-response="_onResponse" last-response="{{_user}}" loading="{{loading}}"></iron-ajax>
+
+        <dropcube-container>
+
+            <div class="layout-row">
+                <div class="layout-align-start-center">
+                    <p class="flow-text labels">{{user.data.name}}</p>
+                </div>
+                <div class="flex values">
+                    <p class="flow-text values">{{device.name}}</p>
+                </div>
+            </div>
+            <div class="layout-row">
+                <paper-card class="flex-xs-100 flex" image="{{user.data.backgroundCover}}">
+
+                    <div class="card-content">
+                        <div class="layout-column">
+                          <template is="dom-if" if="{{user.data.email}}">
+                            <div class="layout-row layout-xs-column">
+                                <div class="labels layout-align-start-center">
+                                    <p class="flow-text labels">email:</p>
+                                </div>
+                                <div class="flex values">
+                                    <p class="flow-text values">{{user.data.email}}</p>
+                                </div>
+                            </div>
+                            </template>
+                            <template is="dom-if" if="{{user.data.screenName}}">
+                              <div class="layout-row layout-xs-column">
+                                  <div class="labels layout-align-start-center">
+                                      <p class="flow-text labels">Alias:</p>
+                                  </div>
+                                  <div class="flex values">
+                                      <p class="flow-text values">{{user.data.screenName}}</p>
+                                  </div>
+                              </div>
+                            </template>
+                            <div class="layout-row layout-xs-column">
+                                <div class="labels layout-align-start-center">
+                                    <p class="flow-text labels">{{dictionary.GENERIC.LANGUAGE}}:</p>
+                                </div>
+                                <div class="flex values layout-row layout-align-start-center">
+                                    <paper-radio-group on-paper-radio-group-changed="_updateUser" selected="{{user.data.lang}}">
+                                        <paper-radio-button noink="" class="flow-text" disabled="{{loading}}" name="en_US">English</paper-radio-button>
+                                        <paper-radio-button noink="" class="flow-text" disabled="{{loading}}" name="es_ES">Spanish</paper-radio-button>
+                                    </paper-radio-group>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </paper-card>
+            </div>
+
+        </dropcube-container>
+
+    </template>
+
+    <script>
+        Polymer({
+            is: "dropcube-settings",
+            properties: {
+                dictionary: {
+                    type: Object
+                },
+                user: {
+                    type: Object,
+                    notify: false
+                },
+                loading: {
+                    type: Boolean,
+                    notify: true
+                },
+                langService : {
+                  type : Object
+                }
+            },
+            _updateUser : function(){
+
+              this.$.putUser.body = JSON.stringify(this.user.data);
+              this.$.putUser.generateRequest();
+
+            },
+            _onResponse : function(){
+
+              this.langService.setLang(this.user.data.lang)
+
+            }
+        });
+    </script>
+
+</dom-module>
 <dom-module id="dropcube-content" assetpath="./">
 
     <template>
@@ -54757,8 +54925,8 @@ Polymer({
 
 
         <!-- ..............   MODEL CONTROL  .............. -->
-        <lang-service id="langService" dictionary="{{dictionary}}" src="lang/locales.json"></lang-service>
-        <user-service id="userService" user="{{user}}"></user-service>
+        <lang-service id="langService" lang-service="{{langService}}" dictionary="{{dictionary}}" src="lang/locales.json"></lang-service>
+        <user-service id="userService" lang-service="{{langService}}" user="{{user}}"></user-service>
 
         <!-- ..............  END MODEL CONTROL .............. -->
 
@@ -54773,12 +54941,12 @@ Polymer({
                 <app-route route="{{subroute}}" pattern="/:id" data="{{subrouteData}}">
                 </app-route>
                 <iron-pages selected="[[routeData.view]]" attr-for-selected="name">
-                  <dropcube-helps name="help"></dropcube-helps>
+                    <dropcube-settings id="dropcubeSettings" name="settings" lang-service="{{langService}}" dictionary="{{dictionary}}" user="{{user}}" loading="{{_loading3}}"></dropcube-settings>
+                    <dropcube-helps name="help"></dropcube-helps>
                     <dropcube-main name="" dictionary="{{dictionary}}" user="{{user}}"></dropcube-main>
                     <dropcube-login name="login" dictionary="{{dictionary}}"></dropcube-login>
                     <dropcube-devices id="dropcubeDevices" name="devices" dictionary="{{dictionary}}" loading="{{_loading1}}"></dropcube-devices>
                     <dropcube-device id="dropcubeDevice" route="{{subrouteData}}" name="device" dictionary="{{dictionary}}" loading="{{_loading2}}"></dropcube-device>
-
                 </iron-pages>
             </div>
             <dropcube-footer class="flex-nogrow" dictionary="{{dictionary}}"></dropcube-footer>
@@ -54804,10 +54972,14 @@ Polymer({
                 _loading2: {
                     type: Boolean,
                     value: false
+                },
+                _loading3: {
+                    type: Boolean,
+                    value: false
                 }
             },
             observers: [
-                '_loading(_loading1, _loading2)'
+                '_loading(_loading1, _loading2, _loading3)'
             ],
             listeners : {
               "deleted" : "_onDeleted"
@@ -54815,10 +54987,8 @@ Polymer({
             _isMain: function(route) {
                 return route.view != "";
             },
-            _loading: function(loading1, loading2) {
-                console.log(loading1);
-                console.log(loading2);
-                this.loading = loading1 || loading2;
+            _loading: function(loading1, loading2, loading3) {
+                this.loading = loading1 || loading2 || loading3;
             },
             _onDeleted: function(){
               this.set("route.path", "/devices");
@@ -55238,6 +55408,10 @@ Polymer({
                 width: 35px;
             }
 
+            paper-item {
+              color: var(--dropcube-main-blue);
+            }
+
             .dropdown-content {
                 display: block;
                 position: absolute;
@@ -55264,8 +55438,8 @@ Polymer({
         <div class="layout-row layout-align-center-center layout-margin">
             <template is="dom-if" if="{{!user.isLogged}}">
                 <paper-menu-button>
-                    <paper-button noink="" class="dropdown-trigger" small="" on-click="_onClick">
-                        <span>Accede</span>
+                    <paper-button noink="" class="dropdown-trigger" small="">
+                        <a href="/login"><span>Accede</span></a>
                     </paper-button>
                 </paper-menu-button>
             </template>
@@ -55274,8 +55448,8 @@ Polymer({
                 <paper-menu-button>
                     <dropcube-user-image class="dropdown-trigger" src="{{user.data.profileCover}}"></dropcube-user-image>
                     <paper-menu class="dropdown-content">
-                        <paper-item>Settings</paper-item>
-                        <paper-item>Logout</paper-item>
+                        <paper-item><a href="/settings">Settings</a></paper-item>
+                        <paper-item on-click="_logout">Logout</paper-item>
                         <paper-item><a href="/help">Help</a></paper-item>
                     </paper-menu>
                 </paper-menu-button>
@@ -55297,9 +55471,11 @@ Polymer({
             },
             _onClick: function(el) {
                 // Wait for ripple to finish.
-
                 location.href = '/login';
 
+            },
+            _logout: function(){
+              this.user.logout();
             }
 
         });

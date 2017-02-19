@@ -99,4 +99,19 @@ public class UserService {
         return user;
     }
 
+
+    /**
+     * Gets a user information.
+     * @return {@link Response} Response in Json with the rating information.
+     */
+    @GET
+    @Path(Rest.USER_LOGOUT)
+    @Produces(MediaType.APPLICATION_JSON + Params.CHARSET_UTF8)
+    public Response logout(
+            @Context HttpServletRequest request) {
+        request.getSession().invalidate();
+        return Response.ok().build();
+    }
+
+
 }

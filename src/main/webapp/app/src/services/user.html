@@ -3,13 +3,14 @@
     <template>
         <iron-cookie name="JSESSIONID" value="{{value}}" uri-safe expires="{{expires}}"></iron-cookie>
         <iron-ajax auto url="/s/users/me"  handle-as="json" on-response="_onResponse" last-response="{{userData}}"></iron-ajax>
+        <iron-ajax id="userLogout" url="/s/users/logout"  handle-as="json" on-response="_onLogout"></iron-ajax>
     </template>
 
 
 
     <script>
 
-        function User() {
+        function User( ) {
 
             this.data = null;
 
@@ -18,6 +19,8 @@
             }
 
             this.isLogged = false;
+
+            this.logout = function(){}
 
         }
 
@@ -29,15 +32,38 @@
                     type: Object,
                     notify: true,
                     value : new User()
+                },
+                langService : {
+                  type : Object
                 }
             },
 
+            listeners : {
+              'logout' : '_logout'
+            },
+
+            _logout : function(){
+              this.$.userLogout.generateRequest();
+            },
+
             _onResponse : function(data){
+
+              var _user = new User();
+
               if(this.userData){
-                this.userData.isLogged = true;
+                _user.isLogged = true;
+                _user.data = this.userData.data;
+                _user.logout = this._logout.bind(this);
+                if(this.userData && this.userData.data && this.userData.data.lang){
+                  this.langService.setLang(this.userData.data.lang);
+                }
               }
 
-              this.set('user', this.userData);
+              this.set('user', _user);
+            },
+
+            _onLogout : function(){
+              this.set('user.isLogged', false);
             }
 
         });

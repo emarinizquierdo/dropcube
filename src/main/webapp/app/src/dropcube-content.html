@@ -21,8 +21,8 @@
 
 
         <!-- ..............   MODEL CONTROL  .............. -->
-        <lang-service id="langService" dictionary="{{dictionary}}" src="lang/locales.json"></lang-service>
-        <user-service id="userService" user="{{user}}"></user-service>
+        <lang-service id="langService" lang-service="{{langService}}" dictionary="{{dictionary}}" src="lang/locales.json"></lang-service>
+        <user-service id="userService" lang-service="{{langService}}" user="{{user}}"></user-service>
 
         <!-- ..............  END MODEL CONTROL .............. -->
 
@@ -37,12 +37,12 @@
                 <app-route route="{{subroute}}" pattern="/:id" data="{{subrouteData}}">
                 </app-route>
                 <iron-pages selected="[[routeData.view]]" attr-for-selected="name">
-                  <dropcube-helps name="help"></dropcube-helps>
+                    <dropcube-settings id="dropcubeSettings" name="settings" lang-service="{{langService}}" dictionary="{{dictionary}}" user="{{user}}" loading="{{_loading3}}"></dropcube-settings>
+                    <dropcube-helps name="help"></dropcube-helps>
                     <dropcube-main name="" dictionary="{{dictionary}}" user="{{user}}"></dropcube-main>
                     <dropcube-login name="login" dictionary="{{dictionary}}"></dropcube-login>
                     <dropcube-devices id="dropcubeDevices" name="devices" dictionary="{{dictionary}}" loading="{{_loading1}}"></dropcube-devices>
                     <dropcube-device id="dropcubeDevice" route="{{subrouteData}}" name="device" dictionary="{{dictionary}}" loading="{{_loading2}}"></dropcube-device>
-
                 </iron-pages>
             </div>
             <dropcube-footer class="flex-nogrow" dictionary="{{dictionary}}"></dropcube-footer>
@@ -68,10 +68,14 @@
                 _loading2: {
                     type: Boolean,
                     value: false
+                },
+                _loading3: {
+                    type: Boolean,
+                    value: false
                 }
             },
             observers: [
-                '_loading(_loading1, _loading2)'
+                '_loading(_loading1, _loading2, _loading3)'
             ],
             listeners : {
               "deleted" : "_onDeleted"
@@ -79,10 +83,8 @@
             _isMain: function(route) {
                 return route.view != "";
             },
-            _loading: function(loading1, loading2) {
-                console.log(loading1);
-                console.log(loading2);
-                this.loading = loading1 || loading2;
+            _loading: function(loading1, loading2, loading3) {
+                this.loading = loading1 || loading2 || loading3;
             },
             _onDeleted: function(){
               this.set("route.path", "/devices");

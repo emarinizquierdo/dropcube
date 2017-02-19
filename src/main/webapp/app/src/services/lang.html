@@ -21,21 +21,29 @@
                 currentLang : {
                    type : String,
                    value : 'es_ES'
+                },
+                langService : {
+                  type : Object,
+                  notify: true
                 }
             },
 
 
             setLang: function(lang) {
-               this.currentLang = (lang == 'en_GB') ? 'en_GB' : 'es_ES';
+               this.currentLang = (lang == 'en_US') ? 'en_US' : 'es_ES';
                this._loadDictionary();
             },
 
             _loadDictionary: function() {
 
                if(this.dictionaries && this.dictionaries[this.currentLang]){
-                  this.dictionary = this.dictionaries[this.currentLang];
+                  this.set('dictionary', this.dictionaries[this.currentLang]);
                }
 
+            },
+
+            ready: function(){
+              this.langService = this;
             }
 
         });

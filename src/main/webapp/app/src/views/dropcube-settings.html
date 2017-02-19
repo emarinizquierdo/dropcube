@@ -1,0 +1,134 @@
+<dom-module id="dropcube-settings">
+
+    <template>
+
+        <style is="custom-style">
+            :host {
+                --paper-tabs-selection-bar-color: var(--dropcube-main-blue);
+                --paper-radio-button-checked-color: var(--dropcube-main-blue);
+                --paper-toggle-button-checked-button-color: var(--dropcube-main-blue);
+            }
+
+            paper-toolbar {
+                padding: 0 16px;
+                position: relative;
+                min-height: 64px;
+                left: 0;
+                width: 100%;
+                color: var(--dropcube-black);
+                background-color: var(--dropcube-white);
+                border-bottom: 1px solid var(--dropcube-grey-border);
+            }
+
+            paper-tabs {
+                border-bottom: 1px solid #d3d3d3;
+            }
+
+            iron-pages {
+                height: calc(100% - 12px);
+            }
+
+            .iron-selected {
+                height: calc(100% - 100px);
+            }
+        </style>
+
+        <!--  Parallax Section  -->
+        <paper-toolbar class="layout-row layout-align-start-center layout-align-space-between">
+            <a>
+                <h5 class="subtitle">Settings</h5>
+            </a>
+        </paper-toolbar>
+
+        <iron-ajax id="putUser" method="PUT" url="/s/users/me" content-type="application/json;charset=UTF-8" handle-as="json" on-response="_onResponse" last-response="{{_user}}" loading="{{loading}}"></iron-ajax>
+
+        <dropcube-container>
+
+            <div class="layout-row">
+                <div class="layout-align-start-center">
+                    <p class="flow-text labels">{{user.data.name}}</p>
+                </div>
+                <div class="flex values">
+                    <p class="flow-text values">{{device.name}}</p>
+                </div>
+            </div>
+            <div class="layout-row">
+                <paper-card class="flex-xs-100 flex" image="{{user.data.backgroundCover}}">
+
+                    <div class="card-content">
+                        <div class="layout-column">
+                          <template is="dom-if" if="{{user.data.email}}">
+                            <div class="layout-row layout-xs-column">
+                                <div class="labels layout-align-start-center">
+                                    <p class="flow-text labels">email:</p>
+                                </div>
+                                <div class="flex values">
+                                    <p class="flow-text values">{{user.data.email}}</p>
+                                </div>
+                            </div>
+                            </template>
+                            <template is="dom-if" if="{{user.data.screenName}}">
+                              <div class="layout-row layout-xs-column">
+                                  <div class="labels layout-align-start-center">
+                                      <p class="flow-text labels">Alias:</p>
+                                  </div>
+                                  <div class="flex values">
+                                      <p class="flow-text values">{{user.data.screenName}}</p>
+                                  </div>
+                              </div>
+                            </template>
+                            <div class="layout-row layout-xs-column">
+                                <div class="labels layout-align-start-center">
+                                    <p class="flow-text labels">{{dictionary.GENERIC.LANGUAGE}}:</p>
+                                </div>
+                                <div class="flex values layout-row layout-align-start-center">
+                                    <paper-radio-group on-paper-radio-group-changed="_updateUser" selected="{{user.data.lang}}">
+                                        <paper-radio-button noink class="flow-text" disabled="{{loading}}" name="en_US">English</paper-radio-button>
+                                        <paper-radio-button noink class="flow-text" disabled="{{loading}}" name="es_ES">Spanish</paper-radio-button>
+                                    </paper-radio-group>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </paper-card>
+            </div>
+
+        </dropcube-container>
+
+    </template>
+
+    <script>
+        Polymer({
+            is: "dropcube-settings",
+            properties: {
+                dictionary: {
+                    type: Object
+                },
+                user: {
+                    type: Object,
+                    notify: false
+                },
+                loading: {
+                    type: Boolean,
+                    notify: true
+                },
+                langService : {
+                  type : Object
+                }
+            },
+            _updateUser : function(){
+
+              this.$.putUser.body = JSON.stringify(this.user.data);
+              this.$.putUser.generateRequest();
+
+            },
+            _onResponse : function(){
+
+              this.langService.setLang(this.user.data.lang)
+
+            }
+        });
+    </script>
+
+</dom-module>

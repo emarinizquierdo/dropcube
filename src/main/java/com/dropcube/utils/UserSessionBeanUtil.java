@@ -25,6 +25,7 @@ public class UserSessionBeanUtil {
                 user = ObjectifyService.ofy().load().type(User.class).filter("screenName", screenName).first().now();
             }
 
+
         return user;
 
     }

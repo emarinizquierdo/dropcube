@@ -36,7 +36,7 @@
             <a href="/devices">
                 <h5 class="subtitle">Devices</h5>
             </a>
-            <dropcube-edit-position device="{{device}}" show="{{_showMapButtons(selected)}}" is-editing="{{_editPosition}}" on-save="_onSave"></dropcube-edit-position>
+            <dropcube-edit-position dictionary="{{dictionary}}" device="{{device}}" show="{{_showMapButtons(selected)}}" is-editing="{{_editPosition}}" on-save="_onSave"></dropcube-edit-position>
         </paper-toolbar>
 
         <iron-ajax id="deviceGet" url="/s/devices/[[route.id]]" handle-as="json" on-response="_onResponse" last-response="{{deviceData}}" loading="{{_loading1}}"></iron-ajax>

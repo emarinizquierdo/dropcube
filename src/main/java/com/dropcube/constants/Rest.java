@@ -17,6 +17,7 @@ public class Rest {
     public static final String USER_GET_URL = "/{" + Params.PARAM_ID + "}";
     public static final String USER_SERVICE_GOOGLE_AUTH = "/gauth";
     public static final String USER_GET_ME = "/me";
+    public static final String USER_LOGOUT = "/logout";
 
     // //////////////
     // /DEVICES

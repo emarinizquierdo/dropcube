@@ -18,6 +18,10 @@
                 width: 35px;
             }
 
+            paper-item {
+              color: var(--dropcube-main-blue);
+            }
+
             .dropdown-content {
                 display: block;
                 position: absolute;
@@ -44,8 +48,8 @@
         <div class="layout-row layout-align-center-center layout-margin">
             <template is="dom-if" if="{{!user.isLogged}}">
                 <paper-menu-button>
-                    <paper-button noink class="dropdown-trigger" small on-click="_onClick">
-                        <span>Accede</span>
+                    <paper-button noink class="dropdown-trigger" small >
+                        <a href="/login"><span>Accede</span></a>
                     </paper-button>
                 </paper-menu-button>
             </template>
@@ -54,8 +58,8 @@
                 <paper-menu-button>
                     <dropcube-user-image class="dropdown-trigger" src="{{user.data.profileCover}}"></dropcube-user-image>
                     <paper-menu class="dropdown-content">
-                        <paper-item>Settings</paper-item>
-                        <paper-item>Logout</paper-item>
+                        <paper-item><a href="/settings">Settings</a></paper-item>
+                        <paper-item on-click="_logout">Logout</paper-item>
                         <paper-item><a href="/help">Help</a></paper-item>
                     </paper-menu>
                 </paper-menu-button>
@@ -77,9 +81,11 @@
             },
             _onClick: function(el) {
                 // Wait for ripple to finish.
-
                 location.href = '/login';
 
+            },
+            _logout: function(){
+              this.user.logout();
             }
 
         });

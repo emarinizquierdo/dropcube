@@ -21,6 +21,7 @@ configuration = {
 		  , "/devices"
 		  , "/device/*"
 		  , "/login"
+			, "/logout"
 		  , "/checkout"
 		  , "/diy"
 	  ]
