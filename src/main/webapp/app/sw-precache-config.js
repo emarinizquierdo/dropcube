@@ -20,6 +20,26 @@ module.exports = {
       }
     },
     {
+      urlPattern: /\/fonts.googleapis.com\/.*/,
+      handler: 'fastest',
+      options: {
+        cache: {
+          maxEntries: 200,
+          name: 'data-cache'
+        }
+      }
+    },
+    {
+      urlPattern: /\/font\/roboto\/.*/,
+      handler: 'fastest',
+      options: {
+        cache: {
+          maxEntries: 200,
+          name: 'data-cache'
+        }
+      }
+    },
+    {
       urlPattern: /\/src\/.*json/,
       handler: 'fastest',
       options: {

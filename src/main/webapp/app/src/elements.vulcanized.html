@@ -54249,7 +54249,7 @@ Custom property | Description | Default
                 },
                 currentLang : {
                    type : String,
-                   value : 'es_ES'
+                   value : 'en_US'
                 },
                 langService : {
                   type : Object,
@@ -56449,6 +56449,12 @@ Polymer({
 
             paper-dialog {
                 z-index: 9999999999999999999;
+                position: fixed;
+                top: 25%;
+                left: 25%;
+                bottom: 25%;
+                right: 25%;
+                margin: 0px;
             }
 
             iron-overlay-backdrop {
@@ -56460,9 +56466,9 @@ Polymer({
                 color: var(--dropcube-white);
             }
 
-            iframe{
-              width: 100%;
-              height: auto;
+            iframe {
+                width: 100%;
+                height: auto;
             }
 
             .weather-cool {
@@ -56476,6 +56482,23 @@ Polymer({
 
             .play-wrapper {
                 cursor: pointer;
+            }
+
+            .video-container {
+                height: 100%;
+                padding: 0;
+                margin: 0;
+            }
+
+            .video-container iframe,
+            .video-container object,
+            .video-container embed {
+                position: relative;
+                ;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
             }
         </style>
 
@@ -56497,13 +56520,15 @@ Polymer({
 
         </dropcube-container>
 
-        <paper-dialog id="videoWrapper" always-on-top="" modal="">
-            <iframe src="https://www.youtube.com/embed/t-Pb_2xvipQ?rel=0&amp;controls=0&amp;showinfo=0" frameborder="0" allowfullscreen=""></iframe>
-            <div class="buttons">
-                <paper-button dialog-confirm="" autofocus="">{{dictionary.GENERIC.CLOSE}}</paper-button>
-            </div>
-        </paper-dialog>
+        <paper-dialog id="videoWrapper" always-on-top="" with-backdrop="" on-iron-overlay-closed="_onClose">
 
+            <div class="video-container">
+
+                <iframe src="{{_source}}" frameborder="0" allowfullscreen=""></iframe>
+
+            </div>
+
+        </paper-dialog>
     </template>
 
 
@@ -56513,11 +56538,20 @@ Polymer({
             properties: {
                 dictionary: {
                     type: Object
+                },
+                isOpen: {
+                    type: Boolean,
+                    value: false
                 }
             },
             _openModal: function() {
+                this.isOpen = true;
+                this._source = "https://www.youtube-nocookie.com/embed/0gEn6MuWvao?rel=0";
                 videoWrapper.open();
             },
+            _onClose: function() {
+                this._source = null;
+            }
 
         });
     </script>
@@ -56819,7 +56853,10 @@ Polymer({
                 background: var(--dropcube-main-blue);
                 color: var(--dropcube-white);
             }
-
+            paper-button a {
+              color: var(--dropcube-white);
+              cursor: pointer;
+            }
 
 
         </style>
@@ -56833,7 +56870,7 @@ Polymer({
                 <h4 class="flow-h flex header light">{{dictionary.SUMMARY3.TITLES.SECONDARY}}</h4>
             </div>
             <div class="layout-row layout-align-center-center summary-title">
-                <paper-button><span class="flow-text">{{dictionary.SUMMARY3.TITLES.THIRD}}</span></paper-button>
+                <paper-button><a href="https://en.dawanda.com/product/112229795-dropcube" target="_blank"><span class="flow-text">{{dictionary.SUMMARY3.TITLES.THIRD}}</span></a></paper-button>
             </div>
 
         </dropcube-container>

@@ -15,40 +15,40 @@
         },
         "SUMMARY1": {
             "TITLES": {
-                "MAIN": "Diferentes tipos de alertas y funciones",
-                "HOT": "Alerta por calor",
-                "RAIN": "Alerta por lluvias",
-                "SNOW": "Alerta por nevadas",
-                "WIND": "Alerta por viento",
-                "RAINBOW": "Función Arcoiris"
+                "MAIN": "Different type of warnings and functions",
+                "HOT": "Heat warning",
+                "RAIN": "Rain warning",
+                "SNOW": "Snow warning",
+                "WIND": "Wind warning",
+                "RAINBOW": "Rainbow mode"
             },
             "DESCRIPTIONS": {
-                "MAIN": "Diferentes tipos de alertas y funciones",
-                "HOT": "Para días muy calurosos, dropcube te avisará si fuera hace más de 27ºC.",
-                "RAIN": "Cada vez que vaya a llover, dropcube te avisará dando prioridad a esta alerta.",
-                "SNOW": "Y si en vez de gotas caen copos, no te preocupes, dropcube se pondrá blanco como un muñeco de nieve.",
-                "WIND": "Cuando fuera empiece a soplar fuerte, una luz naranja te avisará para que no se te escape el sombrero.",
-                "RAINBOW": "Con este modo activo, podrás difrutar de una transición de colores ideal para relajarese después de un día duro ;-)"
+                "MAIN": "Different type of warnings and functions",
+                "HOT": "If it is scorching, dropcube will notify you if out is more than 27ºC.",
+                "RAIN": "Everytime it is going to rain, dropcube will notify you as primary warning.",
+                "SNOW": "And if it is snowing, don't worry, dropcube will change to white colour as a snowman.",
+                "WIND": "If it is windy with strong gusts, a orange light will notify you and that way you won't loose your hat.",
+                "RAINBOW": "If you switch on this mode, you can enyou of beautiful colour transitions which you can relax after a hard work day;-)"
             }
         },
 
         "SUMMARY2": {
             "TITLES": {
-                "MAIN": "Disponible en cualquier punto del mundo"
+                "MAIN": "Available anywhere in the world"
             },
             "DESCRIPTIONS": {
-                "MAIN": "Podrás elegir el lugar para el cuál quieres que dropcube te tenga informado. Bastará con seleccionarlo desde la configuración y ya estará listo."
+                "MAIN": "You can choose the place where you want dropcube to keep notifed. The only thing you have to do is select the point in the map and that's all!"
             }
         },
 
         "SUMMARY3": {
             "TITLES": {
-                "MAIN": "¿Deseas saber si lloverá de forma diferente?",
-                "SECONDARY": "¡Adquiere tu dropcube ahora!",
-                "THIRD": "Añadir al carrito"
+                "MAIN": "Do you want if it is going to rain in a different way?",
+                "SECONDARY": "Checkout dropcube now!",
+                "THIRD": "Add to cart"
             },
             "DESCRIPTIONS": {
-                "MAIN": "Podrás elegir el lugar para el cuál quieres que dropcube te tenga informado. Bastará con seleccionarlo desde la configuración y ya estará listo."
+                "MAIN": "You can choose the place where you want dropcube to keep notifed. The only thing you have to do is select the point in the map and that's all!"
             }
         },
         "MAIN_PAGE": {
@@ -91,28 +91,28 @@
         },
 
         "DEVICE": {
-            "DEVICE": "Dispositivo",
-            "MODE": "Modo",
-            "WARNINGS": "Alertas",
-            "BY_DAYS": "Seleccionar ciertas horas",
-            "BY_HOURS": "En tiempo real",
-            "SELECT_HOURS": "Selecciona las horas en las que normalmente transitas por la calle",
-            "DELETE_DROPCUBE": "BORRAR DROPCUBE",
-            "UPDATE_POS": "Modificar posición"
+            "DEVICE": "Device",
+            "MODE": "Mode",
+            "WARNINGS": "Warnings",
+            "BY_DAYS": "Select some hours",
+            "BY_HOURS": "In real time",
+            "SELECT_HOURS": "Select the hours when You usually walk for the street",
+            "DELETE_DROPCUBE": "DELETE DROPCUBE",
+            "UPDATE_POS": "Update location"
         },
         "DEVICES": {
-            "YOUR_DROPCUBES": "Tus dispositivos dropcube",
+            "YOUR_DROPCUBES": "Your dropcube devices",
             "ADD_NEW": "Add a new Dropcube",
-            "ADD_NEW_DEVICE": "Añadir nuevo dispositivo",
+            "ADD_NEW_DEVICE": "Add a new device",
             "NEW_ADVICE": "Add a descriptive name for your dropcube, for example, lounge dropcube",
-            "DELETE": "Borrar dropcube",
-            "DELETE_ADVICE": "¿Estás seguro de que deseas eliminar este dropcube?"
+            "DELETE": "Delete dropcube",
+            "DELETE_ADVICE": "¿Are you sure you want to remove this dropcube?"
         },
         "WEATHER": {
-            "NOW": "Ahora en tu posición",
+            "NOW": "Now in your location",
             "SPEED_WIND": "Wind speed",
             "PRESSURE": "Pressure",
-            "HUMIDITY": "Humedad"
+            "HUMIDITY": "Humidity"
         }
     },
 

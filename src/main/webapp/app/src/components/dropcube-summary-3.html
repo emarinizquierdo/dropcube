@@ -18,7 +18,10 @@
                 background: var(--dropcube-main-blue);
                 color: var(--dropcube-white);
             }
-
+            paper-button a {
+              color: var(--dropcube-white);
+              cursor: pointer;
+            }
 
 
         </style>
@@ -32,7 +35,7 @@
                 <h4 class="flow-h flex header light">{{dictionary.SUMMARY3.TITLES.SECONDARY}}</h4>
             </div>
             <div class="layout-row layout-align-center-center summary-title">
-                <paper-button><span class="flow-text">{{dictionary.SUMMARY3.TITLES.THIRD}}</span></paper-button>
+                <paper-button><a href="https://en.dawanda.com/product/112229795-dropcube" target="_blank"><span class="flow-text">{{dictionary.SUMMARY3.TITLES.THIRD}}</span></a></paper-button>
             </div>
 
         </dropcube-container>
