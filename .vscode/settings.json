@@ -1,3 +1,4 @@
 {
-  "python.pythonPath": "/home/edu/workspace/edu/gae-vue-flask-starter/venv/bin/python3"
+  "python.pythonPath": "/home/edu/workspace/edu/gae-vue-flask-starter/venv/bin/python3",
+  "editor.tabSize": 4
 }

@@ -13,8 +13,3 @@ class Property(ndb.Model):
 
   ''' State info'''
   value = ndb.StringProperty()
-
-  @staticmethod
-  def get(key):
-    prop_key = ndb.Key(Property, key)
-    return prop_key.get()

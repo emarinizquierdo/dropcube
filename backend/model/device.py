@@ -15,7 +15,8 @@ device_schema = api.model('Device', {
     'id': fields.String,
     'deviceId': fields.Integer,
     'lat': fields.Integer,
-    'lng': fields.Integer
+    'lng': fields.Integer,
+    'hours': fields.List(fields.Boolean)
 })
 
 device_input_schema = api.model('DeviceInput', {
@@ -35,13 +36,10 @@ class Device(ndb.Model):
 
     ''' basic geography info '''
     name = ndb.StringProperty()
-    deviceId = ndb.IntegerProperty()
+    deviceId = ndb.IntegerProperty(indexed=True)
     lat = ndb.IntegerProperty()
     lng = ndb.IntegerProperty()
-
-    ''' State info'''
-    active = ndb.BooleanProperty(indexed=True, default=True)
-    deleted = ndb.BooleanProperty(indexed=True, default=False)
+    hours = ndb.BooleanProperty(repeated=True)
 
     @property
     def id(self):

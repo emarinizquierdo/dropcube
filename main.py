@@ -17,10 +17,14 @@ from flask import Flask
 
 from google.cloud import ndb
 from backend.core import create_app
+from backend import config
 
 # If `entrypoint` is not defined in app.yaml, App Engine will look for an app
 # called `app` in `main.py`.
 app = Flask(__name__, static_folder='app/dist', template_folder='app/dist')
+
+app.config.from_object(config.get_config())
+
 client = ndb.Client()
 
 create_app(app, client)
@@ -29,5 +33,5 @@ if __name__ == '__main__':
     # This is used when running locally only. When deploying to Google App
     # Engine, a webserver process such as Gunicorn will serve the app. This
     # can be configured by adding an `entrypoint` to app.yaml.
-    app.run(host='127.0.0.1', port=8080, debug=True)
+    app.run(host='127.0.0.1', port=8080, debug=config.dev_env())
 # [END gae_python37_app]

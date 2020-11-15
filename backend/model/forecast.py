@@ -26,11 +26,6 @@ class Forecast(ndb.Model):
 
   forecasts = ndb.IntegerProperty(indexed=True, repeated=True)
 
-  @staticmethod
-  def get(key):
-    self_key = ndb.Key(Forecast, key)
-    return self_key.get()
-
   @property
   def id(self):
     return self.key.id()
