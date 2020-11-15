@@ -3,6 +3,8 @@ from werkzeug.exceptions import HTTPException
 
 from backend.restplus import api
 from backend.ws.devices import ns as devices_namespace
+from backend.ws.forecasts import ns as forecasts_namespace
+from backend.tasks import tasks
 
 def ndb_wsgi_middleware(wsgi_app, client):
     def middleware(environ, start_response):
@@ -31,3 +33,5 @@ def create_app(app, client):
 
   api.init_app(app)
   api.add_namespace(devices_namespace)
+  api.add_namespace(forecasts_namespace)
+  app.register_blueprint(tasks)

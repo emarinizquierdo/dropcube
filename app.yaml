@@ -9,3 +9,6 @@ handlers:
   
 - url: /js
   static_dir: app/dist/js
+
+- url: /tasks/.*
+  secure: always

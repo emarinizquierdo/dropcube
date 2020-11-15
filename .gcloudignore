@@ -30,3 +30,15 @@ README.md
 !app/
 app/*
 !app/dist/
+
+**/*.iml
+**/*.py[cod]
+**/.*
+/venv/
+/docs/
+.idea/
+.eclipse/
+.vscode/
+Dockerfile
+/resources/
+.venv/

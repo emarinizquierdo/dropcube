@@ -13,7 +13,9 @@ log = logging.getLogger(__name__)
 
 device_schema = api.model('Device', {
     'id': fields.String,
-    'name': fields.String(required=True)
+    'deviceId': fields.Integer,
+    'lat': fields.Integer,
+    'lng': fields.Integer
 })
 
 device_input_schema = api.model('DeviceInput', {
@@ -33,6 +35,9 @@ class Device(ndb.Model):
 
     ''' basic geography info '''
     name = ndb.StringProperty()
+    deviceId = ndb.IntegerProperty()
+    lat = ndb.IntegerProperty()
+    lng = ndb.IntegerProperty()
 
     ''' State info'''
     active = ndb.BooleanProperty(indexed=True, default=True)
