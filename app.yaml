@@ -9,3 +9,7 @@ handlers:
   
 - url: /js
   static_dir: app/dist/js
+
+- url: /.*
+  script: auto
+  secure: always

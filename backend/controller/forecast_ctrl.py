@@ -7,6 +7,7 @@ from timezonefinder import TimezoneFinder
 
 from backend.model.forecast import Forecast
 from backend.model.device import Device
+from backend.model.code import Code
 from backend.model.generic_list import GenericList
 from backend.handlers import openweather
 from backend.utils import json_ok
@@ -30,8 +31,7 @@ def update_forecast(device_id, latitude, longitude):
 
     forecast = Forecast.get_by_id(device_id) or Forecast(
         key=ndb.Key(Forecast, device_id))
-    forecast.forecasts = list(map(lambda item: int(
-        item['code']), sorted(hour_forecasts, key=lambda x: x['hour'])))
+    forecast.forecasts = list(map(lambda item: Code.get_by_id(int(item['code'])).value, sorted(hour_forecasts, key=lambda x: x['hour'])))
     forecast.put()
 
 
@@ -41,6 +41,11 @@ def get_forecasts():
     forecasts = query.fetch()
 
     return GenericList(cursor=None, total=None, data=forecasts)
+
+def get_device_forecasts(deviceId):
+
+    forecasts = Forecast.get_by_id(deviceId)
+    return forecasts
 
 def rotate(l, n):
    return l[n:] + l[:n]

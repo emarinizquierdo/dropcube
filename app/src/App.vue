@@ -1,19 +1,31 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <dropcube-header />
+    <router-view />
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import '@/assets/colors.css';
+import '@/assets/global.css';
+import DropcubeHeader from '@/components/DropcubeHeader.vue';
+
+import { SET_LANGUAGE } from '@/store';
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    DropcubeHeader
+  },
+  mounted () {
+    var userLang = navigator.language || navigator.userLanguage;
+    if (userLang.includes('es')) {
+      this.$store.commit(SET_LANGUAGE, 'es_ES');
+    } else {
+      this.$store.commit(SET_LANGUAGE, 'en_US');
+    }
   }
-}
+};
 </script>
 
 <style>

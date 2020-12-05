@@ -7,13 +7,12 @@ from flask_restplus import fields
 # App dependencies
 from backend.restplus import api
 
-# App dependencies
 
 log = logging.getLogger(__name__)
 
 forecast_schema = api.model('Forecast', {
     'id': fields.Integer,
-    'forecasts': fields.List(fields.Integer(required=True, ))
+    'forecasts': fields.List(fields.String(required=True, ))
 })
 
 forecast_output_list_schema = api.model('ForecastOutputList', {
@@ -24,7 +23,7 @@ forecast_output_list_schema = api.model('ForecastOutputList', {
 
 class Forecast(ndb.Model):
 
-  forecasts = ndb.IntegerProperty(indexed=True, repeated=True)
+  forecasts = ndb.StringProperty(repeated=True)
 
   @property
   def id(self):

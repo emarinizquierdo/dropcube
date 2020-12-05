@@ -5,6 +5,7 @@ from werkzeug.exceptions import HTTPException
 
 from backend.restplus import api
 from backend.ws.devices import ns as devices_namespace
+from backend.ws.codes import ns as codes_namespace
 from backend.ws.forecasts import ns as forecasts_namespace
 from backend.tasks import tasks
 from backend.config import dev_env
@@ -27,8 +28,9 @@ def create_app(app, client):
     # Wrap the app in middleware.
     app.wsgi_app = ndb_wsgi_middleware(app.wsgi_app, client)
 
-    @app.route('/')
-    def vue_client():
+    @app.route('/', defaults={'path': ''})
+    @app.route('/<path:path>')
+    def vue_client(path):
         return render_template('index.html')
 
     @app.errorhandler(Exception)

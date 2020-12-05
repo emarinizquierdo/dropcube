@@ -1,0 +1,1 @@
+source venv/bin/activate && python3 main.py & (cd app && npm run serve)

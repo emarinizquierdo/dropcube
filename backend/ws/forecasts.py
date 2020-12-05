@@ -25,8 +25,21 @@ class ForecastsWS(Resource):
 class ForecastByIdWS(Resource):
 
     @api.doc(description='get forecast by id')
+    @api.header('Content-type', 'text/plain')
     def get(self, id):
         """
-        Retrieve a list of forecasts
+        Retrieve current forecast
         """
         return forecast_ctrl.get_forecast(id)
+    
+
+@ns.route('/<int:id>/list', methods=['GET'])
+class ForecastByIdWS(Resource):
+
+    @api.doc(description='get forecasts by id')
+    @ns.marshal_list_with(forecast_schema, skip_none=True)
+    def get(self, id):
+        """
+        Retrieve forecasts for a device
+        """
+        return forecast_ctrl.get_device_forecasts(id)

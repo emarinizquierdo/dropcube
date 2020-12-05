@@ -13,6 +13,12 @@ def add( device ):
 
   return device
 
+def get(id=None):
+
+  query = Device.query(Device.deviceId == id)
+  device = query.get()
+
+  return device
 
 def get_list( ):
 
@@ -21,3 +27,13 @@ def get_list( ):
   devices = query.fetch()
 
   return GenericList(cursor=None, total=None, data=devices)
+
+
+def config(id=None, hours=None):
+
+  query = Device.query(Device.deviceId == id)
+  device = query.get()
+  device.hours = hours
+  device.put()
+
+  return device

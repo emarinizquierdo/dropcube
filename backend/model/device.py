@@ -14,8 +14,8 @@ log = logging.getLogger(__name__)
 device_schema = api.model('Device', {
     'id': fields.String,
     'deviceId': fields.Integer,
-    'lat': fields.Integer,
-    'lng': fields.Integer,
+    'lat': fields.Float,
+    'lng': fields.Float,
     'hours': fields.List(fields.Boolean)
 })
 
@@ -29,6 +29,10 @@ device_output_list_schema = api.model('DeviceOutputList', {
     'total': fields.Integer
 })
 
+device_input_config_schema = api.model('DeviceConfigInput', {
+    'hours': fields.List(fields.Boolean())
+})
+
 class Device(ndb.Model):
     """
     Geography class
@@ -37,8 +41,8 @@ class Device(ndb.Model):
     ''' basic geography info '''
     name = ndb.StringProperty()
     deviceId = ndb.IntegerProperty(indexed=True)
-    lat = ndb.IntegerProperty()
-    lng = ndb.IntegerProperty()
+    lat = ndb.FloatProperty()
+    lng = ndb.FloatProperty()
     hours = ndb.BooleanProperty(repeated=True)
 
     @property

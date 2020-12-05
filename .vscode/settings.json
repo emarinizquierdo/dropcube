@@ -1,4 +1,7 @@
 {
   "python.pythonPath": "/home/edu/workspace/edu/gae-vue-flask-starter/venv/bin/python3",
-  "editor.tabSize": 4
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "eslint.validate": ["javascript"]
 }
